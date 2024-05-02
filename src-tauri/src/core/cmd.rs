@@ -4,7 +4,7 @@
  * @ref: https://tauri.app/v1/guides/features/command/#passing-arguments
  * @ref: https://github.com/tauri-apps/tauri/discussions/7737#discussioncomment-6912654
  */
-use tauri::{AppHandle, Error, Manager, WebviewWindow};
+use tauri::{AppHandle, Manager, WebviewWindow};
 use tauri_plugin_dialog::{DialogExt, MessageDialogKind};
 
 use crate::{core::utils, meta};
