@@ -1,0 +1,6 @@
+export * from './about'
+export * from './appearance'
+export * from './changelog'
+export * from './general'
+export * from './shortcuts'
+export * from './updates'

@@ -1,9 +1,7 @@
 {
     "recommendations": [
-        "bradlc.vscode-tailwindcss",
-        "dbaeumer.vscode-eslint",
+        "biomejs.biome",
         "EditorConfig.EditorConfig",
-        "esbenp.prettier-vscode",
         "foxundermoon.shell-format",
         "rust-lang.rust-analyzer",
         "serayuzgur.crates",

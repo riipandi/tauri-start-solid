@@ -1,17 +1,8 @@
 {
     "typescript.tsdk": "node_modules/typescript/lib",
     "typescript.enablePromptUseWorkspaceTsdk": true,
-    "eslint.workingDirectories": ["./src"],
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-        "source.fixAll": "explicit",
-        "source.fixAll.eslint": "explicit"
-    },
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "biomejs.biome",
     "files.exclude": {
-        "**/.tsbuildinfo": true,
-        "**/.turbo/**": true,
-        "**/*.tgz": true,
         "**/tmp/**": true
     },
     "files.watcherExclude": {
@@ -19,15 +10,16 @@
         "**/.github/ISSUE_TEMPLATE/**": true,
         "**/.github/PULL_REQUEST_TEMPLATE.md": true,
         "**/.tsbuildinfo": true,
-        "**/.turbo/**": true,
-        "**/.vscode/**": true,
-        "**/tmp/*/**": true
+        "**/.vscode/**": true
     },
     "search.exclude": {
         "**/.tsbuildinfo": true,
-        "**/.turbo/**": true,
-        "**/.vscode/**": true,
-        "**/tmp/*/**": true
+        "**/.vscode/**": true
+    },
+    "files.associations": {
+        "*.yml.example": "yaml",
+        "*.css": "tailwindcss",
+        "*.plist": "xml"
     },
     "tailwindCSS.files.exclude": [
         "**/.git/**",
@@ -36,10 +28,19 @@
         "**/node_modules/**",
         "**/*.{md,js,ts}"
     ],
-    "files.associations": {
-        "*.yml.example": "yaml",
-        "*.css": "tailwindcss",
-        "*.plist": "xml"
+    "tailwindCSS.emmetCompletions": true,
+    "tailwindCSS.experimental.classRegex": [
+        "clx\\(([^)]*)\\)" // clx(xxx)
+    ],
+    "tailwindCSS.includeLanguages": {
+        "javascriptreact": "javascriptreact",
+        "typescriptreact": "javascriptreact"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "biomejs.biome"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "biomejs.biome"
     },
     "[toml]": {
         "editor.defaultFormatter": "tamasfe.even-better-toml"

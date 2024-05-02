@@ -7,40 +7,42 @@ name: setup-sdk
 description: Prepare Nodejs environment with pnpm enabled
 
 inputs:
-  nodeVersion:
+  NODE_VERSION:
     description: 'Specify Nodejs version'
     required: false
     default: '20'
-  pnpmVersion:
+  PNPM_VERSION:
     description: 'Specify pnpm version'
     required: false
-    default: '8'
-  workspacePath:
+    default: '9'
+  WORKSPACE_PATH:
     description: 'Specify workspaces path'
-    required: true
+    default: "./src-tauri -> target"
+    required: false
 
 runs:
   using: composite
   steps:
-    - uses: actions/setup-node@v3
+    - uses: pnpm/action-setup@v3
       with:
-        node-version: ${{ inputs.nodeVersion }}
-
-    - uses: pnpm/action-setup@v2
-      with:
-        version: ${{ inputs.pnpmVersion }}
+        version: ${{ inputs.PNPM_VERSION }}
         run_install: false
 
     - name: Get pnpm store directory
       shell: bash
       run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-    - uses: actions/cache@v3
+    - uses: actions/cache@v4
       name: Setup pnpm cache
       with:
         path: ${{ env.STORE_PATH }}
         key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
         restore-keys: ${{ runner.os }}-pnpm-store-
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.NODE_VERSION }}
+        cache: 'pnpm'
 
     - name: Setup Rust Toolchan
       uses: dtolnay/rust-toolchain@stable
@@ -48,4 +50,4 @@ runs:
     - name: Setup Rust cache
       uses: swatinem/rust-cache@v2
       with:
-        workspaces: ${{ inputs.workspacePath }}
+        workspaces: ${{ inputs.WORKSPACE_PATH }}

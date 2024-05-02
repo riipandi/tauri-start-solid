@@ -1,0 +1,66 @@
+{
+    "$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
+    "organizeImports": {
+        "enabled": true
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": true,
+            "a11y": {
+                "noSvgWithoutTitle": "off",
+                "useKeyWithClickEvents": "off"
+            },
+            "suspicious": {
+                "noCommentText": "off",
+                "noExplicitAny": "off",
+                "noArrayIndexKey": "off"
+            },
+            "complexity": {
+                "noBannedTypes": "off"
+            },
+            "style": {
+                "noUnusedTemplateLiteral": "off"
+            }
+        }
+    },
+    "formatter": {
+        "enabled": true,
+        "formatWithErrors": false,
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineWidth": 100
+    },
+    "css": {
+        "parser": {
+            "allowWrongLineComments": false
+        },
+        "formatter": {
+            "enabled": true,
+            "quoteStyle": "double"
+        }
+    },
+    "javascript": {
+        "formatter": {
+            "indentWidth": 2,
+            "quoteStyle": "single",
+            "jsxQuoteStyle": "double",
+            "arrowParentheses": "always",
+            "semicolons": "asNeeded",
+            "trailingComma": "es5",
+            "quoteProperties": "asNeeded",
+            "bracketSpacing": true,
+            "bracketSameLine": false
+        }
+    },
+    "json": {
+        "formatter": {
+            "indentWidth": 4
+        }
+    },
+    "files": {
+        "ignoreUnknown": true,
+        "include": ["**/*.js", "**/*.ts", "**/*.tsx", "**/*.css", "**/*.json"],
+        "ignore": [".github", ".vscode", "node_modules", "dist", "src-tauri"]
+    }
+}

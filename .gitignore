@@ -12,6 +12,7 @@ node_modules
 dist
 dist-ssr
 *.local
+/tmp
 
 # Editor directories and files
 .vscode/*
@@ -34,3 +35,7 @@ dist-ssr
 # Tauri
 .tauri/
 target/
+/src-tauri/gen/
+# /src/types/bindings.ts
+example.sql
+depgraph.png

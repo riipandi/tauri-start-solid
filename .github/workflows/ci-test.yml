@@ -1,0 +1,72 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+name: CI Test
+
+on:
+  push:
+    branches: ['**']
+    tags-ignore: ['*']
+  pull_request:
+
+permissions: read-all
+
+env:
+  NODE_VERSION: 20
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: 0
+  CI: true
+
+# Cancel in progress workflows on pull_requests.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  test-build:
+    name: Test Build
+    strategy:
+      matrix:
+        # https://github.com/actions/runner-images/tree/main/images
+        os: [macos-11] # macos-13-arm64, windows-2019, ubuntu-20.04
+        rust-toolchain: [stable] # nightly
+      fail-fast: false
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run actions/setup-sdk@local
+        uses: ./.github/setup-sdk
+        with:
+          NODE_VERSION: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies (ubuntu only)
+        if: matrix.os == 'ubuntu-20.04'
+        run: |
+          sudo apt update && sudo apt -yq full-upgrade
+          sudo apt -yqq install ca-certificates gnupg build-essential curl wget file
+          sudo apt -yqq install libgtk-3-dev libappindicator3-dev librsvg2-dev patchelf
+          sudo apt -yqq install libwebkit2gtk-4.0-dev libssl-dev libayatana-appindicator3-dev
+
+      # https://github.com/marketplace/actions/install-development-tools
+      - name: Setup additional tools
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-binstall,cargo-nextest
+
+      - name: Check code style
+        working-directory: src-tauri
+        run: cargo fmt -- --check
+
+      # - name: Tests Rust code
+      #   working-directory: src-tauri
+      #   # https://github.com/nextest-rs/reuse-build-partition-example/blob/main/.github/workflows/ci.yml
+      #   # run: cargo test --frozen --quiet
+      #   run: cargo nextest run
+
+      - if: ${{ steps.pnpm-cache.outputs.cache-hit != 'true' }}
+        name: Build the application
+        run: |
+          pnpm install --frozen-lockfile --silent
+          pnpm build:debug

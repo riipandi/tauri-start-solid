@@ -1,35 +1,43 @@
-/// <reference types="vitest" />
-/// <reference types="vite/client" />
-
 import { resolve } from 'node:path'
-
+import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
-export default defineConfig(async () => ({
-  plugins: [react()],
-  define: { 'import.meta.env.APP_VERSION': `"${process.env.npm_package_version}"` },
-  // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
-  // @reference: https://tauri.studio/v1/api/config#buildconfig.beforedevcommand
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  envPrefix: ['VITE_'],
   clearScreen: false,
-  server: { port: 1420, strictPort: true },
-  envPrefix: ['VITE_', 'TAURI_'],
+  server: {
+    port: 1420,
+    strictPort: true,
+    watch: {
+      ignored: ['**/src-tauri/**'],
+    },
+  },
   resolve: {
     alias: [
       { find: '@', replacement: resolve(__dirname, 'src') },
       { find: '~', replacement: resolve(__dirname, 'public') },
     ],
   },
+  esbuild: {
+    supported: {
+      'top-level-await': true, // browsers can handle top-level-await features
+    },
+  },
   build: {
-    emptyOutDir: true,
-    chunkSizeWarningLimit: 1200,
+    target: 'ES2020',
+    chunkSizeWarningLimit: 1024,
     reportCompressedSize: false,
     outDir: resolve(__dirname, 'dist'),
+    rollupOptions: {
+      input: { app: resolve(__dirname, 'index.html') },
+      output: {
+        // Output with hash in filename
+        entryFileNames: `assets/[name]-[hash].js`,
+        chunkFileNames: `assets/[name]-[hash].js`,
+        assetFileNames: `assets/[name]-[hash].[ext]`,
+      },
+    },
   },
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    cache: { dir: './node_modules/.vitest' },
-    include: ['./**/*.{test,spec}.{ts,tsx}'],
-  },
-}))
+})
