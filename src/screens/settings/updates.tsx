@@ -32,22 +32,22 @@ export function SettingUpdates() {
   }
 
   return (
-    <div className="flex flex-col size-full justify-between pb-2">
+    <div className="flex size-full flex-col justify-between pb-2">
       <section className="space-y-5">
-        <div className="flex flex-1 justify-between items-center">
+        <div className="flex flex-1 items-center justify-between">
           <div className="w-2/3 pr-2">
-            <h2 className="text-base font-semibold leading-6 dark:text-white">Automatic Updates</h2>
-            <p className="mt-1 text-sm leading-4 text-neutral-500 dark:text-neutral-400">
+            <h2 className="font-semibold text-base leading-6 dark:text-white">Automatic Updates</h2>
+            <p className="mt-1 text-neutral-500 text-sm leading-4 dark:text-neutral-400">
               Check for updates automatically.
             </p>
           </div>
 
-          <div className="w-1/3 flex flex-1 items-center">
-            <div className="flex items-center w-full justify-end">
+          <div className="flex w-1/3 flex-1 items-center">
+            <div className="flex w-full items-center justify-end">
               <input
                 type="checkbox"
                 id="minimize-to-tray"
-                className="relative w-[3.25rem] h-7 p-px bg-gray-100 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:ring-blue-600 disabled:opacity-50 disabled:pointer-events-none checked:bg-none checked:text-blue-600 checked:border-blue-600 focus:checked:border-blue-600 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-600 before:inline-block before:size-6 before:bg-white checked:before:bg-blue-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-neutral-400 dark:checked:before:bg-blue-200"
+                className="relative h-7 w-[3.25rem] cursor-pointer rounded-full border-transparent bg-gray-100 p-px text-transparent transition-colors duration-200 ease-in-out before:inline-block before:size-6 before:translate-x-0 before:transform before:rounded-full before:bg-white before:shadow before:ring-0 before:transition before:duration-200 before:ease-in-out checked:border-blue-600 checked:bg-none checked:text-blue-600 checked:before:translate-x-full checked:before:bg-blue-200 focus:ring-blue-600 focus:checked:border-blue-600 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-800 dark:focus:ring-offset-gray-600 dark:checked:border-blue-500 dark:checked:bg-blue-500 dark:before:bg-neutral-400 dark:checked:before:bg-blue-200"
               />
               <label htmlFor="minimize-to-tray" className="sr-only">
                 Automatic Updates
@@ -56,22 +56,22 @@ export function SettingUpdates() {
           </div>
         </div>
 
-        <div className="flex flex-1 justify-between items-center">
+        <div className="flex flex-1 items-center justify-between">
           <div className="w-2/3 pr-2">
-            <h2 className="text-base font-semibold leading-6 dark:text-white">
+            <h2 className="font-semibold text-base leading-6 dark:text-white">
               Updat to Beta Release
             </h2>
-            <p className="mt-1 text-sm leading-4 text-neutral-500 dark:text-neutral-400">
+            <p className="mt-1 text-neutral-500 text-sm leading-4 dark:text-neutral-400">
               Update to Beta Release, even though they maybe unstable.
             </p>
           </div>
 
-          <div className="w-1/3 flex flex-1 items-center">
-            <div className="flex items-center w-full justify-end">
+          <div className="flex w-1/3 flex-1 items-center">
+            <div className="flex w-full items-center justify-end">
               <input
                 type="checkbox"
                 id="close-to-tray"
-                className="relative w-[3.25rem] h-7 p-px bg-gray-100 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:ring-blue-600 disabled:opacity-50 disabled:pointer-events-none checked:bg-none checked:text-blue-600 checked:border-blue-600 focus:checked:border-blue-600 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-600 before:inline-block before:size-6 before:bg-white checked:before:bg-blue-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-neutral-400 dark:checked:before:bg-blue-200"
+                className="relative h-7 w-[3.25rem] cursor-pointer rounded-full border-transparent bg-gray-100 p-px text-transparent transition-colors duration-200 ease-in-out before:inline-block before:size-6 before:translate-x-0 before:transform before:rounded-full before:bg-white before:shadow before:ring-0 before:transition before:duration-200 before:ease-in-out checked:border-blue-600 checked:bg-none checked:text-blue-600 checked:before:translate-x-full checked:before:bg-blue-200 focus:ring-blue-600 focus:checked:border-blue-600 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-800 dark:focus:ring-offset-gray-600 dark:checked:border-blue-500 dark:checked:bg-blue-500 dark:before:bg-neutral-400 dark:checked:before:bg-blue-200"
               />
               <label htmlFor="close-to-tray" className="sr-only">
                 Close to Tray Menu
@@ -81,14 +81,14 @@ export function SettingUpdates() {
         </div>
       </section>
 
-      <section className="space-y-5 size-full">
-        <div className="size-full items-center justify-center flex flex-col text-neutral-500 dark:text-neutral-300">
+      <section className="size-full space-y-5">
+        <div className="flex size-full flex-col items-center justify-center text-neutral-500 dark:text-neutral-300">
           <p className="text-base leading-5">Last checked: Today at 00:00</p>
           <p className="text-base leading-5">No updates available, you are up to date.</p>
           <div className="mt-5">
             <button
               type="button"
-              className="rounded-md bg-neutral-900 py-1.5 px-3 text-sm text-white shadow-sm hover:bg-neutral-700 block w-full"
+              className="block w-full rounded-md bg-neutral-900 px-3 py-1.5 text-sm text-white shadow-sm hover:bg-neutral-700"
               onClick={handleCheckForUpdates}
             >
               Check For Updates

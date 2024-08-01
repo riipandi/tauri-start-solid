@@ -1,178 +1,196 @@
 @media (prefers-color-scheme: light) {
-  .titlebar-root {
-    color: black;
-    background-color: var(--ui-titlebar-color-light);
-  }
+    .titlebar-root {
+        color: black;
+        background-color: var(--ui-titlebar-color-light);
+    }
 }
 
 @media (prefers-color-scheme: dark) {
-  .titlebar-root {
-    color: black;
-    background-color: var(--ui-titlebar-color-light);
-  }
+    .titlebar-root {
+        color: black;
+        background-color: var(--ui-titlebar-color-light);
+    }
 }
 
 .titlebar-root {
-  width: 100%;
-  z-index: 999;
-  height: var(--ui-titlebar-height);
-  display: flex;
-  font-size: 14px;
-  align-items: center;
-  justify-content: space-between;
-  border-top-left-radius: var(--ui-window-border-radius);
-  border-top-right-radius: var(--ui-window-border-radius);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  /* Disable select */
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Old versions of Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version */
-  cursor: default;
+    width: 100%;
+    z-index: 999;
+    height: var(--ui-titlebar-height);
+    display: flex;
+    font-size: 14px;
+    align-items: center;
+    justify-content: space-between;
+    border-top-left-radius: var(--ui-window-border-radius);
+    border-top-right-radius: var(--ui-window-border-radius);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    /* Disable select */
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version */
+    cursor: default;
 }
 
 .titlebar-content {
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  position: absolute;
-  padding-right: 6px;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 12px;
-  font-weight: 500;
-  height: var(--ui-titlebar-height);
-  border-top-left-radius: var(--ui-window-border-radius);
-  border-top-right-radius: var(--ui-window-border-radius);
-  background-color: transparent;
-  color: inherit;
-  /* Inner shadow - Uncomment to enable shadow */
-  /* -moz-box-shadow: inset 0 -1px 1px -1px #0e305d;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: absolute;
+    padding-right: 6px;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 500;
+    height: var(--ui-titlebar-height);
+    border-top-left-radius: var(--ui-window-border-radius);
+    border-top-right-radius: var(--ui-window-border-radius);
+    background-color: transparent;
+    color: inherit;
+    /* Inner shadow - Uncomment to enable shadow */
+    /* -moz-box-shadow: inset 0 -1px 1px -1px #0e305d;
   -webkit-box-shadow: inset 0 -1px 1px -1px #0e305d;
   box-shadow: inset 0 -1px 1px -1px #0e305d; */
 }
 
 /* Styles for traffic light (macOS) */
 .traffic-lights {
-  z-index: 999;
-  padding-left: 12px;
-  padding-right: 12px;
-  background-color: transparent;
-  border-top-left-radius: var(--ui-window-border-radius);
-  height: var(--ui-titlebar-height);
-  position: relative;
-  width: auto;
-  display: none; /* flex = enable, none = disable */
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+    z-index: 999;
+    padding-left: 12px;
+    padding-right: 12px;
+    background-color: transparent;
+    border-top-left-radius: var(--ui-window-border-radius);
+    height: var(--ui-titlebar-height);
+    position: relative;
+    width: auto;
+    display: none; /* flex = enable, none = disable */
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
-.traffic-lights.focus > .traffic-light-close, .traffic-lights:hover > .traffic-light-close, .traffic-lights:active > .traffic-light-close {
-  background-color: #ff6159;
+.traffic-lights.focus > .traffic-light-close,
+.traffic-lights:hover > .traffic-light-close,
+.traffic-lights:active > .traffic-light-close {
+    background-color: #ff6159;
 }
-.traffic-lights.focus > .traffic-light-close:active:hover, .traffic-lights:hover > .traffic-light-close:active:hover, .traffic-lights:active > .traffic-light-close:active:hover {
-  background-color: #bf4942;
+.traffic-lights.focus > .traffic-light-close:active:hover,
+.traffic-lights:hover > .traffic-light-close:active:hover,
+.traffic-lights:active > .traffic-light-close:active:hover {
+    background-color: #bf4942;
 }
-.traffic-lights.focus > .traffic-light-minimize, .traffic-lights:hover > .traffic-light-minimize, .traffic-lights:active > .traffic-light-minimize {
-  background-color: #ffbd2e;
+.traffic-lights.focus > .traffic-light-minimize,
+.traffic-lights:hover > .traffic-light-minimize,
+.traffic-lights:active > .traffic-light-minimize {
+    background-color: #ffbd2e;
 }
-.traffic-lights.focus > .traffic-light-minimize:active:hover, .traffic-lights:hover > .traffic-light-minimize:active:hover, .traffic-lights:active > .traffic-light-minimize:active:hover {
-  background-color: #bf8e22;
+.traffic-lights.focus > .traffic-light-minimize:active:hover,
+.traffic-lights:hover > .traffic-light-minimize:active:hover,
+.traffic-lights:active > .traffic-light-minimize:active:hover {
+    background-color: #bf8e22;
 }
-.traffic-lights.focus > .traffic-light-maximize, .traffic-lights:hover > .traffic-light-maximize, .traffic-lights:active > .traffic-light-maximize {
-  background-color: #28c941;
+.traffic-lights.focus > .traffic-light-maximize,
+.traffic-lights:hover > .traffic-light-maximize,
+.traffic-lights:active > .traffic-light-maximize {
+    background-color: #28c941;
 }
-.traffic-lights.focus > .traffic-light-maximize:active:hover, .traffic-lights:hover > .traffic-light-maximize:active:hover, .traffic-lights:active > .traffic-light-maximize:active:hover {
-  background-color: #1d9730;
+.traffic-lights.focus > .traffic-light-maximize:active:hover,
+.traffic-lights:hover > .traffic-light-maximize:active:hover,
+.traffic-lights:active > .traffic-light-maximize:active:hover {
+    background-color: #1d9730;
 }
-.traffic-lights:hover > .traffic-light:before, .traffic-lights:active > .traffic-light:before, .traffic-lights:hover > .traffic-light:after, .traffic-lights:active > .traffic-light:after, .traffic-lights:hover > .traffic-light svg, .traffic-lights:active > .traffic-light svg {
-  visibility: visible;
+.traffic-lights:hover > .traffic-light:before,
+.traffic-lights:active > .traffic-light:before,
+.traffic-lights:hover > .traffic-light:after,
+.traffic-lights:active > .traffic-light:after,
+.traffic-lights:hover > .traffic-light svg,
+.traffic-lights:active > .traffic-light svg {
+    visibility: visible;
 }
 .traffic-light {
-  border-radius: 100%;
-  padding: 0;
-  height: 13px;
-  width: 13px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  box-sizing: border-box;
-  background-color: #ddd;
-  position: relative;
-  outline: none;
+    border-radius: 100%;
+    padding: 0;
+    height: 13px;
+    width: 13px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-sizing: border-box;
+    background-color: #ddd;
+    position: relative;
+    outline: none;
 }
 .traffic-light > svg {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-  visibility: hidden;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    visibility: hidden;
 }
 .traffic-light-close svg path {
-  stroke: #740000bf;
+    stroke: #740000bf;
 }
 .traffic-light-close:active:hover svg path {
-  stroke: #190000;
+    stroke: #190000;
 }
 .traffic-light-minimize svg {
-  transform: translate(-50%, -30%);
+    transform: translate(-50%, -30%);
 }
 .traffic-light-minimize svg > path {
-  stroke: #740000bf;
+    stroke: #740000bf;
 }
 .traffic-light-minimize:active:hover svg path {
-  stroke: #190000;
+    stroke: #190000;
 }
 .traffic-light-maximize svg path {
-  stroke: #006500;
+    stroke: #006500;
 }
 .traffic-light-maximize:active:hover svg path {
-  stroke: #003200;
+    stroke: #003200;
 }
 
 /* Styles for captions controls (Windows) */
 .caption-controls {
-  position: relative;
-  border-top-right-radius: var(--ui-window-border-radius);
-  background-color: transparent;
-  height: var(--ui-titlebar-height);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  gap: 0;
+    position: relative;
+    border-top-right-radius: var(--ui-window-border-radius);
+    background-color: transparent;
+    height: var(--ui-titlebar-height);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    gap: 0;
 }
 .caption-control {
-  padding: 0;
-  height: var(--ui-titlebar-height);
-  width: var(--ui-titlebar-height);
-  border: none;
-  box-sizing: border-box;
-  background-color: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  outline: none;
-  color: rgba(255, 255, 255, 0.9);
+    padding: 0;
+    height: var(--ui-titlebar-height);
+    width: var(--ui-titlebar-height);
+    border: none;
+    box-sizing: border-box;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    outline: none;
+    color: rgba(255, 255, 255, 0.9);
 }
-.caption-control:hover, .caption-control:active {
-  background-color: rgba(0, 0, 0, 0.08);
-  color: rgba(255, 255, 255, 1);
+.caption-control:hover,
+.caption-control:active {
+    background-color: rgba(0, 0, 0, 0.08);
+    color: rgba(255, 255, 255, 1);
 }
-.caption-control-close  {
-  border-top-right-radius: var(--ui-window-border-radius);
+.caption-control-close {
+    border-top-right-radius: var(--ui-window-border-radius);
 }
 /* .caption-control-minimize {}
 .caption-control-minimize:active:hover {}

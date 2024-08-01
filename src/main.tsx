@@ -17,7 +17,7 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 if (!('__TAURI__' in window)) {
   ReactDOM.createRoot(root).render(
     <React.StrictMode>
-      <div className="size-full p-4 min-h-screen items-center justify-center flex dark:bg-black">
+      <div className="flex size-full min-h-screen items-center justify-center p-4 dark:bg-black">
         <p className="font-medium tracking-wide dark:text-white">
           This application will not work in Browser.
         </p>

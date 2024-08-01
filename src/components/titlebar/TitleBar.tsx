@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from 'react'
 import { getCurrent } from '@tauri-apps/api/window'
 import { type OsType, type as getOsType } from '@tauri-apps/plugin-os'
+import { useCallback, useEffect, useState } from 'react'
 
-import CaptionControl from './CaptionControl'
-import TrafficLight from './TrafficLight'
+import CaptionControl from './caption-control'
+import TrafficLight from './traffic-light'
 import './titlebar.css'
 import { clx } from '@/utils/helpers'
 
@@ -34,7 +34,8 @@ export function CustomTitleBar({ children }: React.PropsWithChildren) {
   }, [win])
 
   useEffect(() => {
-    getOsType().then(setPlatform)
+    const osType = getOsType()
+    setPlatform(osType)
 
     // @ref: https://beta.tauri.app/references/v2/js/core/namespaceevent
     win.listen('tauri://webview-created', () => setIsFocused(true))
@@ -76,7 +77,7 @@ export function CustomTitleBar({ children }: React.PropsWithChildren) {
 export function DefaultTitleBar() {
   return (
     <div
-      className="absolute w-full h-7 bg-transparent z-10 rounded-t-[10px]"
+      className="absolute z-10 h-7 w-full rounded-t-[10px] bg-transparent"
       data-tauri-drag-region
     />
   )

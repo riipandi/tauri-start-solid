@@ -15,15 +15,15 @@ export function SettingAbout() {
   }, [])
 
   return (
-    <div className="flex flex-col size-full">
+    <div className="flex size-full flex-col">
       <section className="-mt-4">
-        <div className="flex flex-1 relative -mx-3 -my-4">
+        <div className="-mx-3 -my-4 relative flex flex-1">
           <img src={AppBannerSvg} className="size-full" alt="App Banner" />
-          <div className="bg-transparent size-full absolute" data-tauri-drag-region />
+          <div className="absolute size-full bg-transparent" data-tauri-drag-region />
         </div>
-        <div className="flex flex-col justify-center mt-8 text-sm text-center gap-1">
-          <span className="text-neutral-600 dark:text-neutral-300 font-medium tracking-normal">{`${appName} v${appVersion} / Tauri v${tauriVersion}`}</span>
-          <span className="text-neutral-600 dark:text-neutral-300 font-medium tracking-tight">
+        <div className="mt-8 flex flex-col justify-center gap-1 text-center text-sm">
+          <span className="font-medium text-neutral-600 tracking-normal dark:text-neutral-300">{`${appName} v${appVersion} / Tauri v${tauriVersion}`}</span>
+          <span className="font-medium text-neutral-600 tracking-tight dark:text-neutral-300">
             Copyright © {new Date().getFullYear()} Your Company. All rights reserved.
           </span>
         </div>
@@ -33,7 +33,7 @@ export function SettingAbout() {
 
       <section className="size-full">
         <textarea
-          className="size-full focus:outline-none rounded text-base py-1 px-2 resize-none border-neutral-200 dark:bg-neutral-900 dark:text-white dark:border-neutral-700 custom-scrollbar"
+          className="custom-scrollbar size-full resize-none rounded border-neutral-200 px-2 py-1 text-base focus:outline-none dark:border-neutral-700 dark:bg-neutral-900 dark:text-white"
           value="License information will be displayed here."
           readOnly
         />

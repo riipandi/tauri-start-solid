@@ -1,6 +1,6 @@
-import { Outlet } from 'react-router-dom'
 import { invoke } from '@tauri-apps/api/core'
 import { CogIcon, PanelRightIcon } from 'lucide-react'
+import { Outlet } from 'react-router-dom'
 
 import { CustomTitleBar } from '@/components/titlebar'
 import { clx } from '@/utils/helpers'
@@ -33,8 +33,8 @@ export function PrimaryLayout() {
           type="button"
           onClick={async () => await invoke('open_settings_window')}
           className={clx(
-            'p-1 inline-flex items-center gap-x-2 text-sm rounded-full cursor-pointer',
-            'bg-transparent disabled:opacity-50 disabled:pointer-events-none focus:outline-none'
+            'inline-flex cursor-pointer items-center gap-x-2 rounded-full p-1 text-sm',
+            'bg-transparent focus:outline-none disabled:pointer-events-none disabled:opacity-50'
           )}
         >
           <CogIcon

@@ -1,1 +1,1 @@
-export * from './TitleBar'
+export * from './titlebar'

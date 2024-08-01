@@ -1,9 +1,9 @@
 export default function PageLoader() {
   return (
-    <div className="absolute left-0 top-0 z-[888] m-0 h-screen w-full bg-neutral-100/80 dark:bg-black/80 p-0">
-      <div className="absolute w-full h-7 bg-transparent z-[999]" data-tauri-drag-region />
+    <div className="absolute top-0 left-0 z-[888] m-0 h-screen w-full bg-neutral-100/80 p-0 dark:bg-black/80">
+      <div className="absolute z-[999] h-7 w-full bg-transparent" data-tauri-drag-region />
       <div className="mx-auto flex h-full w-full items-center justify-center">
-        <div role="status" className="absolute left-1/2 top-2/4 -translate-x-1/2 -translate-y-1/2">
+        <div role="status" className="-translate-x-1/2 -translate-y-1/2 absolute top-2/4 left-1/2">
           {/* SVG by Sam Herbert (@https://github.com/SamHerbert/SVG-Loaders) */}
           <svg
             width="72"

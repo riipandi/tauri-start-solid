@@ -61,28 +61,28 @@ export function SettingsLayout() {
   return (
     <div className="root-settings">
       <DefaultTitleBar />
-      <div className="main-container rounded-top rounded-bottom">
-        <div className="dark:bg-black disable-select flex flex-1">
-          <aside className="fixed flex flex-col rounded-left w-48 pt-6 h-[99vh] overflow-y-auto bg-white border-r border-neutral-200 dark:bg-neutral-950 dark:border-neutral-800">
-            <div className="mt-4 mx-2">
-              <h1 className="mx-2 text-base font-semibold dark:text-white">Settings</h1>
+      <div className="main-container rounded-bottom rounded-top">
+        <div className="disable-select flex flex-1 dark:bg-black">
+          <aside className="fixed flex h-[99vh] w-48 flex-col overflow-y-auto rounded-left border-neutral-200 border-r bg-white pt-6 dark:border-neutral-800 dark:bg-neutral-950">
+            <div className="mx-2 mt-4">
+              <h1 className="mx-2 font-semibold text-base dark:text-white">Settings</h1>
             </div>
 
-            <div className="flex flex-col justify-between flex-1 p-3">
-              <nav className="space-y-1 h-full mb-2">
+            <div className="flex flex-1 flex-col justify-between p-3">
+              <nav className="mb-2 h-full space-y-1">
                 {primaryNavItems.map((item) => (
                   <NavLink
                     key={item.id}
                     to={item.href}
                     className={clx(
                       pathname === item.href
-                        ? 'text-neutral-700 dark:text-neutral-200 bg-neutral-200/60 dark:bg-neutral-900'
-                        : 'text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:hover:text-neutral-200 hover:text-neutral-700',
-                      'flex items-center px-3 py-2 transition-colors duration-75 transform rounded-md cursor-default tracking-tight'
+                        ? 'bg-neutral-200/60 text-neutral-700 dark:bg-neutral-900 dark:text-neutral-200'
+                        : 'text-neutral-600 hover:bg-neutral-100 hover:text-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-200',
+                      'flex transform cursor-default items-center rounded-md px-3 py-2 tracking-tight transition-colors duration-75'
                     )}
                   >
                     <item.icon className="size-4" strokeWidth={1.6} aria-hidden="true" />
-                    <span className="mx-2 text-sm font-medium">{item.label}</span>
+                    <span className="mx-2 font-medium text-sm">{item.label}</span>
                   </NavLink>
                 ))}
 
@@ -94,20 +94,20 @@ export function SettingsLayout() {
                     to={item.href}
                     className={clx(
                       pathname === item.href
-                        ? 'text-neutral-700 dark:text-neutral-200 bg-neutral-200/60 dark:bg-neutral-900'
-                        : 'text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:hover:text-neutral-200 hover:text-neutral-700',
-                      'flex items-center px-3 py-2 transition-colors duration-75 transform rounded-md cursor-default tracking-tight'
+                        ? 'bg-neutral-200/60 text-neutral-700 dark:bg-neutral-900 dark:text-neutral-200'
+                        : 'text-neutral-600 hover:bg-neutral-100 hover:text-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-200',
+                      'flex transform cursor-default items-center rounded-md px-3 py-2 tracking-tight transition-colors duration-75'
                     )}
                   >
                     <item.icon className="size-4" strokeWidth={1.6} aria-hidden="true" />
-                    <span className="mx-2 text-sm font-medium">{item.label}</span>
+                    <span className="mx-2 font-medium text-sm">{item.label}</span>
                   </NavLink>
                 ))}
               </nav>
 
               <button
                 type="button"
-                className="flex items-center px-3 py-2 text-neutral-600 transition-colors duration-75 transform rounded-md dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:hover:text-neutral-200 hover:text-neutral-700"
+                className="flex transform items-center rounded-md px-3 py-2 text-neutral-600 transition-colors duration-75 hover:bg-neutral-100 hover:text-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
                 onClick={() =>
                   invoke('open_with_shell', {
                     url: 'https://github.com/riipandi/tauri-tray-app/issues',
@@ -115,11 +115,11 @@ export function SettingsLayout() {
                 }
               >
                 <LifeBuoyIcon className="size-4" strokeWidth={1.6} />
-                <span className="mx-2 text-sm font-medium">Help &amp; Support</span>
+                <span className="mx-2 font-medium text-sm">Help &amp; Support</span>
               </button>
             </div>
           </aside>
-          <main className="ml-48 px-4 pt-10 pb-4 dark:bg-dark-grey size-full dark:text-white">
+          <main className="ml-48 size-full px-4 pt-10 pb-4 dark:bg-dark-grey dark:text-white">
             <Outlet />
           </main>
         </div>
