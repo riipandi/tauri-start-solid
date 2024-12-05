@@ -1,36 +1,75 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-.pnpm-store
-node_modules
-dist
-dist-ssr
-*.local
-/tmp
-
-# Editor directories and files
+/node_modules
+/.rollup.cache
+/.fleet
+/.idea
+/.pnp
+/.cache
+/.output
+/.husky
+.pnp.js
+.DS_Store
+.DS_Store?
+/coverage
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*tsbuildinfo
 .vscode/*
 !.vscode/extensions.json
-!.vscode/launch.json
 !.vscode/settings.json
-!.vscode/tasks.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+!.vscode/launch.json
+*.bak
+
+# SQLite
+*.sqlite*
+*.sqlite3*
+*.libsql
+*.db
+
+# Nitro
+_data/
+build/
+dist/
+.data
+.dist
+.nitro
+.cache
+.output
+.client
+.build
+.wrangler
 
 # envars
-.env*
-!.env.*example
+.env.*
+!.env.example
+compose.env*
+!compose.env.example
+
+# Disable this line in your real app
+/playwright/.cache/
+/playwright-report/
+/tests-results/
+/blob-report/
+.playwright/
+
+# Sentry Config File
+.sentryclirc
+
+# Storybook
+*storybook.log
+/storybook-static/
+
+# Miscellaneous
+vite.config.ts.*
+slim.report.json
+
+# Terraform
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate*
+terraform.tfvars*
+!terraform.tfvars.example
 
 # Tauri
 .tauri/

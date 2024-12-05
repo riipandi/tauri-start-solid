@@ -1,32 +1,5 @@
 {
     "$schema": "https://json.schemastore.org/tsconfig",
-    "compilerOptions": {
-        "target": "ES2020",
-        "module": "ESNext",
-        "lib": ["ES2020", "DOM", "DOM.Iterable"],
-        "skipLibCheck": true,
-
-        /* Bundler mode */
-        "moduleResolution": "Bundler",
-        "allowImportingTsExtensions": true,
-        "resolveJsonModule": true,
-        "isolatedModules": true,
-        "noEmit": true,
-        "jsx": "react-jsx",
-
-        /* Linting */
-        "strict": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "noFallthroughCasesInSwitch": true,
-
-        /* Absolute import */
-        "baseUrl": ".",
-        "paths": {
-            "@/*": ["src/*"],
-            "~/*": ["public/*"]
-        }
-    },
-    "include": ["src"],
-    "references": [{ "path": "./tsconfig.node.json" }]
+    "files": [],
+    "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]
 }

@@ -1,37 +1,32 @@
-import { resolve } from 'node:path'
-import tailwindcss from '@tailwindcss/vite'
-import react from '@vitejs/plugin-react'
+import { resolve } from 'pathe'
+import { env, process } from 'std-env'
 import { defineConfig } from 'vite'
+import solid from 'vite-plugin-solid'
+import tsconfigPaths from 'vite-tsconfig-paths'
 
-export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  envPrefix: ['VITE_'],
+const host = env.TAURI_DEV_HOST
+
+export default defineConfig(async () => ({
+  plugins: [solid(), tsconfigPaths()],
   clearScreen: false,
   server: {
     port: 1420,
     strictPort: true,
+    host: host || false,
+    hmr: host ? { protocol: 'ws', host, port: 1421 } : undefined,
     watch: {
+      // Tell vite to ignore watching `src-tauri`
       ignored: ['**/src-tauri/**'],
     },
   },
-  resolve: {
-    alias: [
-      { find: '@', replacement: resolve(__dirname, 'src') },
-      { find: '~', replacement: resolve(__dirname, 'public') },
-    ],
-  },
-  esbuild: {
-    supported: {
-      'top-level-await': true, // browsers can handle top-level-await features
-    },
-  },
   build: {
-    target: 'ES2020',
+    manifest: true,
+    emptyOutDir: true,
+    minify: !process.dev,
     chunkSizeWarningLimit: 1024,
     reportCompressedSize: false,
-    outDir: resolve(__dirname, 'dist'),
+    outDir: resolve('.output'),
     rollupOptions: {
-      input: { app: resolve(__dirname, 'index.html') },
       output: {
         // Output with hash in filename
         entryFileNames: `assets/[name]-[hash].js`,
@@ -40,4 +35,4 @@ export default defineConfig({
       },
     },
   },
-})
+}))

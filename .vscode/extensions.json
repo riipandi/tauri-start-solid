@@ -1,12 +1,14 @@
 {
     "recommendations": [
         "biomejs.biome",
+        "bradlc.vscode-tailwindcss",
         "EditorConfig.EditorConfig",
         "foxundermoon.shell-format",
         "rust-lang.rust-analyzer",
         "serayuzgur.crates",
         "tamasfe.even-better-toml",
         "tauri-apps.tauri-vscode",
+        "unifiedjs.vscode-mdx",
         "vadimcn.vscode-lldb"
     ]
 }

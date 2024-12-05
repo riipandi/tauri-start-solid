@@ -5,45 +5,38 @@
     "files.exclude": {
         "**/tmp/**": true
     },
-    "files.watcherExclude": {
-        "**/.github/FUNDING.yml": true,
-        "**/.github/ISSUE_TEMPLATE/**": true,
-        "**/.github/PULL_REQUEST_TEMPLATE.md": true,
-        "**/.tsbuildinfo": true,
-        "**/.vscode/**": true
-    },
     "search.exclude": {
         "**/.tsbuildinfo": true,
-        "**/.vscode/**": true
+        "**/.output/**": true,
+        "**/.vscode/**": true,
+        "**/build": true,
+        "**/dist": true
     },
     "files.associations": {
         "*.yml.example": "yaml",
         "*.css": "tailwindcss",
         "*.plist": "xml"
     },
-    "tailwindCSS.files.exclude": [
-        "**/.git/**",
-        "**/.github/**",
-        "**/.vscode/**",
-        "**/node_modules/**",
-        "**/*.{md,js,ts}"
-    ],
-    "tailwindCSS.emmetCompletions": true,
-    "tailwindCSS.experimental.classRegex": [
-        "clx\\(([^)]*)\\)" // clx(xxx)
-    ],
-    "tailwindCSS.includeLanguages": {
-        "javascriptreact": "javascriptreact",
-        "typescriptreact": "javascriptreact"
-    },
+    // "tailwindCSS.experimental.classRegex": [
+    //     // https://www.tailwind-variants.org/docs/getting-started#intellisense-setup-optional
+    //     ["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    //     "cn\\(([^)]*)\\)", // cn(xxx)
+    //     "clx\\(([^)]*)\\)", // clx(xxx)
+    //     "cx\\(([^)]*)\\)" // cx(xxx)
+    // ],
+    "tailwindCSS.files.exclude": ["**/src-tauri/**", "vite.config.ts"],
     "[json]": {
         "editor.defaultFormatter": "biomejs.biome"
     },
     "[jsonc]": {
         "editor.defaultFormatter": "biomejs.biome"
     },
+    "[markdown]": {
+        "editor.defaultFormatter": "darkriszty.markdown-table-prettify"
+    },
     "[toml]": {
-        "editor.defaultFormatter": "tamasfe.even-better-toml"
+        "editor.defaultFormatter": "tamasfe.even-better-toml",
+        "editor.formatOnSave": false
     },
     "rust-analyzer.linkedProjects": ["./src-tauri/Cargo.toml"],
     "rust-analyzer.showUnlinkedFileNotification": false

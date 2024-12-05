@@ -1,38 +1,29 @@
-import { attachConsole } from '@tauri-apps/plugin-log'
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './app'
+/* @refresh reload */
+import { render } from 'solid-js/web'
+import './assets/styles/globals.css'
+import AppRoutes from './routes'
 
-import './assets/styles/main.css'
+const rootElement = document.getElementById('root')
 
-const root = document.getElementById('root') as HTMLElement
-
-if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
-  throw new Error('Root element not found. Did you forget to add it to your index.html?')
+if (!rootElement) {
+  throw new Error(
+    "Root element not found. Check if it's in your index.html or if the id is correct."
+  )
 }
 
 // Set `withGlobalTauri` to `true` in `tauri.conf.json`.
 // If the frontend running in browser, throw an error because
 // this application will not work in Browser.
-if (!('__TAURI__' in window)) {
-  ReactDOM.createRoot(root).render(
-    <React.StrictMode>
-      <div className="flex size-full min-h-screen items-center justify-center p-4 dark:bg-black">
-        <p className="font-medium tracking-wide dark:text-white">
-          This application will not work in Browser.
-        </p>
-      </div>
-    </React.StrictMode>
+const MainApp = () => {
+  return !('__TAURI__' in window) ? (
+    <div class="flex size-full min-h-screen items-center justify-center p-4 dark:bg-black">
+      <p class="font-medium tracking-wide dark:text-white">
+        This application will not work in Browser.
+      </p>
+    </div>
+  ) : (
+    <AppRoutes />
   )
 }
 
-// Print logs to the browser console (TargetKind::Webview)
-const detach = await attachConsole()
-
-ReactDOM.createRoot(root).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-)
-
-detach() // detach the browser console from the log stream
+render(() => <MainApp />, rootElement)

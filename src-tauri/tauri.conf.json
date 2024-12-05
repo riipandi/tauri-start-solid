@@ -1,25 +1,31 @@
 {
-    "$schema": "https://raw.githubusercontent.com/tauri-apps/tauri/dev/core/tauri-config-schema/schema.json",
+    "$schema": "https://schema.tauri.app/config/2",
     "productName": "Tauri App",
-    "version": "0.0.0",
     "identifier": "com.example.tauri-tray-app",
+    "version": "0.0.0",
     "build": {
         "beforeDevCommand": "pnpm dev:ui",
         "beforeBuildCommand": "pnpm build:ui",
         "devUrl": "http://localhost:1420",
-        "frontendDist": "../dist"
+        "frontendDist": "../.output"
     },
     "app": {
         "withGlobalTauri": true,
         "macOSPrivateApi": true,
-        "windows": [],
         "security": {
             "pattern": {
                 "use": "brownfield"
             },
             "csp": null
         },
-        "trayIcon": null
+        "trayIcon": null,
+        "windows": [
+            {
+                "title": "tauri-tray-app",
+                "width": 800,
+                "height": 600
+            }
+        ]
     },
     "bundle": {
         "active": true,
@@ -27,8 +33,8 @@
         "publisher": "Your Company",
         "copyright": "Copyright © 2024 Your Company",
         "shortDescription": "A Tauri application",
-        "longDescription": "A Tauri application built with Tauri, React, and TypeScript",
-        "targets": ["app", "dmg", "nsis", "deb", "appimage", "updater"],
+        "longDescription": "A Tauri application built with Tauri, SolidJS, and TypeScript",
+        "targets": ["app", "dmg", "nsis", "deb", "appimage"],
         "licenseFile": "../LICENSE",
         "macOS": {
             "dmg": {
@@ -58,7 +64,6 @@
             "nsis": null,
             "timestampUrl": null,
             "tsp": false,
-            "webviewFixedRuntimePath": null,
             "webviewInstallMode": {
                 "silent": true,
                 "type": "downloadBootstrapper"
@@ -80,9 +85,7 @@
         },
         "updater": {
             "active": true,
-            "endpoints": [
-                "https://releases.example.com/{{target}}/{{arch}}/{{current_version}}"
-            ],
+            "endpoints": ["https://releases.example.com/{{target}}/{{arch}}/{{current_version}}"],
             "dialog": true,
             "pubkey": "YOUR_UPDATER_SIGNATURE_PUBKEY_HERE"
         }

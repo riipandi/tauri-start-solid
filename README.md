@@ -1,14 +1,14 @@
 # ⚡️ Tauri Starter Template
 
 [![Tauri version](https://img.shields.io/badge/Tauri-v2.0.0-24C8DB.svg?logo=tauri)](https://tauri.app)
-[![Rust version](https://img.shields.io/badge/rust-v1.75-orange.svg?logo=rust)](https://www.rust-lang.org)
+[![Rust version](https://img.shields.io/badge/rust-v1.77-orange.svg?logo=rust)](https://www.rust-lang.org)
 [![CI Test](https://github.com/riipandi/tauri-tray-app/actions/workflows/ci-test.yml/badge.svg)](https://github.com/riipandi/tauri-tray-app/actions/workflows/ci-test.yml)
 [![Contribution welcome](https://img.shields.io/badge/Contributions-welcome-gray.svg)](https://github.com/riipandi/tauri-tray-app/pulse)
 
 ---
 
 This project template should help get you started developing a multi-platform desktop
-application with tray menu using Tauri, React, Tailwind CSS, Typescript, and Vite.
+application with tray menu using Tauri, SolidJS, Tailwind CSS, Typescript, and Vite.
 
 ## Quick Start
 
@@ -47,7 +47,7 @@ to build the application in debug mode, this will enable developer tools.
 - [x] Theme switcher (dark & light mode)
 - [x] Application settings with separated window
 - [x] Global state with [`native_db`][native_db] as backend
-- [x] Frontend app with [React][reactjs] + [Tailwind CSS][tailwindcss]
+- [x] Frontend app with [SolidJS][solidjs] + [Tailwind CSS][tailwindcss]
 - [x] Frontend lint & format using [Biome][biome]
 - [x] Git hooks tasks with [Lefthook][lefthook]
 - [x] GitHub actions for CI testing and build
@@ -101,8 +101,8 @@ See the [LICENSE-APACHE](./LICENSE-APACHE) and [LICENSE-MIT](./LICENSE-MIT) file
 for more information.
 
 [rust]: https://www.rust-lang.org/tools/install
-[reactjs]: https://react.dev/
-[biome]: https://biomejs.dev/
+[solidjs]: https://www.solidjs.com
+[biome]: https://biomejs.dev
 [nodejs]: https://nodejs.org/en/download
 [pnpm]: https://pnpm.io/installation
 [tailwindcss]: https://tailwindcss.com

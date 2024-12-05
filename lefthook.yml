@@ -20,15 +20,15 @@ pre-commit:
     check-frontend:
       tags: frontend
       glob: "*.{js,ts,html,css,json}"
-      run: biome check --apply .
+      run: biome check . --write
     lint-frontend:
       tags: frontend
       glob: "*.{js,ts,html,css,json}"
-      run: biome lint --apply .
+      run: biome lint . --write
     test-frontend:
       tags: frontend
       glob: "*.{js,ts,html,css}"
-      run: pnpm test
+      run: pnpm --silent test:js
     check-backend:
       root: "src-tauri/"
       glob: "*.{rs,toml,json}"
@@ -45,4 +45,4 @@ pre-commit:
 pre-push:
   commands:
     build-frontend:
-      run: pnpm build:ui
+      run: pnpm --silent build:ui

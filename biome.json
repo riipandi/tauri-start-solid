@@ -1,5 +1,5 @@
 {
-    "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+    "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
     "organizeImports": {
         "enabled": true
     },
@@ -18,22 +18,22 @@
                 "useKeyWithClickEvents": "off"
             },
             "complexity": {
-                "noBannedTypes": "off"
+                "noBannedTypes": "off",
+                "noUselessFragments": "warn"
             },
             "correctness": {
-                "noUnusedImports": "error",
-                "noUnusedVariables": "error",
-                "useJsxKeyInIterable": "off"
-            },
-            "nursery": {
-                "noConsole": {
+                "noUnusedImports": {
                     "level": "off",
                     "fix": "none"
                 },
-                "noDuplicateAtImportRules": "error",
-                "noDuplicateJsonKeys": "error",
-                "noEmptyBlock": "warn",
-                "noUnknownUnit": "error",
+                "noUnusedVariables": {
+                    "level": "warn",
+                    "fix": "none"
+                },
+                "useJsxKeyInIterable": "error",
+                "noUnknownFunction": "off"
+            },
+            "nursery": {
                 "useSortedClasses": {
                     "level": "warn",
                     "fix": "safe",
@@ -53,19 +53,45 @@
                 "noUnusedTemplateLiteral": "off",
                 "useConsistentArrayType": "warn",
                 "useExportType": "warn",
-                "useImportType": "warn",
-                "useFilenamingConvention": "error"
+                "useImportType": {
+                    "level": "off",
+                    "fix": "none"
+                },
+                "useFilenamingConvention": {
+                    "level": "off",
+                    "options": {
+                        "filenameCases": ["PascalCase", "camelCase", "kebab-case"]
+                    }
+                }
             },
             "suspicious": {
                 "noArrayIndexKey": "error",
                 "noAssignInExpressions": "off",
                 "noCommentText": "off",
                 "noConsoleLog": {
-                    "level": "off",
-                    "fix": "none"
+                    "level": "info",
+                    "fix": "safe"
                 },
                 "noDebugger": "off",
-                "noExplicitAny": "off"
+                "noExplicitAny": "off",
+                "noConsole": {
+                    "level": "warn",
+                    "fix": "none",
+                    "options": {
+                        "allow": [
+                            "assert",
+                            "error",
+                            "info",
+                            "warn",
+                            "debug",
+                            "time",
+                            "timeEnd",
+                            "timeLog"
+                        ]
+                    }
+                },
+                "noDuplicateAtImportRules": "error",
+                "noEmptyBlock": "warn"
             }
         }
     },
@@ -74,7 +100,8 @@
         "formatWithErrors": false,
         "indentStyle": "space",
         "indentWidth": 4,
-        "lineWidth": 100
+        "lineWidth": 100,
+        "ignore": []
     },
     "css": {
         "parser": {
@@ -106,17 +133,7 @@
     },
     "files": {
         "ignoreUnknown": true,
-        "include": ["**/*.js", "**/*.ts", "**/*.tsx", "**/*.css", "**/*.json"],
-        "ignore": [
-            ".github",
-            ".husky",
-            ".tauri",
-            ".vscode",
-            "node_modules",
-            "crates",
-            "src-tauri",
-            "target",
-            "tmp"
-        ]
+        "include": ["**/*.js", "**/*.mjs", "**/*.ts", "**/*.tsx", "**/*.css", "**/*.json"],
+        "ignore": [".github", ".output", ".build", "dist", "**/*.rs", "target"]
     }
 }
