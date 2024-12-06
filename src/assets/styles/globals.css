@@ -72,10 +72,10 @@
     }
     html,
     body {
-        @apply antialiased min-h-screen scroll-smooth;
+        @apply antialiased min-h-screen scroll-smooth overflow-hidden;
     }
     body {
-        @apply bg-background text-foreground font-sans;
+        @apply bg-background text-foreground font-sans h-screen w-full;
     }
 }
 

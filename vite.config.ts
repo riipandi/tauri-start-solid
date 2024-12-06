@@ -1,5 +1,5 @@
 import { resolve } from 'pathe'
-import { env, process } from 'std-env'
+import { env, isProduction } from 'std-env'
 import { defineConfig } from 'vite'
 import solid from 'vite-plugin-solid'
 import tsconfigPaths from 'vite-tsconfig-paths'
@@ -22,7 +22,7 @@ export default defineConfig(async () => ({
   build: {
     manifest: true,
     emptyOutDir: true,
-    minify: !process.dev,
+    minify: isProduction,
     chunkSizeWarningLimit: 1024,
     reportCompressedSize: false,
     outDir: resolve('.output'),

@@ -1,8 +1,11 @@
 /* @refresh reload */
 import { render } from 'solid-js/web'
 import './assets/styles/globals.css'
+import './assets/styles/app.css'
+import './assets/styles/scrollbar.css'
 import AppRoutes from './routes'
 
+// This is the entry point of the application.
 const rootElement = document.getElementById('root')
 
 if (!rootElement) {

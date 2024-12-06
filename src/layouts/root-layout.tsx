@@ -1,5 +1,10 @@
-import { ParentComponent } from 'solid-js'
+import { ComponentProps } from 'solid-js'
+import { clx } from '#/libs/utils'
 
-const RootLayout: ParentComponent = (props) => <>{props.children}</>
+interface RootLayoutProps extends ComponentProps<'div'> {}
+
+const RootLayout = (props: RootLayoutProps) => {
+  return <div class={clx('root-layout', props.class)}>{props.children}</div>
+}
 
 export default RootLayout
