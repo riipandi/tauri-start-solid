@@ -9,6 +9,7 @@ import { Link } from '#/components/link'
 import { resetUiState, saveUiState, uiStore } from '#/stores/ui.store'
 
 import viteLogo from '/vite.svg'
+import { ThemeSelector } from '#/components/theme'
 import solidLogo from '../assets/images/solid.svg'
 
 type Quotes = {
@@ -47,18 +48,19 @@ export default function Component() {
   }
 
   return (
-    <div class="page-wrapper custom-scrollbar">
-      <div class="mx-auto flex h-full max-w-2xl flex-col items-center justify-center p-8">
+    <div class="page-wrapper custom-scrollbar flex size-full items-center">
+      <div class="mx-auto h-auto max-w-xl flex-1">
         <header class="mb-6 flex items-center justify-between">
           <div class="flex items-center gap-4">
             <Link href="https://vite.dev" class="transition-transform hover:scale-110" newTab>
-              <img src={viteLogo} class="h-8 w-8" alt="Vite logo" />
+              <img src={viteLogo} class="size-8" alt="Vite logo" />
             </Link>
             <Link href="https://solidjs.com" class="transition-transform hover:scale-110" newTab>
-              <img src={solidLogo} class="h-8 w-8" alt="Solid logo" />
+              <img src={solidLogo} class="size-8" alt="Solid logo" />
             </Link>
             <h1 class="font-bold text-2xl text-gray-900 dark:text-white">Daily Quotes</h1>
           </div>
+          <ThemeSelector />
         </header>
 
         <main class="w-full flex-1 space-y-4">

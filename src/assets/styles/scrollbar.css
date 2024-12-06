@@ -6,8 +6,8 @@
 
 /* Set scrollbar width and height for Webkit browsers */
 .custom-scrollbar::-webkit-scrollbar {
-    width: 12px; /* Fixed width */
-    height: 12px;
+    width: 11px; /* Fixed width */
+    height: 11px;
 }
 
 /* Track background for Webkit browsers */

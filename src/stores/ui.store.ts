@@ -1,7 +1,8 @@
+import { MaybeConfigColorMode } from '@kobalte/core/color-mode'
 import { persistentMap } from '@nanostores/persistent'
 import { storeDecode, storeEncode } from '#/libs/utils'
 
-export type Theme = 'dark' | 'light' | 'system'
+export type Theme = MaybeConfigColorMode
 
 type UIStore = {
   sidebar: 'expanded' | 'collapsed'

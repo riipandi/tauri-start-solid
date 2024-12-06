@@ -42,6 +42,7 @@
         "@kobalte/core": "^0.13.7",
         "@nanostores/persistent": "^0.10.2",
         "@nanostores/solid": "^0.5.0",
+        "@solidjs/meta": "^0.29.4",
         "@solidjs/router": "^0.15.1",
         "@tanstack/solid-table": "^8.20.5",
         "@tauri-apps/api": "^2",
