@@ -8,11 +8,11 @@
             <dict>
                 <key>CFBundleURLName</key>
                 <!-- Obviously needs to be replaced with your app's bundle identifier -->
-                <string>com.example.tauri-tray-app</string>
+                <string>com.example.tauri-start-solid</string>
                 <key>CFBundleURLSchemes</key>
                 <array>
-                    <!-- register the tauri-tray-app:// scheme -->
-                    <string>tauri-tray-app</string>
+                    <!-- register the tauri-start-solid:// scheme -->
+                    <string>tauri-start-solid</string>
                 </array>
             </dict>
         </array>

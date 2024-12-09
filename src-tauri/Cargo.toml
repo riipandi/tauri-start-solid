@@ -1,10 +1,10 @@
 [package]
-name = "tauri-tray-app"
+name = "tauri-start-solid"
 version = "0.0.0"
 description = "A Tauri application built with Tauri, SolidJS, and TypeScript"
 authors = ["you"]
 license = "MIT or Apache-2.0"
-repository = "http://github.com/riipandi/tauri-tray-app"
+repository = "http://github.com/riipandi/tauri-start-solid"
 rust-version = "1.77"
 edition = "2021"
 
@@ -14,7 +14,7 @@ edition = "2021"
 # The `_lib` suffix may seem redundant but it is necessary
 # to make the lib name unique and wouldn't conflict with the bin name.
 # This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
-name = "tauri_tray_app_lib"
+name = "tauri_start_solid_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]

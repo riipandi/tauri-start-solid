@@ -1,25 +1,25 @@
-# ⚡️ Tauri Starter Template
+# ⚡️ Tauri Start Solid
 
 [![Tauri version](https://img.shields.io/badge/Tauri-v2.0.0-24C8DB.svg?logo=tauri)](https://tauri.app)
 [![Rust version](https://img.shields.io/badge/rust-v1.77-orange.svg?logo=rust)](https://www.rust-lang.org)
-[![CI Test](https://github.com/riipandi/tauri-tray-app/actions/workflows/ci-test.yml/badge.svg)](https://github.com/riipandi/tauri-tray-app/actions/workflows/ci-test.yml)
-[![Contribution welcome](https://img.shields.io/badge/Contributions-welcome-gray.svg)](https://github.com/riipandi/tauri-tray-app/pulse)
+[![CI Test](https://github.com/riipandi/tauri-start-solid/actions/workflows/ci-test.yml/badge.svg)](https://github.com/riipandi/tauri-start-solid/actions/workflows/ci-test.yml)
+[![Contribution welcome](https://img.shields.io/badge/Contributions-welcome-gray.svg)](https://github.com/riipandi/tauri-start-solid/pulse)
 
 ---
 
-This project template should help get you started developing a multi-platform desktop
-application with tray menu using Tauri, SolidJS, Tailwind CSS, Typescript, and Vite.
+This project template should help get you started developing a multi-platform desktop application
+with tray menu support using Tauri, SolidJS, Nano Stores, Typescript, Tailwind CSS, and Vite.
 
 ## Quick Start
 
 ```sh
-pnpm dlx degit riipandi/tauri-tray-app my-app
+pnpm dlx degit riipandi/tauri-start-solid my-app
 ```
 
 1. Install required toolchains: [Rust][rust], [Node.js][nodejs], [PNPM][pnpm], and [Lefthook][lefthook].
 2. Replace the project name in the [`package.json`](./package.json), [`Cargo.toml`](./src-tauri/Cargo.toml),
    and [`tauri.conf.json`](./src-tauri/tauri.conf.json) files.
-3. Find and replace `tauri-tray-app`, `tauri_tray_app` and `Tauri App` strings in the source files.
+3. Find and replace `tauri-start-solid`, `tauri_start_solid` and `Tauri Start Solid` strings in the source files.
 4. Set application identifier and other application metadata in [`tauri.conf.json`](./src-tauri/tauri.conf.json) file.
 5. Install frontend dependencies by running `pnpm install`.
 6. Run `pnpm dev` to start developing.
@@ -58,13 +58,13 @@ to build the application in debug mode, this will enable developer tools.
 
 ### Fix Unsigned Warning (macOS)
 
-> Warning: "Tauri App" is damaged and can't be opened.
+> Warning: "Tauri Start Solid" is damaged and can't be opened.
 
 This warning is shown because the build is not signed. Run the following command
  to suppress this warning:
 
 ```sh
-xattr -r -d com.apple.quarantine "/Applications/Tauri App.app"
+xattr -r -d com.apple.quarantine "/Applications/Tauri Start Solid.app"
 ```
 
 ## Screenshots
@@ -75,7 +75,7 @@ xattr -r -d com.apple.quarantine "/Applications/Tauri App.app"
 ## Acknowledgements
 
 - [Tauri Examples Repo](https://github.com/tauri-apps/tauri/tree/dev/examples)
-- [tauri-tray-app-example](https://github.com/dheater/tauri-tray-app-example)
+- [tauri-start-solid-example](https://github.com/dheater/tauri-start-solid-example)
 - [tauri-tray-icon-animation](https://github.com/rming/tauri-tray-icon-animation)
 - [tauri-tray-menu](https://github.com/rming/tauri-tray-menu)
 - [tauri-window-controls](https://github.com/agmmnn/tauri-controls)

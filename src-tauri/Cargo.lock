@@ -3708,7 +3708,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "tauri-tray-app"
+name = "tauri-start-solid"
 version = "0.0.0"
 dependencies = [
  "dotenv-build",
