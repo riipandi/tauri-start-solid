@@ -1,5 +1,4 @@
 import { ColorModeProvider, ColorModeScript } from '@kobalte/core'
-import { MetaProvider } from '@solidjs/meta'
 import { ComponentProps, Suspense } from 'solid-js'
 import { clx } from '#/libs/utils'
 
@@ -17,14 +16,12 @@ const PageLoader = () => {
 
 const RootLayout = (props: RootLayoutProps) => {
   return (
-    <MetaProvider>
-      <Suspense fallback={<PageLoader />}>
-        <ColorModeProvider>
-          <div class={clx('root-layout', props.class)}>{props.children}</div>
-        </ColorModeProvider>
-        <ColorModeScript storageType="localStorage" />
-      </Suspense>
-    </MetaProvider>
+    <Suspense fallback={<PageLoader />}>
+      <ColorModeProvider>
+        <div class={clx('root-layout', props.class)}>{props.children}</div>
+      </ColorModeProvider>
+      <ColorModeScript storageType="localStorage" />
+    </Suspense>
   )
 }
 
