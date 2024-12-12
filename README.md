@@ -1,8 +1,9 @@
 # ⚡️ Tauri Start Solid
 
-[![Tauri version](https://img.shields.io/badge/Tauri-v2.0.0-24C8DB.svg?logo=tauri)](https://tauri.app)
-[![Rust version](https://img.shields.io/badge/rust-v1.77-orange.svg?logo=rust)](https://www.rust-lang.org)
 [![Contribution welcome](https://img.shields.io/badge/Contributions-welcome-gray.svg)](https://github.com/riipandi/tauri-start-solid/pulse)
+[![Rust version](https://img.shields.io/badge/rust-v1.77-FF5500.svg?logo=rust)](https://www.rust-lang.org)
+[![Tauri version](https://img.shields.io/badge/Tauri-v2.0.0-00aaff.svg?logo=tauri)](https://tauri.app)
+![Repo Size](https://img.shields.io/github/repo-size/riipandi/tauri-start-solid)
 <!-- [![CI Test](https://github.com/riipandi/tauri-start-solid/actions/workflows/ci-test.yml/badge.svg)](https://github.com/riipandi/tauri-start-solid/actions/workflows/ci-test.yml) -->
 
 ---
