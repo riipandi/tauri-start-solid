@@ -76,17 +76,19 @@ const SVGLoader = () => (
   </svg>
 )
 
-export default function AppLoader() {
+export default function ScreenLoader() {
   return (
-    <div class="flex size-full min-h-screen flex-col items-center justify-center bg-background p-4 py-12 sm:px-6 lg:px-8">
-      <div class="flex flex-col items-center justify-center space-y-4 sm:mx-auto sm:w-full sm:max-w-lg">
-        <h1 class="mt-3 text-center font-medium text-foreground">Loading...</h1>
-        <p class="text-center text-muted-foreground text-sm leading-6 tracking-tight">
-          Does this take longer than expected? <br />
-          Try clearing your browser&apos;s cache or check if you have an ad blocker enabled!
-        </p>
-        <div class="mt-1">
-          <SVGLoader />
+    <div class="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-950 dark:to-gray-900">
+      <div class="flex size-full min-h-screen flex-col items-center justify-center p-4 py-12 sm:px-6 lg:px-8">
+        <div class="flex flex-col items-center justify-center space-y-4 sm:mx-auto sm:w-full sm:max-w-lg">
+          <h1 class="mt-3 text-center font-medium text-gray-900 dark:text-gray-100">Loading...</h1>
+          <p class="text-center text-gray-600 text-sm leading-6 tracking-tight dark:text-gray-400">
+            Does this take longer than expected? <br />
+            Try restarting the application or clearing the application cache!
+          </p>
+          <div class="mt-4">
+            <SVGLoader />
+          </div>
         </div>
       </div>
     </div>
