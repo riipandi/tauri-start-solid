@@ -1,14 +1,19 @@
-# ------------------------------------------------------------------------------
 # Refer for explanation to following link:
-#  - https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md
-# ------------------------------------------------------------------------------
+# https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md
 
-skip_output:
-  - meta           # Skips lefthook version printing
-  - summary        # Skips summary block (successful and failed steps) printing
-  - empty_summary  # Skips summary heading when there are no steps to run
-  - execution_info # Skips printing `EXECUTE > ...` logging
-  - skips          # Skips "skip" printing (i.e. no files matched)
+assert_lefthook_installed: true
+skip_lfs: true
+
+output:
+  - success        # Print successful steps
+  - failure        # Print failed steps printing
+  - execution      # Print any execution logs
+  - execution_out  # Print execution output
+  # - meta           # Print lefthook version
+  # - summary        # Print summary block (successful and failed steps)
+  # - empty_summary  # Print summary heading when there are no steps to run
+  # - execution_info # Print `EXECUTE > ...` logging
+  - skips          # Print "skip" (i.e. no files matched)
 
 pre-commit:
   parallel: true
@@ -41,6 +46,10 @@ pre-commit:
       root: "src-tauri/"
       glob: "*.{rs,toml,json}"
       run: cargo test
+    # check-links:
+    #   glob: '*.md'
+    #   run: lychee --max-concurrency 3 {all_files}
+    #   exclude: [CHANGELOG.md, CONTRIBUTING.md]
 
 pre-push:
   commands:
