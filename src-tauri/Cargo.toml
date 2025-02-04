@@ -41,3 +41,21 @@ serde_json = "1"
 [target."cfg(target_os = \"macos\")".dependencies]
 cocoa = "0.26.0"
 objc = "0.2.7"
+
+[dev-dependencies]
+tauri = { version = "2.2.5", features = ["test"] }
+
+# Optimized for bundle size. If you want faster builds comment out/delete this section.
+# Reference: https://doc.rust-lang.org/cargo/reference/profiles.html
+# Reference: https://tauri.app/concept/size/
+[profile.release]
+codegen-units = 128  # Allows LLVM to perform better optimization, reduce number of codegen units to increase optimizations.
+lto = true           # Enables link-time-optimizations. LTO can produce better optimized code, at the cost of longer linking time.
+opt-level = 1        # Use slightly better optimizations. Use "s" if you prefer smaller binaries.
+panic = "abort"      # Higher performance by disabling panic handlers.
+debug = false        # Disable debug on production build.
+strip = true         # Ensures debug symbols are removed.
+
+[profile.dev]
+incremental = true   # Compile your binary in smaller steps.
+debug = "limited"    # Debug info without type or variable-level information.

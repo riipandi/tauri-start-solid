@@ -1,14 +1,18 @@
 import tailwindcss from '@tailwindcss/vite'
 import { resolve } from 'pathe'
-import { env, isProduction } from 'std-env'
+import { env, isDevelopment } from 'std-env'
 import { defineConfig } from 'vite'
 import solid from 'vite-plugin-solid'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
 const host = env.TAURI_DEV_HOST
+const isDev = isDevelopment || process.env.TAURI_ENV_DEBUG
 
 export default defineConfig(async () => ({
   plugins: [solid(), tailwindcss(), tsconfigPaths()],
+  // Environment variables starting with the item of `envPrefix`
+  // will be exposed in tauri's source code through `import.meta.env`.
+  envPrefix: ['VITE_', 'TAURI_ENV_*'],
   clearScreen: false,
   server: {
     port: 1420,
@@ -21,9 +25,12 @@ export default defineConfig(async () => ({
     },
   },
   build: {
+    // Tauri uses Chromium on Windows and WebKit on macOS and Linux
+    target: process.env.TAURI_ENV_PLATFORM === 'windows' ? 'chrome105' : 'safari13',
     manifest: true,
+    minify: !isDev,
+    sourcemap: !!isDev,
     emptyOutDir: true,
-    minify: isProduction,
     chunkSizeWarningLimit: 1024,
     reportCompressedSize: false,
     outDir: resolve('.output/client'),
