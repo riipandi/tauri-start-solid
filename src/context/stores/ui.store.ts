@@ -1,10 +1,7 @@
 import { persistentMap } from '@nanostores/persistent'
 import { storeDecode, storeEncode } from '#/libs/utils'
 
-export type Theme = 'dark' | 'light' | 'system'
-
 type UIStore = {
-  theme: Theme
   sidebar: 'expanded' | 'collapsed'
   counter: number
 }
@@ -13,7 +10,6 @@ type UIStore = {
  * The default values for the UI store, which includes the initial state of the sidebar.
  */
 const defaultUIStoreValues: UIStore = {
-  theme: 'system',
   sidebar: 'collapsed',
   counter: 0,
 }

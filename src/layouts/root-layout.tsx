@@ -1,7 +1,5 @@
-import { invoke } from '@tauri-apps/api/core'
 import { getCurrentWindow } from '@tauri-apps/api/window'
-import consola from 'consola'
-import { ParentComponent, Suspense, onMount } from 'solid-js'
+import { ParentComponent, Suspense } from 'solid-js'
 import AppLoader from '#/components/loaders/app-loader'
 import { ThemeProvider } from '#/components/theme/provider'
 import Titlebar from '#/components/titlebar/titlebar'
@@ -14,11 +12,6 @@ const RootLayout: ParentComponent = (props) => {
 
   // Handler for update events
   createUpdateHandler()
-
-  onMount(async () => {
-    const theme = await invoke<string>('get_theme')
-    consola.log('Mounted with theme', theme)
-  })
 
   return (
     <ThemeProvider>

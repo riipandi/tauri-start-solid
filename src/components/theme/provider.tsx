@@ -1,24 +1,42 @@
-import { useStore } from '@nanostores/solid'
-import { ParentComponent, createContext, createEffect, createSignal, onCleanup } from 'solid-js'
-import { Theme, defaultUIStoreValues, saveUiState, uiStore } from '#/context/stores/ui.store'
+import type { MaybeConfigColorMode } from '@kobalte/core/color-mode'
+import { invoke } from '@tauri-apps/api/core'
+import { createConsola } from 'consola/basic'
+import type { ParentComponent } from 'solid-js'
+import { createContext, createEffect, createSignal, onCleanup, onMount } from 'solid-js'
+
+export type Theme = MaybeConfigColorMode
 
 type ThemeProviderState = {
-  theme: Theme
+  theme: () => Theme
   setTheme: (theme: Theme) => void
 }
 
 const initialState: ThemeProviderState = {
-  theme: defaultUIStoreValues.theme,
+  theme: () => 'system',
   setTheme: () => null,
 }
 
 export const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
 
 export const ThemeProvider: ParentComponent = (props) => {
-  const uiState = useStore(uiStore)
-  const [theme, setTheme] = createSignal<Theme>(uiState().theme)
+  const log = createConsola({ defaults: { tag: 'theme-provider' } })
+  const [theme, setTheme] = createSignal<Theme>('system')
+  const [isLoaded, setIsLoaded] = createSignal(false)
+
+  onMount(async () => {
+    try {
+      const savedTheme = await invoke<Theme>('get_theme')
+      log.debug('Theme loaded:', savedTheme)
+      setTheme(savedTheme)
+    } catch (error) {
+      log.error('Failed to get theme:', error)
+    } finally {
+      setIsLoaded(true)
+    }
+  })
 
   createEffect(() => {
+    const currentTheme = theme()
     const root = document.documentElement
 
     function applyTheme(selectedTheme: Theme) {
@@ -38,18 +56,21 @@ export const ThemeProvider: ParentComponent = (props) => {
       onCleanup(() => mediaQuery.removeEventListener('change', handleChange))
     }
 
-    applyTheme(theme())
+    applyTheme(currentTheme)
   })
 
   const value = {
-    theme: theme(),
+    theme,
     setTheme: (newTheme: Theme) => {
-      saveUiState({ theme: newTheme })
-      setTheme(newTheme)
+      invoke('set_theme', { theme: newTheme })
+        .then(() => setTheme(newTheme))
+        .catch((error) => log.error('Failed to set theme:', error))
     },
   }
 
   return (
-    <ThemeProviderContext.Provider value={value}>{props.children}</ThemeProviderContext.Provider>
+    <ThemeProviderContext.Provider value={value}>
+      {isLoaded() && props.children}
+    </ThemeProviderContext.Provider>
   )
 }

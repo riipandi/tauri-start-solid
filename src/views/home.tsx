@@ -5,7 +5,7 @@ import { Show, createEffect, createSignal, onMount } from 'solid-js'
 import { Button, Link, TextField, TextFieldRoot } from '#/components/base-ui'
 import { Card, CardContent, CardHeader, CardTitle } from '#/components/base-ui'
 import { ThemeSwitcher } from '#/components/theme/switcher'
-import { resetUiState, saveUiState, uiStore } from '#/stores/ui.store'
+import { resetUiState, saveUiState, uiStore } from '#/context/stores/ui.store'
 
 import solidLogo from '/images/solid.svg'
 import viteLogo from '/images/vite.svg'

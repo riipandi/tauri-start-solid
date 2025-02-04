@@ -1,23 +1,17 @@
-import { invoke } from '@tauri-apps/api/core'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '#/components/base-ui'
+import { Theme } from '#/components/theme/provider'
 import { useTheme } from '#/context/hooks/use-theme'
-import { Theme } from '#/context/stores/ui.store'
 
 export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme()
-
-  const setNewTheme = async (theme: Theme) => {
-    await invoke('set_theme', { theme })
-    setTheme(theme)
-  }
+  const themeOptions: Theme[] = ['dark', 'light', 'system']
 
   return (
     <Select
-      defaultValue={theme}
-      onChange={(e) => setNewTheme(e as Theme)}
-      options={['dark', 'light', 'system'] as Theme[]}
+      value={theme()}
+      onChange={(value) => setTheme(value as Theme)}
       itemComponent={(props) => <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>}
-      placeholder="Select theme"
+      options={themeOptions}
     >
       <SelectTrigger class="w-24">
         <SelectValue<Theme>>{(state) => state.selectedOption()}</SelectValue>
