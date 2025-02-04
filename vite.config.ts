@@ -27,6 +27,8 @@ export default defineConfig(async () => ({
     chunkSizeWarningLimit: 1024,
     reportCompressedSize: false,
     outDir: resolve('.output/client'),
+    terserOptions: { format: { comments: false } },
+    esbuild: { legalComments: 'inline' },
     rollupOptions: {
       output: {
         // Output with hash in filename

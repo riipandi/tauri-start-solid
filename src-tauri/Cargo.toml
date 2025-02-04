@@ -19,11 +19,11 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
 dotenv-build = "^0.1.1"
-tauri-build = { version = "2.0.0", features = [] }
+tauri-build = { version = "2.0.5", features = [] }
 
 [dependencies]
-tauri = { version = "2.0.0", features = ["macos-private-api"] }
-tauri-plugin-http = "2.0.0"
-tauri-plugin-shell = "2.0.0"
+tauri = { version = "2.2.5", features = ["macos-private-api"] }
+tauri-plugin-http = "2.3.0"
+tauri-plugin-shell = "2.2.0"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"

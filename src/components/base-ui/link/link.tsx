@@ -1,13 +1,3 @@
-import { A } from '@solidjs/router'
-import type { ComponentProps, ParentComponent } from 'solid-js'
-import { splitProps } from 'solid-js'
-import { clx } from '#/libs/utils'
-
-interface CustomLinkProps extends Omit<ComponentProps<'a'>, 'href'> {
-  href: string
-  newTab?: boolean
-}
-
 /**
  * Custom Link component that wraps SolidJS Router's A component.
  * This component provides consistent styling and behavior for links.
@@ -19,7 +9,18 @@ interface CustomLinkProps extends Omit<ComponentProps<'a'>, 'href'> {
  * <Link href="/path" class="custom-class">Link Text</Link>
  * ```
  */
-const Link: ParentComponent<CustomLinkProps> = (props) => {
+
+import { A } from '@solidjs/router'
+import type { ComponentProps, ParentComponent } from 'solid-js'
+import { splitProps } from 'solid-js'
+import { clx } from '#/libs/utils'
+
+interface LinkProps extends Omit<ComponentProps<'a'>, 'href'> {
+  href: string
+  newTab?: boolean
+}
+
+const Link: ParentComponent<LinkProps> = (props) => {
   const [local, rest] = splitProps(props, ['href', 'class', 'newTab'])
 
   return (
