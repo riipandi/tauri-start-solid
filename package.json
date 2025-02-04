@@ -14,8 +14,6 @@
         "build:win:arm": "CI=true tauri build --target aarch64-pc-windows-msvc",
         "build:debug": "tauri build --debug",
         "build:ui": "vite build",
-        "dev:ios": "tauri ios dev",
-        "dev:android": "tauri android dev",
         "dev:storybook": "VITE_CJS_IGNORE_WARNING=true storybook dev -p 6006 --no-open",
         "build:storybook": "VITE_CJS_IGNORE_WARNING=true storybook build -o .output/storybook",
         "start:storybook": "pnpm dlx serve .output/storybook -l 6006 -n -C",

@@ -1,22 +1,6 @@
+use crate::theme::Theme;
 use serde::{Deserialize, Serialize};
 use std::time::{SystemTime, UNIX_EPOCH};
-
-/// Theme options for the application UI
-#[derive(Debug, Serialize, Deserialize)]
-pub enum Theme {
-    /// Light theme mode
-    Light,
-    /// Dark theme mode
-    Dark,
-    /// Follow system theme settings
-    System,
-}
-
-impl Default for Theme {
-    fn default() -> Self {
-        Self::System
-    }
-}
 
 /// Update channel configuration for the application
 #[derive(Debug, Serialize, Deserialize)]

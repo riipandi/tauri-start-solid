@@ -2,13 +2,14 @@ mod script;
 mod types;
 
 use crate::store::KVStore;
+use std::sync::Mutex;
 use tauri::Manager;
 
 pub use self::script::*;
 pub use types::*;
 
 /// Key used to store app configuration in KVStore
-const CONFIG_KEY: &str = "app_config";
+pub const CONFIG_KEY: &str = "app_config";
 
 /// Sets up the configuration store for the application
 ///
@@ -49,7 +50,10 @@ pub fn setup_config_store<R: tauri::Runtime>(app: &tauri::App<R>) -> Result<(), 
         println!("Store pairs: {:?}", config_store.pairs()?);
     }
 
-    // Register store in Tauri state management
-    app.manage(config_store);
+    // Register store in Tauri state management. We cannot directly mutate values
+    // which are shared between multiple threads or when ownership is controlled
+    // through a shared pointer.
+    app.manage(Mutex::new(config_store));
+
     Ok(())
 }
