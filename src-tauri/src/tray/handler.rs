@@ -57,9 +57,7 @@ impl<R: Runtime> TrayEventHandler<R> {
             "quit" => {
                 app.exit(0);
             }
-            _ => {
-                println!("Menu item {:?} not handled", event.id);
-            }
+            _ => {} // Unhandled events
         }
     }
 }

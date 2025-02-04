@@ -61,15 +61,37 @@ pub fn create_app_menu<R: Runtime>(app: &tauri::App<R>) -> tauri::Result<Menu<R>
         .item(&PredefinedMenuItem::fullscreen(app, None)?)
         .build()?;
 
+    // Custom menu for Window menu
+    let force_reload = MenuItemBuilder::new("Force Reload")
+        .id("force_reload")
+        .accelerator("CmdOrCtrl+Shift+R")
+        .build(app)?;
+
     // Create Window menu
     let window_menu = SubmenuBuilder::new(app, "Window")
         .item(&PredefinedMenuItem::minimize(app, None)?)
         .item(&PredefinedMenuItem::close_window(app, None)?)
+        .separator()
+        .item(&force_reload)
         .build()?;
+
+    // Custom menu for Help menu
+    let open_devtool = MenuItemBuilder::new("Toggle Developer Tools")
+        .id("devtool")
+        .accelerator("CmdOrCtrl+Alt+I")
+        .build(app)?;
+
+    let documentation = MenuItemBuilder::new("Documentation").id("docs").build(app)?;
+    let send_feedback = MenuItemBuilder::new("Send Feedback").id("feedback").build(app)?;
+    let open_data_dir = MenuItemBuilder::new("Open Data Directory").id("data_dir").build(app)?;
 
     // Create Help menu
     let help_menu = SubmenuBuilder::new(app, "Help")
-        .item(&MenuItemBuilder::new("Learn More").build(app)?)
+        .item(&documentation)
+        .item(&send_feedback)
+        .separator()
+        .item(&open_devtool)
+        .item(&open_data_dir)
         .build()?;
 
     // Build final menu with all submenus

@@ -3,6 +3,7 @@ mod config;
 mod menu;
 mod store;
 mod tray;
+mod utils;
 mod window;
 
 use cmd::example::greet;

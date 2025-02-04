@@ -1,11 +1,12 @@
+mod script;
 mod types;
 
 use crate::store::KVStore;
 use tauri::Manager;
+
+pub use self::script::*;
 pub use types::*;
 
-/// File name for storing application configuration
-const CONFIG_FILE_NAME: &str = "localstore.prs";
 /// Key used to store app configuration in KVStore
 const CONFIG_KEY: &str = "app_config";
 
@@ -21,8 +22,11 @@ pub fn setup_config_store<R: tauri::Runtime>(app: &tauri::App<R>) -> Result<(), 
     let data_dir = app.path().app_config_dir().unwrap();
     std::fs::create_dir_all(&data_dir)?;
 
+    // File name for storing application configuration, separated based on environment
+    let file_name = format!("localstore{}.prs", if cfg!(debug_assertions) { "-debug" } else { "" });
+
     // Setup store file path
-    let store_path = data_dir.join(CONFIG_FILE_NAME);
+    let store_path = data_dir.join(file_name);
     let store_file = store_path.as_path();
 
     // Initialize configuration store

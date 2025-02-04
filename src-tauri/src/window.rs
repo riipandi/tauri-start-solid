@@ -2,6 +2,8 @@ use anyhow::Result;
 use tauri::utils::{config::WindowEffectsConfig, WindowEffect, WindowEffectState};
 use tauri::{TitleBarStyle, WebviewUrl, WebviewWindowBuilder};
 
+use crate::config::JS_INIT_SCRIPT;
+
 // Setup main window. Set visible to false if you want to hide the main window on startup.
 // This is useful for testing tray icon on desktop or you want show an onboarding screen first.
 pub fn create_main_window(app: &tauri::App) -> Result<(), Box<dyn std::error::Error>> {
@@ -14,6 +16,7 @@ pub fn create_main_window(app: &tauri::App) -> Result<(), Box<dyn std::error::Er
         .transparent(true)
         .hidden_title(true)
         .fullscreen(false)
+        .initialization_script(JS_INIT_SCRIPT)
         .visible(true)
         .center();
 
