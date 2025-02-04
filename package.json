@@ -22,6 +22,8 @@
         "format": "pnpm --stream --color \"/format:/\"",
         "format:rs": "cargo fmt --manifest-path src-tauri/Cargo.toml",
         "format:js": "biome format . --write",
+        "postinstall": "lefthook install || true",
+        "pre-commit": "lefthook run pre-commit --force",
         "generate:icons": "tauri icon ./src/assets/images/app-icon.png",
         "generate:signkey": "tauri signer generate -w .tauri/${npm_package_name}_signer.key",
         "depgraph": "(cd src-tauri && cargo depgraph --build-deps --frozen | dot -Tpng > ../depgraph.png)",
