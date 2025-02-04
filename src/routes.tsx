@@ -2,8 +2,8 @@ import { Route, Router } from '@solidjs/router'
 import { lazy } from 'solid-js'
 import RootLayout from '#/layouts/root-layout'
 
-const Home = lazy(() => import('./views/home'))
-const NotFound = lazy(() => import('./views/404'))
+const Home = lazy(() => import('#/views/home'))
+const NotFound = lazy(() => import('#/views/404'))
 
 const AppRoutes = () => (
   <Router root={RootLayout}>

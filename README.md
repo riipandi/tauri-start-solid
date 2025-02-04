@@ -20,7 +20,7 @@ pnpm dlx degit riipandi/tauri-start-solid my-app
 1. Install required toolchains: [Rust][rust], [Node.js][nodejs], [PNPM][pnpm], and [Lefthook][lefthook].
 2. Replace the project name in the [`package.json`](./package.json), [`Cargo.toml`](./src-tauri/Cargo.toml),
    and [`tauri.conf.json`](./src-tauri/tauri.conf.json) files.
-3. Find and replace `tauri-start-solid`, `tauri_start_solid` and `Tauri Start Solid` strings in the source files.
+3. Find and replace `tauri-start-solid`, `tauri_start_solid` and `Tauri App` strings in the source files.
 4. Set application identifier and other application metadata in [`tauri.conf.json`](./src-tauri/tauri.conf.json) file.
 5. Install frontend dependencies by running `pnpm install`.
 6. Run `pnpm dev` to start developing.
@@ -59,13 +59,13 @@ to build the application in debug mode, this will enable developer tools.
 
 ### Fix Unsigned Warning (macOS)
 
-> Warning: "Tauri Start Solid" is damaged and can't be opened.
+> Warning: "Tauri App" is damaged and can't be opened.
 
 This warning is shown because the build is not signed. Run the following command
  to suppress this warning:
 
 ```sh
-xattr -r -d com.apple.quarantine "/Applications/Tauri Start Solid.app"
+xattr -r -d com.apple.quarantine "/Applications/Tauri App.app"
 ```
 
 ## Screenshots

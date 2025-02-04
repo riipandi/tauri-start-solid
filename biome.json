@@ -39,7 +39,7 @@
                     "fix": "safe",
                     "options": {
                         "attributes": ["classList"],
-                        "functions": ["cn", "clx", "clsx", "cva", "tw"]
+                        "functions": ["cn", "clx", "clsx", "cva", "tv", "tw"]
                     }
                 }
             },
@@ -47,7 +47,8 @@
                 "noReExportAll": "off"
             },
             "security": {
-                "noDangerouslySetInnerHtmlWithChildren": "warn"
+                "noDangerouslySetInnerHtmlWithChildren": "warn",
+                "noDangerouslySetInnerHtml": "off"
             },
             "style": {
                 "noUnusedTemplateLiteral": "off",
@@ -70,7 +71,7 @@
                 "noCommentText": "off",
                 "noConsoleLog": {
                     "level": "info",
-                    "fix": "safe"
+                    "fix": "none"
                 },
                 "noDebugger": "off",
                 "noExplicitAny": "off",

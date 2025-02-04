@@ -1,27 +1,14 @@
-import { ColorModeProvider, ColorModeScript } from '@kobalte/core'
-import { ComponentProps, Suspense } from 'solid-js'
-import { clx } from '#/libs/utils'
+import { ParentComponent, Suspense } from 'solid-js'
+import AppLoader from '#/components/loaders/app-loader'
+import { ThemeProvider } from '#/components/theme/provider'
 
-interface RootLayoutProps extends ComponentProps<'div'> {}
-
-const PageLoader = () => {
+const RootLayout: ParentComponent = (props) => {
   return (
-    <div class="size-full min-h-screen bg-background">
-      <div class="flex h-full items-center justify-center">
-        <h1 class="text-foreground">Loading...</h1>
-      </div>
+    <div class="size-full rounded-b-[10px] bg-transparent">
+      <ThemeProvider>
+        <Suspense fallback={<AppLoader />}>{props.children}</Suspense>
+      </ThemeProvider>
     </div>
-  )
-}
-
-const RootLayout = (props: RootLayoutProps) => {
-  return (
-    <Suspense fallback={<PageLoader />}>
-      <ColorModeProvider>
-        <div class={clx('root-layout', props.class)}>{props.children}</div>
-      </ColorModeProvider>
-      <ColorModeScript storageType="localStorage" />
-    </Suspense>
   )
 }
 

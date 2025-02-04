@@ -4,9 +4,9 @@
     "upgrade": true,
     "color": true,
     "root": true,
-    "deep": false,
-    "silent": false,
+    "deep": true,
     "install": "always",
     "packageManager": "pnpm",
+    "silent": false,
     "reject": []
 }

@@ -4,8 +4,9 @@
 /.idea
 /.pnp
 /.cache
-/.output
 /.husky
+/.temp
+/.tmp
 .pnp.js
 .DS_Store
 .DS_Store?
@@ -27,7 +28,7 @@ $RECYCLE.BIN/
 *.libsql
 *.db
 
-# Nitro
+# Projects
 _data/
 build/
 dist/
@@ -58,11 +59,12 @@ compose.env*
 
 # Storybook
 *storybook.log
-/storybook-static/
+storybook-static/
 
 # Miscellaneous
-vite.config.ts.*
+pnpm-exec-summary.json
 slim.report.json
+vite.config.ts.*
 
 # Terraform
 .terraform/
@@ -71,10 +73,12 @@ terraform.tfstate*
 terraform.tfvars*
 !terraform.tfvars.example
 
+# fly.io
+fly*.toml*
+!fly*.example.toml
+
 # Tauri
 .tauri/
 target/
 /src-tauri/gen/
-# /src/types/bindings.ts
-example.sql
 depgraph.png

@@ -1,8 +1,9 @@
+import './styles/global.css'
+import './styles/colors.css'
+import './styles/scrollbar.css'
+
 /* @refresh reload */
 import { render } from 'solid-js/web'
-import './assets/styles/globals.css'
-import './assets/styles/app.css'
-import './assets/styles/scrollbar.css'
 import AppRoutes from './routes'
 
 // This is the entry point of the application.
@@ -19,8 +20,8 @@ if (!rootElement) {
 // this application will not work in Browser.
 const MainApp = () => {
   return !('__TAURI__' in window) ? (
-    <div class="flex size-full min-h-screen items-center justify-center p-4 dark:bg-black">
-      <p class="font-medium tracking-wide dark:text-white">
+    <div class="flex size-full min-h-screen items-center justify-center bg-background p-4">
+      <p class="font-medium text-foreground tracking-wide">
         This application will not work in Browser.
       </p>
     </div>

@@ -1,5 +1,4 @@
-import type { ClassValue } from 'clsx'
-import clsx from 'clsx'
+import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
 /**
@@ -45,4 +44,24 @@ export function storeDecode(value: string): any {
     // If not JSON, return as is
     return value
   }
+}
+
+/**
+ * Gets initials from a full name
+ * Example: "John Doe" -> "JD", "Alice" -> "A", "Bob Smith Jones" -> "BS"
+ *
+ * @param name - Full name to get initials from
+ * @param maxInitials - Maximum number of initials to return (default: 2)
+ * @returns Uppercase initials from the name
+ */
+export function getInitials(name: string, maxInitials = 2): string {
+  if (!name) return ''
+  return name
+    .trim()
+    .split(' ')
+    .map((part) => part[0])
+    .filter((char) => char && /[A-Za-z]/.test(char))
+    .slice(0, maxInitials)
+    .join('')
+    .toUpperCase()
 }

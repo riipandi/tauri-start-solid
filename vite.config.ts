@@ -1,3 +1,4 @@
+import tailwindcss from '@tailwindcss/vite'
 import { resolve } from 'pathe'
 import { env, isProduction } from 'std-env'
 import { defineConfig } from 'vite'
@@ -7,7 +8,7 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 const host = env.TAURI_DEV_HOST
 
 export default defineConfig(async () => ({
-  plugins: [solid(), tsconfigPaths()],
+  plugins: [solid(), tailwindcss(), tsconfigPaths()],
   clearScreen: false,
   server: {
     port: 1420,

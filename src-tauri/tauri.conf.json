@@ -1,6 +1,6 @@
 {
     "$schema": "https://schema.tauri.app/config/2",
-    "productName": "Tauri Start Solid",
+    "productName": "Tauri App",
     "identifier": "com.example.tauri-start-solid",
     "version": "0.0.0",
     "build": {
@@ -21,7 +21,7 @@
         "trayIcon": null,
         "windows": [
             {
-                "title": "Tauri Start Solid",
+                "title": "Tauri App",
                 "width": 800,
                 "height": 600
             }

@@ -1,5 +1,5 @@
 import { useNavigate } from '@solidjs/router'
-import { Link } from '#/components/link'
+import { Link } from '#/components/base-ui'
 
 export default function NotFound() {
   const navigate = useNavigate()

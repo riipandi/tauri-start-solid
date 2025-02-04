@@ -2,15 +2,13 @@ import { useStore } from '@nanostores/solid'
 import { invoke } from '@tauri-apps/api/core'
 import { fetch } from '@tauri-apps/plugin-http'
 import { Show, createEffect, createSignal, onMount } from 'solid-js'
-import { Button } from '#/components/base-ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '#/components/base-ui/card'
-import { TextField, TextFieldRoot } from '#/components/base-ui/textfield'
-import { Link } from '#/components/link'
+import { Button, Link, TextField, TextFieldRoot } from '#/components/base-ui'
+import { Card, CardContent, CardHeader, CardTitle } from '#/components/base-ui'
+import { ThemeSwitcher } from '#/components/theme/switcher'
 import { resetUiState, saveUiState, uiStore } from '#/stores/ui.store'
 
-import viteLogo from '/vite.svg'
-import { ThemeSelector } from '#/components/theme'
-import solidLogo from '../assets/images/solid.svg'
+import solidLogo from '/images/solid.svg'
+import viteLogo from '/images/vite.svg'
 
 type Quotes = {
   author: string
@@ -48,7 +46,7 @@ export default function Component() {
   }
 
   return (
-    <div class="page-wrapper custom-scrollbar flex size-full items-center">
+    <div class="page-wrapper custom-scrollbar flex h-svh items-center">
       <div class="mx-auto h-auto max-w-xl flex-1">
         <header class="mb-6 flex items-center justify-between">
           <div class="flex items-center gap-4">
@@ -60,7 +58,7 @@ export default function Component() {
             </Link>
             <h1 class="font-bold text-2xl text-gray-900 dark:text-white">Daily Quotes</h1>
           </div>
-          <ThemeSelector />
+          <ThemeSwitcher />
         </header>
 
         <main class="w-full flex-1 space-y-4">
@@ -89,11 +87,12 @@ export default function Component() {
               <div class="flex gap-3">
                 <Button
                   onClick={() => saveUiState({ counter: uiState().counter + 1 })}
+                  variant="outline"
                   class="flex-1"
                 >
                   Quote Number {uiState().counter}
                 </Button>
-                <Button onClick={() => resetUiState()} variant="outline" class="w-24">
+                <Button onClick={() => resetUiState()} variant="destructive" class="w-24">
                   Reset
                 </Button>
               </div>
