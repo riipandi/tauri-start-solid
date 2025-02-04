@@ -26,7 +26,7 @@ export default defineConfig(async () => ({
     minify: isProduction,
     chunkSizeWarningLimit: 1024,
     reportCompressedSize: false,
-    outDir: resolve('.output'),
+    outDir: resolve('.output/client'),
     rollupOptions: {
       output: {
         // Output with hash in filename

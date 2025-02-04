@@ -20,5 +20,5 @@
         "tsBuildInfoFile": "./.temp/tsconfig.node.tsbuildinfo"
     },
     "include": ["vite.config.ts", "vitest.config.ts", "vitest.workspace.ts"],
-    "exclude": ["node_modules", "storybook-static", "tests-results"]
+    "exclude": ["node_modules", "tests-results"]
 }

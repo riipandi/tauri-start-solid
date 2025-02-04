@@ -38,5 +38,5 @@
         }
     },
     "include": ["src"],
-    "exclude": ["vite.config.ts", "vitest.*.ts", "storybook-static", "tests-results"]
+    "exclude": ["vite.config.ts", "vitest.*.ts", "tests-results"]
 }
