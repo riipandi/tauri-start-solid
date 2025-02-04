@@ -10,14 +10,14 @@ const Titlebar = (props: TitlebarProps) => {
   const appPlatform = platform()
   const appWindow = getCurrentWindow()
   const isMaximized = appWindow.isMaximized()
-  const isMacOS = appPlatform !== 'macos'
+  const isMacOS = appPlatform === 'macos'
 
   return (
     <div
       data-tauri-drag-region
       class={clx(
         'relative flex h-7 w-full items-center justify-between',
-        'border-border/40 border-b bg-background/80 backdrop-blur-sm',
+        'border-border/40 border-b bg-transparent backdrop-blur-sm',
         !isMaximized ? 'rounded-t-[10px]' : 'rounded-none',
         isMacOS ? 'pl-14' : 'p-0',
         props.class

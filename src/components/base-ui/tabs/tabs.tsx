@@ -91,7 +91,7 @@ const tabsIndicatorVariants = cva('absolute outline-none transition-all duration
   variants: {
     variant: {
       block:
-        'rounded-md bg-background shadow peer-focus-visible:outline-none peer-focus-visible:ring-[1.5px] peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-background data-[orientation=vertical]:top-0 data-[orientation=vertical]:right-1 data-[orientation=horizontal]:bottom-1 data-[orientation=horizontal]:left-0 data-[orientation=horizontal]:h-[calc(100%-0.5rem)] data-[orientation=vertical]:w-[calc(100%-0.5rem)]',
+        'rounded-md bg-background shadow-sm peer-focus-visible:outline-none peer-focus-visible:ring-[1.5px] peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-background data-[orientation=vertical]:top-0 data-[orientation=vertical]:right-1 data-[orientation=horizontal]:bottom-1 data-[orientation=horizontal]:left-0 data-[orientation=horizontal]:h-[calc(100%-0.5rem)] data-[orientation=vertical]:w-[calc(100%-0.5rem)]',
       underline:
         'data-[orientation=horizontal]:-bottom-[1px] data-[orientation=vertical]:-right-[1px] bg-primary data-[orientation=vertical]:top-0 data-[orientation=horizontal]:left-0 data-[orientation=horizontal]:h-[2px] data-[orientation=vertical]:w-[2px]',
     },

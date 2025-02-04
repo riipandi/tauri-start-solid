@@ -33,3 +33,11 @@ tauri-plugin-shell = "2.2.0"
 # Serialization
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+
+# Logging
+anyhow = "1.0"
+
+# Used to call the macOS native API
+[target."cfg(target_os = \"macos\")".dependencies]
+cocoa = "0.26.0"
+objc = "0.2.7"

@@ -81,7 +81,8 @@
         @apply antialiased min-h-screen scroll-smooth overflow-hidden;
     }
     body {
-        @apply bg-background/90 text-foreground font-sans;
+        /* Set the background color from the Rust side */
+        @apply bg-transparent text-foreground font-sans;
     }
     div#root {
         @apply overflow-hidden min-h-screen size-full;

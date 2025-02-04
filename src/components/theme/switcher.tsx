@@ -1,3 +1,4 @@
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '#/components/base-ui'
 import { useTheme } from '#/context/hooks/use-theme'
 import { Theme } from '#/context/stores/ui.store'
 
@@ -5,20 +6,17 @@ export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme()
 
   return (
-    <div class="grid grid-cols-2 gap-1">
-      <label for="theme-select" class="text-base">
-        Select Theme:
-      </label>
-      <select
-        id="theme-select"
-        onInput={(e) => setTheme(e.currentTarget.value as Theme)}
-        class="bg-background text-base"
-        value={theme}
-      >
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
-        <option value="system">System</option>
-      </select>
-    </div>
+    <Select
+      defaultValue={theme}
+      onChange={(e) => setTheme(e as Theme)}
+      options={['dark', 'light', 'system'] as Theme[]}
+      itemComponent={(props) => <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>}
+      placeholder="Select theme"
+    >
+      <SelectTrigger class="w-24">
+        <SelectValue<Theme>>{(state) => state.selectedOption()}</SelectValue>
+      </SelectTrigger>
+      <SelectContent />
+    </Select>
   )
 }

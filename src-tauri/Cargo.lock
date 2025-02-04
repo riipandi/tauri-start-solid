@@ -3856,7 +3856,10 @@ dependencies = [
 name = "tauri-start-solid"
 version = "0.0.0"
 dependencies = [
+ "anyhow",
+ "cocoa",
  "dotenv-build",
+ "objc",
  "serde",
  "serde_json",
  "tauri",

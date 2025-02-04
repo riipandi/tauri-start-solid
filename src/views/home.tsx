@@ -80,7 +80,9 @@ export default function Component() {
                 </TextFieldRoot>
 
                 <Show when={greetMsg()}>
-                  <p class="text-center text-gray-700 dark:text-gray-300">{greetMsg()}</p>
+                  <p class="whitespace-pre-line break-words p-1 text-center text-gray-700 dark:text-gray-300">
+                    {greetMsg()}
+                  </p>
                 </Show>
               </div>
 

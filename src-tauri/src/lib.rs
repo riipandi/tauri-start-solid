@@ -1,9 +1,10 @@
 mod cmd;
 mod tray;
+mod window;
 
 use cmd::example::greet;
-use tauri::Manager;
 use tray::setup_tray;
+use window::create_main_window;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -20,12 +21,7 @@ pub fn run() {
 
     // Setup tray icon on desktop
     let builder = builder.setup(|app| {
-        // Setup main window
-        if let Some(main_window) = app.get_webview_window("main") {
-            main_window.show().unwrap();
-        }
-
-        // Setup tray icon
+        create_main_window(app)?;
         setup_tray(app)?;
         Ok(())
     });
