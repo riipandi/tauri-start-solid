@@ -68,19 +68,23 @@ async fn start_proxy<R: Runtime>(app: AppHandle<R>) {
     *mutex = Some(tx);
     drop(mutex);
 
-    // TODO: https://docs.rs/tokio/latest/tokio/task/index.html#cooperative-scheduling
+    // Cooperative scheduling using tokio::task::yield_now()
+    // @ref: https://docs.rs/tokio/latest/tokio/task/index.html#cooperative-scheduling
     loop {
         tokio::select! {
             _ = rx.recv() => {
                 break;
             }
             Some(preference) = stream.next() => {
+                // Yield to other tasks periodically
+                tokio::task::yield_now().await;
+
                 match preference {
                     SchemePreference::NoPreference | SchemePreference::Light => {
-                        update_theme(app.clone() ,false);
+                        update_theme(app.clone(), false);
                     }
                     SchemePreference::Dark => {
-                        update_theme(app.clone() ,true);
+                        update_theme(app.clone(), true);
                     }
                 }
             }
