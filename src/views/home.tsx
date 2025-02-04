@@ -46,8 +46,8 @@ export default function Component() {
   }
 
   return (
-    <div class="page-wrapper custom-scrollbar flex h-svh items-center">
-      <div class="mx-auto h-auto max-w-xl flex-1">
+    <div class="flex min-h-full w-full flex-col items-center justify-center rounded-bl-[10px]">
+      <div class="w-full max-w-xl p-4">
         <header class="mb-6 flex items-center justify-between">
           <div class="flex items-center gap-4">
             <Link href="https://vite.dev" class="transition-transform hover:scale-110" newTab>
@@ -61,7 +61,7 @@ export default function Component() {
           <ThemeSwitcher />
         </header>
 
-        <main class="w-full flex-1 space-y-4">
+        <div class="w-full flex-1 space-y-4">
           <Card>
             <CardHeader class="pb-2">
               <CardTitle>Personal Quote Collection</CardTitle>
@@ -117,7 +117,7 @@ export default function Component() {
               </Show>
             </CardContent>
           </Card>
-        </main>
+        </div>
 
         <footer class="mt-4 text-center text-gray-600 text-sm dark:text-gray-400">
           <p>Share your favorite quotes with others</p>

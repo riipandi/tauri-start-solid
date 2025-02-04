@@ -22,8 +22,23 @@
         "windows": [
             {
                 "title": "Tauri App",
+                "label": "main",
+                "visible": false,
                 "width": 800,
-                "height": 600
+                "minWidth": 425,
+                "height": 600,
+                "minHeight": 550,
+                "titleBarStyle": "Overlay",
+                "hiddenTitle": true,
+                "center": true,
+                "fullscreen": false,
+                "resizable": true,
+                "decorations": true,
+                "transparent": true,
+                "windowEffects": {
+                    "effects": ["hudWindow"],
+                    "state": "active"
+                }
             }
         ]
     },

@@ -33,13 +33,22 @@ importers:
         specifier: ^0.15.3
         version: 0.15.3(solid-js@1.9.4)
       '@tauri-apps/api':
-        specifier: ^2
+        specifier: ^2.2.0
         version: 2.2.0
       '@tauri-apps/plugin-http':
         specifier: ^2.3.0
         version: 2.3.0
+      '@tauri-apps/plugin-os':
+        specifier: ^2.2.0
+        version: 2.2.0
+      '@tauri-apps/plugin-positioner':
+        specifier: ^2.2.0
+        version: 2.2.0
+      '@tauri-apps/plugin-process':
+        specifier: ^2.2.0
+        version: 2.2.0
       '@tauri-apps/plugin-shell':
-        specifier: ^2
+        specifier: ^2.2.0
         version: 2.2.0
       cmdk-solid:
         specifier: ^1.1.2
@@ -94,7 +103,7 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3(vite@6.0.11(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1))
       '@tauri-apps/cli':
-        specifier: ^2
+        specifier: ^2.2.7
         version: 2.2.7
       '@types/node':
         specifier: ^22.13.1
@@ -1044,6 +1053,15 @@ packages:
 
   '@tauri-apps/plugin-http@2.3.0':
     resolution: {integrity: sha512-pigTvz+zzAqbIhCzRiR1GE98Jw7A03j2V+Eiexr9thBI8VfMiwFQMcbgON51xlwnVaI72LdbYKNajU84im8tlg==}
+
+  '@tauri-apps/plugin-os@2.2.0':
+    resolution: {integrity: sha512-HszbCdbisMlu5QhCNAN8YIWyz2v33abAWha6+uvV2CKX8P5VSct/y+kEe22JeyqrxCnWlQ3DRx7s49Byg7/0EA==}
+
+  '@tauri-apps/plugin-positioner@2.2.0':
+    resolution: {integrity: sha512-3JIWqV4U1US4nmM4PGmAHODq0ltkJ91MyANR033elKSSpX3AqKnVQnLz76xThBFHjChJrZwsXASpc2Inpu+cTg==}
+
+  '@tauri-apps/plugin-process@2.2.0':
+    resolution: {integrity: sha512-uypN2Crmyop9z+KRJr3zl71OyVFgTuvHFjsJ0UxxQ/J5212jVa5w4nPEYjIewcn8bUEXacRebwE6F7owgrbhSw==}
 
   '@tauri-apps/plugin-shell@2.2.0':
     resolution: {integrity: sha512-iC3Ic1hLmasoboG7BO+7p+AriSoqAwKrIk+Hpk+S/bjTQdXqbl2GbdclghI4gM32X0bls7xHzIFqhRdrlvJeaA==}
@@ -3069,6 +3087,18 @@ snapshots:
       '@tauri-apps/cli-win32-x64-msvc': 2.2.7
 
   '@tauri-apps/plugin-http@2.3.0':
+    dependencies:
+      '@tauri-apps/api': 2.2.0
+
+  '@tauri-apps/plugin-os@2.2.0':
+    dependencies:
+      '@tauri-apps/api': 2.2.0
+
+  '@tauri-apps/plugin-positioner@2.2.0':
+    dependencies:
+      '@tauri-apps/api': 2.2.0
+
+  '@tauri-apps/plugin-process@2.2.0':
     dependencies:
       '@tauri-apps/api': 2.2.0
 

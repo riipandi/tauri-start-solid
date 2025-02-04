@@ -78,10 +78,10 @@
     }
     html,
     body {
-        @apply antialiased min-h-screen scroll-smooth;
+        @apply antialiased min-h-screen scroll-smooth overflow-hidden;
     }
     body {
-        @apply bg-background text-foreground font-sans;
+        @apply bg-background/90 text-foreground font-sans;
     }
     div#root {
         @apply overflow-hidden min-h-screen size-full;
@@ -95,6 +95,16 @@
     border-color: #f87171;
 }
 
-@utility page-wrapper {
-    @apply size-full overflow-auto bg-transparent;
+@utility disable-select {
+    -webkit-user-select: none; /* Chrome all / Safari all */
+    -moz-user-select: none; /* Firefox all */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Likely future */
+}
+
+@utility force-select {
+    -webkit-user-select: all; /* Chrome 49+ */
+    -moz-user-select: all; /* Firefox 43+ */
+    -ms-user-select: all; /* No support yet */
+    user-select: all; /* Likely future */
 }
