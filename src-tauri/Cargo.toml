@@ -22,7 +22,7 @@ dotenv-build = "^0.1.1"
 tauri-build = { version = "2.0.5", features = [] }
 
 [dependencies]
-tauri = { version = "2.2.5", features = ["macos-private-api"] }
+tauri = { version = "2.2.5", features = ["macos-private-api", "tray-icon"] }
 tauri-plugin-http = "2.3.0"
 tauri-plugin-shell = "2.2.0"
 serde = { version = "1", features = ["derive"] }
