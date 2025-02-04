@@ -29,6 +29,7 @@
         "shortDescription": "A Tauri application",
         "longDescription": "A Tauri application built with Tauri, SolidJS, and TypeScript",
         "targets": ["app", "dmg", "nsis", "deb", "appimage"],
+        "createUpdaterArtifacts": true,
         "licenseFile": "../LICENSE",
         "macOS": {
             "dmg": {
@@ -80,6 +81,16 @@
     "plugins": {
         "shell": {
             "open": true
+        },
+        "updater": {
+            "active": true,
+            "dialog": true,
+            "dangerousInsecureTransportProtocol": true,
+            "windows": {
+                "installMode": "passive"
+            },
+            "endpoints": ["http://localhost:3000/updates/{{target}}/{{arch}}/{{current_version}}"],
+            "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDNCQkFCQkFCNzA0RUU2REQKUldUZDVrNXdxN3U2T3pkTytTSWsvY1AyeHoxM2xobEhoMkFORXpLZU1sMm1aWitOYk9RN284R2oK"
         }
     }
 }

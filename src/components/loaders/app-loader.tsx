@@ -78,7 +78,7 @@ const SVGLoader = () => (
 
 export default function AppLoader() {
   return (
-    <div class="absolute inset-0 my-[10px] ml-[10px] flex flex-col items-center justify-center bg-background p-4">
+    <div class="absolute inset-0 my-[10px] ml-[10px] flex flex-col items-center justify-center rounded-sm bg-background p-4">
       <div class="flex flex-col items-center justify-center space-y-4">
         <h1 class="font-medium text-foreground">Loading...</h1>
         <p class="text-center text-muted-foreground text-sm leading-6 tracking-tight">

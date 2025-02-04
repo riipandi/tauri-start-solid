@@ -19,16 +19,17 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
 dotenv-build = "^0.1.1"
-tauri-build = { version = "2.0.5", features = [] }
+tauri-build = { version = "2", features = [] }
 
 [dependencies]
 # Tauri dependencies
-tauri = { version = "2.2.5", features = ["macos-private-api", "tray-icon", "devtools"] }
-tauri-plugin-http = "2.3.0"
-tauri-plugin-os = "2.2.0"
-tauri-plugin-positioner = { version = "2.2.0", features = ["tray-icon"] }
-tauri-plugin-process = "2.2.0"
-tauri-plugin-shell = "2.2.0"
+tauri = { version = "2", features = ["macos-private-api", "tray-icon", "devtools"] }
+tauri-plugin-dialog = "2"
+tauri-plugin-http = "2"
+tauri-plugin-os = "2"
+tauri-plugin-positioner = { version = "2", features = ["tray-icon"] }
+tauri-plugin-process = "2"
+tauri-plugin-shell = "2"
 
 # Essential crates
 anyhow = "1.0"
@@ -42,8 +43,11 @@ serde_json = "1"
 cocoa = "0.26.0"
 objc = "0.2.7"
 
+[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+tauri-plugin-updater = "2"
+
 [dev-dependencies]
-tauri = { version = "2.2.5", features = ["test"] }
+tauri = { version = "2", features = ["test"] }
 
 # Optimized for bundle size. If you want faster builds comment out/delete this section.
 # Reference: https://doc.rust-lang.org/cargo/reference/profiles.html

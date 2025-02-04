@@ -4,8 +4,8 @@
     "description": "Capability for the main window",
     "windows": ["main"],
     "permissions": [
-        "core:default",
         "core:app:default",
+        "core:default",
         "core:event:default",
         "core:image:default",
         "core:menu:allow-append",
@@ -69,11 +69,17 @@
         "core:window:allow-unmaximize",
         "core:window:allow-unminimize",
         "core:window:default",
-        "process:default",
-        "shell:allow-open",
         {
             "identifier": "http:default",
-            "allow": [{ "url": "https://i18n-quotes.victr.workers.dev" }]
-        }
+            "allow": [
+                {
+                    "url": "https://i18n-quotes.victr.workers.dev"
+                }
+            ]
+        },
+        "dialog:default",
+        "positioner:default",
+        "process:default",
+        "shell:allow-open"
     ]
 }
