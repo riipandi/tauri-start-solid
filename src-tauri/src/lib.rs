@@ -1,9 +1,12 @@
 mod cmd;
+mod config;
 mod menu;
+mod store;
 mod tray;
 mod window;
 
 use cmd::example::greet;
+use config::setup_config_store;
 use menu::setup_menu;
 use tray::setup_tray;
 use window::create_main_window;
@@ -23,6 +26,7 @@ pub fn run() {
 
     // Setup the application properties
     let builder = builder.setup(|app| {
+        setup_config_store(app)?;
         create_main_window(app)?;
         setup_tray(app)?;
         setup_menu(app)?;

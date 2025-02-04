@@ -25,7 +25,7 @@
         "active": true,
         "category": "DeveloperTool",
         "publisher": "Your Company",
-        "copyright": "Copyright © 2024 Your Company",
+        "copyright": "Copyright © 2025 Your Company",
         "shortDescription": "A Tauri application",
         "longDescription": "A Tauri application built with Tauri, SolidJS, and TypeScript",
         "targets": ["app", "dmg", "nsis", "deb", "appimage"],
