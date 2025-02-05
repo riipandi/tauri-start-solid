@@ -1,10 +1,7 @@
-import { invoke } from '@tauri-apps/api/core'
 import { createConsola } from 'consola/basic'
 import type { ParentComponent } from 'solid-js'
 import { createContext, createEffect, createSignal, onCleanup, onMount } from 'solid-js'
-import { type Theme as AppTheme, commands } from '#/libs/bindings'
-
-export type Theme = AppTheme
+import { type Theme, commands } from '#/libs/bindings'
 
 type ThemeProviderState = {
   theme: () => Theme
@@ -20,7 +17,7 @@ export const ThemeProviderContext = createContext<ThemeProviderState>(initialSta
 
 export const ThemeProvider: ParentComponent = (props) => {
   const log = createConsola({ defaults: { tag: 'theme-provider' } })
-  const [theme, setTheme] = createSignal<Theme>('system')
+  const [resolvedTheme, setResolvedTheme] = createSignal<Theme>('system')
   const [isLoaded, setIsLoaded] = createSignal(false)
 
   onMount(async () => {
@@ -28,7 +25,7 @@ export const ThemeProvider: ParentComponent = (props) => {
       const savedTheme = await commands.getTheme()
       log.debug('Theme loaded:', savedTheme)
       if (savedTheme.status === 'ok') {
-        setTheme(savedTheme.data)
+        setResolvedTheme(savedTheme.data)
       }
     } catch (error) {
       log.error('Failed to get theme:', error)
@@ -38,7 +35,7 @@ export const ThemeProvider: ParentComponent = (props) => {
   })
 
   createEffect(() => {
-    const currentTheme = theme()
+    const currentTheme = resolvedTheme()
     const root = document.documentElement
 
     function applyTheme(selectedTheme: Theme) {
@@ -62,10 +59,11 @@ export const ThemeProvider: ParentComponent = (props) => {
   })
 
   const value = {
-    theme,
+    theme: resolvedTheme,
     setTheme: (newTheme: Theme) => {
-      invoke('set_theme', { theme: newTheme })
-        .then(() => setTheme(newTheme))
+      commands
+        .setTheme(newTheme)
+        .then(() => setResolvedTheme(newTheme))
         .catch((error) => log.error('Failed to set theme:', error))
     },
   }

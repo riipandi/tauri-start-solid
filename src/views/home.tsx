@@ -5,7 +5,7 @@ import { Button, Link, TextField, TextFieldRoot } from '#/components/base-ui'
 import { Card, CardContent, CardHeader, CardTitle } from '#/components/base-ui'
 import { ThemeSwitcher } from '#/components/theme/switcher'
 import { resetUiState, saveUiState, uiStore } from '#/context/stores/ui.store'
-import { commands } from '#/libs/bindings'
+import { APP_NAME, commands } from '#/libs/bindings'
 
 import solidLogo from '/images/solid.svg'
 import viteLogo from '/images/vite.svg'
@@ -56,7 +56,7 @@ export default function Component() {
             <Link href="https://solidjs.com" class="transition-transform hover:scale-110" newTab>
               <img src={solidLogo} class="size-8" alt="Solid logo" />
             </Link>
-            <h1 class="font-bold text-2xl text-gray-900 dark:text-white">Daily Quotes</h1>
+            <h1 class="font-bold text-2xl text-gray-900 dark:text-white">{APP_NAME}</h1>
           </div>
           <ThemeSwitcher />
         </header>
