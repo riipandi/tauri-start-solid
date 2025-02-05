@@ -7,10 +7,10 @@ import type {
   TextFieldRootProps,
 } from '@kobalte/core/text-field'
 import { TextField as TextFieldPrimitive } from '@kobalte/core/text-field'
-import { cva } from 'class-variance-authority'
 import type { ValidComponent, VoidProps } from 'solid-js'
 import { splitProps } from 'solid-js'
 import { clx } from '#/libs/utils'
+import { textfieldLabel } from './textfield.css'
 
 type textFieldProps<T extends ValidComponent = 'div'> = TextFieldRootProps<T> & {
   class?: string
@@ -23,26 +23,6 @@ export const TextFieldRoot = <T extends ValidComponent = 'div'>(
 
   return <TextFieldPrimitive class={clx('space-y-1', local.class)} {...rest} />
 }
-
-export const textfieldLabel = cva(
-  'font-medium text-sm data-[disabled]:cursor-not-allowed data-[disabled]:opacity-70',
-  {
-    variants: {
-      label: {
-        true: 'data-[invalid]:text-destructive',
-      },
-      error: {
-        true: 'text-destructive text-xs',
-      },
-      description: {
-        true: 'font-normal text-muted-foreground',
-      },
-    },
-    defaultVariants: {
-      label: true,
-    },
-  }
-)
 
 type textFieldLabelProps<T extends ValidComponent = 'label'> = TextFieldLabelProps<T> & {
   class?: string

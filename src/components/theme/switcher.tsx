@@ -1,6 +1,6 @@
+import { Select } from '@kobalte/core/select'
 import * as Lucide from 'lucide-solid'
 import { type JSX, createEffect, createSignal } from 'solid-js'
-import { Select } from '#/components/base-ui'
 import { useTheme } from '#/context/hooks/use-theme'
 import { Theme } from '#/libs/bindings'
 import { clx } from '#/libs/utils'

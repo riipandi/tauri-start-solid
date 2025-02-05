@@ -2,7 +2,8 @@ import { fn } from '@storybook/test'
 import * as Lucide from 'lucide-solid'
 import { For } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs'
-import { Button, type ButtonProps, type ButtonVariants } from './button'
+import { Button, type ButtonProps } from './button'
+import { type ButtonVariants } from './button.css'
 
 const variantOptions: NonNullable<ButtonVariants['variant']>[] = [
   'default',
