@@ -4,11 +4,12 @@
  */
 
 use super::{save_theme_state, Theme};
-use tauri::{command, AppHandle, Manager, Runtime};
+use tauri::{AppHandle, Manager, Runtime};
 use webview2_com::Microsoft::Web::WebView2::Win32::*;
 use windows_core::Interface;
 
-#[command]
+#[tauri::command]
+#[specta::specta]
 pub fn set_theme<R: Runtime>(app: AppHandle<R>, theme: Theme) -> Result<(), &'static str> {
     save_theme_state(&app, theme)?;
 

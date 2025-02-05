@@ -6,9 +6,10 @@
 use super::{save_theme_state, Theme};
 use cocoa::appkit::{NSAppearance, NSAppearanceNameVibrantDark, NSAppearanceNameVibrantLight, NSWindow};
 use cocoa::base::{id, nil};
-use tauri::{command, AppHandle, Manager, Runtime};
+use tauri::{AppHandle, Manager, Runtime};
 
-#[command]
+#[tauri::command]
+#[specta::specta]
 pub fn set_theme<R: Runtime>(app: AppHandle<R>, theme: Theme) -> Result<(), &'static str> {
     save_theme_state(&app, theme)?;
 

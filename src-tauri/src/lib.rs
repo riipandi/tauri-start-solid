@@ -8,8 +8,10 @@ mod utils;
 mod window;
 
 use tauri::RunEvent;
+use tauri_specta::collect_commands;
+use tauri_specta::Builder as SpectaBuilder;
 
-use cmd::example::greet;
+use cmd::example::{goodbye_world, greet};
 use config::setup_config_store;
 use menu::setup_menu;
 use theme::{get_theme, set_theme};
@@ -18,6 +20,26 @@ use window::create_main_window;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    let specta_builder = SpectaBuilder::<tauri::Wry>::new()
+        .commands(collect_commands![
+            get_theme::<tauri::Wry>,
+            set_theme::<tauri::Wry>,
+            greet,
+            goodbye_world
+        ])
+        .constant("APP_NAME", "Tauri App");
+
+    #[cfg(debug_assertions)]
+    {
+        let export_opts = specta_typescript::Typescript::default()
+            .formatter(specta_typescript::formatter::biome)
+            .header("/* eslint-disable */");
+
+        specta_builder
+            .export(export_opts, "../src/libs/bindings.ts")
+            .expect("Failed to export typescript bindings");
+    }
+
     let builder = tauri::Builder::default();
     let tauri_ctx = tauri::generate_context!();
 
@@ -32,7 +54,9 @@ pub fn run() {
         .plugin(tauri_plugin_updater::Builder::new().build());
 
     // Setup the application properties
-    let builder = builder.setup(|app| {
+    let builder = builder.setup(move |app| {
+        specta_builder.mount_events(app);
+
         setup_config_store(app)?;
         create_main_window(app)?;
         setup_tray(app)?;
@@ -73,7 +97,7 @@ pub fn run() {
 
     // Finally, build and run the application
     builder
-        .invoke_handler(tauri::generate_handler![get_theme, set_theme, greet])
+        .invoke_handler(tauri::generate_handler![get_theme, set_theme, greet, goodbye_world])
         .build(tauri_ctx)
         .expect("error while building tauri application")
         .run(|app_handle, event| match event {

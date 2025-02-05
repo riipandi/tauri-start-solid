@@ -7,6 +7,7 @@ license = "MIT or Apache-2.0"
 repository = "http://github.com/riipandi/tauri-start-solid"
 rust-version = "1.77"
 edition = "2021"
+publish = false
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -35,9 +36,12 @@ tauri-plugin-shell = "2"
 anyhow = "1.0"
 chrono = "0.4"
 persy = "1.6"
-tokio = { version = "1.43", features = ["sync"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+specta = { version = "2.0.0-rc.21", features = ["derive", "serde", "serde_json"] }
+specta-typescript = "0.0.9"
+tauri-specta = { version = "2.0.0-rc.21", features = ["derive", "typescript"] }
+tokio = { version = "1.43", features = ["sync"] }
 
 # Used to call the macOS native API
 [target."cfg(target_os = \"macos\")".dependencies]
@@ -45,15 +49,16 @@ cocoa = "0.26.0"
 objc = "0.2.7"
 
 [target."cfg(target_os = \"windows\")".dependencies]
-webview2-com = "0.33"
-windows = "0.58"
-windows-core = "0.58"
+webview2-com = "0.35"
+windows = "0.59"
+windows-core = "0.59"
 windows-version = "0.1"
 
 [target."cfg(target_os = \"linux\")".dependencies]
-gtk = "0.18"
-tintanum = "0.1"
-futures-lite = "2.3"
+gtk = { version = "0.18", features = ["v3_24"] }
+webkit2gtk = { version = "=2.0.1", features = ["v2_38"] }
+tintanum = "0.4.0"
+futures-lite = "2.6"
 tokio = { version = "1", features = ["macros"] }
 
 [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]

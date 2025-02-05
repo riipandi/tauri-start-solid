@@ -65,6 +65,7 @@ storybook-static/
 pnpm-exec-summary.json
 slim.report.json
 vite.config.ts.*
+depgraph.png
 
 # Terraform
 .terraform/
@@ -80,5 +81,5 @@ fly*.toml*
 # Tauri
 .tauri/
 target/
-/src-tauri/gen/
-depgraph.png
+src-tauri/gen/
+src/libs/bindings.ts

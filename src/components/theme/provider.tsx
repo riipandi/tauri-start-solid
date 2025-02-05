@@ -1,10 +1,10 @@
-import type { MaybeConfigColorMode } from '@kobalte/core/color-mode'
 import { invoke } from '@tauri-apps/api/core'
 import { createConsola } from 'consola/basic'
 import type { ParentComponent } from 'solid-js'
 import { createContext, createEffect, createSignal, onCleanup, onMount } from 'solid-js'
+import { type Theme as AppTheme, commands } from '#/libs/bindings'
 
-export type Theme = MaybeConfigColorMode
+export type Theme = AppTheme
 
 type ThemeProviderState = {
   theme: () => Theme
@@ -25,9 +25,11 @@ export const ThemeProvider: ParentComponent = (props) => {
 
   onMount(async () => {
     try {
-      const savedTheme = await invoke<Theme>('get_theme')
+      const savedTheme = await commands.getTheme()
       log.debug('Theme loaded:', savedTheme)
-      setTheme(savedTheme)
+      if (savedTheme.status === 'ok') {
+        setTheme(savedTheme.data)
+      }
     } catch (error) {
       log.error('Failed to get theme:', error)
     } finally {

@@ -24,11 +24,12 @@ pub use windows::set_theme;
 use crate::config::{AppConfig, CONFIG_KEY};
 use crate::store::KVStore;
 use serde::{Deserialize, Serialize};
+use specta::Type;
 use std::sync::Mutex;
 use tauri::{AppHandle, Manager, Runtime};
 
 /// Theme options for the application UI
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, Type)]
 #[serde(rename_all = "lowercase")]
 pub enum Theme {
     /// Light theme mode
@@ -87,6 +88,7 @@ fn save_theme_state<R: Runtime>(app: &AppHandle<R>, theme: Theme) -> Result<(), 
 }
 
 #[tauri::command]
+#[specta::specta]
 pub fn get_theme<R: Runtime>(app: AppHandle<R>) -> Result<Theme, ()> {
     let state = app.state::<Mutex<KVStore<String, AppConfig>>>();
     let store = state.lock().map_err(|_| ())?;

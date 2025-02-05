@@ -1,5 +1,6 @@
 use chrono::{DateTime, Local};
 use serde::Serialize;
+use specta::Type;
 use std::time::{SystemTime, UNIX_EPOCH};
 use tauri::{Emitter, Runtime, WebviewWindow};
 use tauri_plugin_updater::UpdaterExt;
@@ -17,7 +18,7 @@ pub fn force_reload<R: Runtime>(window: &mut WebviewWindow<R>) -> Result<(), Str
     window.navigate(current_url).map_err(|e| e.to_string())
 }
 
-#[derive(Serialize, Clone)]
+#[derive(Serialize, Clone, Type)]
 pub struct UpdateStatus {
     status: String,
     progress: Option<f64>,

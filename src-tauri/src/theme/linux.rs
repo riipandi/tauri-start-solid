@@ -8,12 +8,13 @@ use futures_lite::StreamExt;
 use gtk::prelude::GtkSettingsExt;
 use gtk::Settings;
 use std::sync::LazyLock;
-use tauri::{async_runtime, command, AppHandle, Runtime};
+use tauri::{async_runtime, AppHandle, Runtime};
 use tintanum::{SchemePreference, SchemeProxy};
 use tokio::sync::mpsc::{channel, Sender};
 use tokio::sync::Mutex;
 
-#[command]
+#[tauri::command]
+#[specta::specta]
 pub fn set_theme<R: Runtime>(app: AppHandle<R>, theme: Theme) -> Result<(), &'static str> {
     save_theme_state(&app, theme)?;
     match theme {

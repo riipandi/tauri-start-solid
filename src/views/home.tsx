@@ -1,11 +1,11 @@
 import { useStore } from '@nanostores/solid'
-import { invoke } from '@tauri-apps/api/core'
 import { fetch } from '@tauri-apps/plugin-http'
 import { Show, createEffect, createSignal, onMount } from 'solid-js'
 import { Button, Link, TextField, TextFieldRoot } from '#/components/base-ui'
 import { Card, CardContent, CardHeader, CardTitle } from '#/components/base-ui'
 import { ThemeSwitcher } from '#/components/theme/switcher'
 import { resetUiState, saveUiState, uiStore } from '#/context/stores/ui.store'
+import { commands } from '#/libs/bindings'
 
 import solidLogo from '/images/solid.svg'
 import viteLogo from '/images/vite.svg'
@@ -42,7 +42,7 @@ export default function Component() {
   })
 
   async function greet() {
-    setGreetMsg(await invoke('greet', { name: name() }))
+    setGreetMsg(await commands.greet(name()))
   }
 
   return (

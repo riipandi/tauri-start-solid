@@ -1,9 +1,10 @@
 use crate::theme::Theme;
 use serde::{Deserialize, Serialize};
+use specta::Type;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 /// Update channel configuration for the application
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Type)]
 pub enum UpdateChannel {
     /// Stable release channel - recommended for production use
     Stable,
@@ -12,7 +13,7 @@ pub enum UpdateChannel {
 }
 
 /// Configuration settings for application updates
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Type)]
 pub struct UpdateConfig {
     /// Enable automatic update checks
     pub auto_check: bool,
@@ -36,7 +37,7 @@ impl Default for UpdateConfig {
 }
 
 /// Main application configuration structure
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Type)]
 pub struct AppConfig {
     /// UI theme setting
     pub theme: Theme,
