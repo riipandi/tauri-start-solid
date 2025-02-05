@@ -1,0 +1,34 @@
+import { Canvas, Meta, Primary } from '@storybook/blocks';
+import * as Stories from './button.stories';
+
+<Meta of={Stories} />
+
+# Button
+
+Button component provides clickable elements with various styles and states.
+
+## Example
+
+```tsx
+import * as Lucide from 'lucide-solid'
+import { Button } from '#/components/base-ui'
+
+// Basic usage
+<Button>Click me</Button>
+
+// Different variants
+<Button variant='outline'>Button Variant</Button>
+
+// With loading text
+<Button isLoading>Save Changes</Button>
+
+// With icon
+<Button>
+  <Lucide.Search strokeWidth={2} />
+  <span>Search</span>
+</Button>
+```
+
+## Preview
+
+<Primary />

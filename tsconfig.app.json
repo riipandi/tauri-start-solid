@@ -38,6 +38,6 @@
             "~~/*": ["./*"]
         }
     },
-    "include": ["src", "tests/**/*"],
+    "include": ["src", "tests/**/*", ".storybook/**/*"],
     "exclude": ["vite.config.ts", "vitest.*.ts", "tests-results"]
 }

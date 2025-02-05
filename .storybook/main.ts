@@ -10,7 +10,18 @@ const config: StorybookConfig = {
       options: { backgrounds: false, controls: true, actions: true },
     },
     '@storybook/addon-links',
-    '@storybook/addon-themes',
+    {
+      name: '@storybook/addon-storysource',
+      options: {
+        sourceLoaderOptions: {
+          injectStoryParameters: true,
+        },
+        loaderOptions: {
+          prettierConfig: { printWidth: 80, singleQuote: false },
+        },
+      },
+    },
+    '@storybook/addon-a11y',
   ],
   framework: {
     name: 'storybook-solidjs-vite',

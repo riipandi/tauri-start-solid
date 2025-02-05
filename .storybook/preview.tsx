@@ -1,6 +1,7 @@
-import { withThemeByClassName } from '@storybook/addon-themes'
-import { themes } from '@storybook/theming'
-import type { Preview, SolidRenderer } from 'storybook-solidjs'
+import type { Preview } from 'storybook-solidjs'
+import { withThemeProvider } from './components/decorators'
+import { Link } from './components/link'
+import { light } from './themes'
 
 // Import the global Tailwind CSS styles
 import '../src/styles/global.css'
@@ -12,7 +13,9 @@ const preview: Preview = {
   // More info: https://storybook.js.org/docs/configure/story-layout
   parameters: {
     actions: { argTypesRegex: '^on[A-Z].*' },
+    previewTabs: { 'storybook/docs/panel': { index: -1 } },
     controls: {
+      expanded: true,
       hideNoControlsWarning: true,
       sort: 'requiredFirst',
       matchers: {
@@ -21,13 +24,35 @@ const preview: Preview = {
       },
       exclude: ['asChild', 'onClick'],
     },
+    viewport: {
+      viewports: {
+        smallMobile: {
+          name: 'Small mobile',
+          styles: { width: '320px', height: '568px' },
+        },
+        largeMobile: {
+          name: 'Large mobile',
+          styles: { width: '414px', height: '896px' },
+        },
+        tablet: {
+          name: 'Tablet',
+          styles: { width: '834px', height: '1112px' },
+        },
+        desktop: {
+          name: 'Desktop',
+          styles: { width: '1280px', height: '1000px' },
+        },
+      },
+    },
     options: {
       // https://storybook.js.org/docs/writing-stories/naming-components-and-hierarchy
       storySort: {
         method: 'alphabetical',
+        includeName: true,
         order: [
           'Introduction',
           'Getting Started',
+          'Changelog',
           'Basic Components',
           'Layout Components',
           'Visualizations',
@@ -37,8 +62,18 @@ const preview: Preview = {
     },
     backgrounds: { disable: true },
     layout: 'padded',
+    chromatic: {
+      modes: {
+        dark: { theme: 'dark' },
+        light: { theme: 'light' },
+      },
+    },
     docs: {
-      theme: themes.dark,
+      theme: light,
+      components: {
+        a: Link,
+      },
+      // container: DocsContainer,
       defaultName: 'Documentation',
       toc: {
         /* Enables the table of contents */
@@ -52,28 +87,25 @@ const preview: Preview = {
       },
     },
   },
-  // globalTypes: {
-  //   theme: {
-  //     name: 'Theme',
-  //     description: 'Theme switcher',
-  //     defaultValue: 'light',
-  //     toolbar: {
-  //       items: [
-  //         { value: 'light', icon: 'sun', title: 'Light Theme' },
-  //         { value: 'dark', icon: 'moon', title: 'Dark Theme' },
-  //       ],
-  //       showName: false,
-  //       dynamicTitle: false,
-  //     },
-  //   },
-  // },
-  decorators: [
-    withThemeByClassName<SolidRenderer>({
-      themes: { light: 'light', dark: 'dark' },
-      defaultTheme: 'light',
-    }),
-    (Story) => Story(),
-  ],
+  globalTypes: {
+    theme: {
+      name: 'Color Scheme',
+      description: 'Global theme for components',
+      defaultValue: 'system',
+      toolbar: {
+        title: 'Color Scheme',
+        icon: 'paintbrush',
+        dynamicTitle: false,
+        showName: false,
+        items: [
+          { title: 'Match system', value: 'system', icon: 'mirror' },
+          { title: 'Light Mode', value: 'light', icon: 'circlehollow' },
+          { title: 'Dark Mode', value: 'dark', icon: 'circle' },
+        ],
+      },
+    },
+  },
+  decorators: [withThemeProvider],
 }
 
 export default preview
