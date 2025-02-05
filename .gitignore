@@ -61,10 +61,17 @@ compose.env*
 *storybook.log
 storybook-static/
 
+# Vite & Vitest config
+vite.config.*
+!vite.config.ts
+vitest.config.*
+!vitest.config.ts
+vitest.workspace.*
+!vitest.workspace.ts
+
 # Miscellaneous
 pnpm-exec-summary.json
 slim.report.json
-vite.config.ts.*
 depgraph.png
 
 # Terraform

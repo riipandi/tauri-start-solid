@@ -15,17 +15,17 @@ const THEME_OPTIONS: ThemeOption[] = [
   {
     value: 'light',
     label: 'Light',
-    icon: (iconClass: string) => <Lucide.Sun class={iconClass} strokeWidth={1.8} />,
+    icon: (iconClass) => <Lucide.Sun class={iconClass} strokeWidth={1.8} />,
   },
   {
     value: 'dark',
     label: 'Dark',
-    icon: (iconClass: string) => <Lucide.Moon class={iconClass} strokeWidth={1.8} />,
+    icon: (iconClass) => <Lucide.Moon class={iconClass} strokeWidth={1.8} />,
   },
   {
     value: 'system',
     label: 'System',
-    icon: (iconClass: string) => <Lucide.Monitor class={iconClass} strokeWidth={1.8} />,
+    icon: (iconClass) => <Lucide.Monitor class={iconClass} strokeWidth={1.8} />,
   },
 ]
 

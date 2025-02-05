@@ -1,6 +1,6 @@
 import tailwindcss from '@tailwindcss/vite'
 import { resolve } from 'pathe'
-import { env, isDevelopment } from 'std-env'
+import { env, isCI, isDevelopment } from 'std-env'
 import { defineConfig } from 'vite'
 import solid from 'vite-plugin-solid'
 import tsconfigPaths from 'vite-tsconfig-paths'
@@ -44,5 +44,32 @@ export default defineConfig(async () => ({
         assetFileNames: `assets/[name]-[hash].[ext]`,
       },
     },
+  },
+  test: {
+    environment: 'jsdom',
+    exclude: ['node_modules', 'tests-e2e'],
+    reporters: isCI ? ['html', 'github-actions'] : ['html', 'default'],
+    include: ['./tests/**/*.{test,spec}.{ts,tsx}'],
+    setupFiles: ['./tests/setup-client.ts'],
+    outputFile: {
+      json: './tests-results/vitest-results.json',
+      html: './tests-results/index.html',
+    },
+    coverage: {
+      provider: 'v8',
+      reporter: ['html-spa', 'text-summary'],
+      reportsDirectory: './tests-results/coverage',
+      cleanOnRerun: true,
+      clean: true,
+      thresholds: {
+        global: {
+          statements: 80,
+          branches: 70,
+          functions: 75,
+          lines: 80,
+        },
+      },
+    },
+    globals: true,
   },
 }))
