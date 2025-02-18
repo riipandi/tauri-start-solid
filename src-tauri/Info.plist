@@ -11,8 +11,8 @@
                 <string>com.example.tauri-start-solid</string>
                 <key>CFBundleURLSchemes</key>
                 <array>
-                    <!-- register the tauri-start-solid:// scheme -->
-                    <string>tauri-start-solid</string>
+                    <!-- register the tauri-app:// scheme -->
+                    <string>tauri-app</string>
                 </array>
             </dict>
         </array>
