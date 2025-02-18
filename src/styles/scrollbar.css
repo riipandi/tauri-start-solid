@@ -1,0 +1,70 @@
+@layer utilities {
+    /* Base scrollbar class with stable gutter to prevent layout shifts */
+    .custom-scrollbar {
+        scrollbar-width: thin; /* Slim scrollbar for a modern look */
+        scrollbar-gutter: stable;
+    }
+
+    /* Set scrollbar width and height for Webkit browsers */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 11px; /* Fixed width */
+        height: 11px;
+    }
+
+    /* Track background for Webkit browsers */
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: oklch(0.98 0.003 252.11 / 0.65); /* Subtle track color */
+        border-radius: 0; /* Rounded edges for smooth appearance */
+        margin: 0 1px; /* Creates separation from container edges */
+    }
+
+    /* Scrollbar thumb styling with invisible default state */
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: oklch(0.55 0.015 252.11 / 0.3); /* Neutral thumb color */
+        border-radius: 6px; /* Rounded thumb for modern look */
+        border: 2px solid transparent; /* Creates padding-like effect */
+        background-clip: padding-box; /* Ensures border does not overlap thumb */
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: oklch(0.55 0.015 252.11 / 0.4); /* Subtle hover effect */
+        border: 2px solid oklch(1 0 0); /* Keeps thumb size consistent */
+    }
+
+    /* Scrollbar corner (intersection of horizontal and vertical scrollbars) */
+    .custom-scrollbar::-webkit-scrollbar-corner {
+        background: transparent;
+    }
+
+    /* Firefox-specific scrollbar */
+    .custom-scrollbar {
+        scrollbar-color: oklch(0.55 0.015 252.11 / 0.3) oklch(0.98 0.003 252.11 / 0.65);
+    }
+
+    .custom-scrollbar:hover {
+        scrollbar-color: oklch(0.55 0.015 252.11 / 0.6) oklch(0.98 0.003 252.11 / 0.65); /* Slight color change on hover */
+    }
+
+    /* Dark mode adjustments */
+    @media (prefers-color-scheme: dark) {
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: oklch(0.98 0.003 252.11 / 0.1); /* Light track for contrast */
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: oklch(0.65 0.015 252.11 / 0.3); /* Subtle thumb for dark mode */
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: oklch(0.65 0.015 252.11 / 0.6); /* Slightly darker on hover */
+        }
+
+        .custom-scrollbar {
+            scrollbar-color: oklch(0.65 0.015 252.11 / 0.3) oklch(0.98 0.003 252.11 / 0.1);
+        }
+
+        .custom-scrollbar:hover {
+            scrollbar-color: oklch(0.65 0.015 252.11 / 0.6) oklch(0.98 0.003 252.11 / 0.1);
+        }
+    }
+}

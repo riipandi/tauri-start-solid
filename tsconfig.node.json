@@ -1,11 +1,24 @@
 {
     "$schema": "https://json.schemastore.org/tsconfig",
     "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
         "composite": true,
-        "skipLibCheck": true,
+        "isolatedModules": true,
+        "lib": ["ES2023"],
         "module": "ESNext",
+        "moduleDetection": "force",
         "moduleResolution": "bundler",
-        "allowSyntheticDefaultImports": true
+        "noEmit": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUncheckedSideEffectImports": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "strictPropertyInitialization": true,
+        "target": "ES2023",
+        "tsBuildInfoFile": "./.output/tsconfig.node.tsbuildinfo"
     },
-    "include": ["vite.config.ts"]
+    "include": ["vite.config.ts", "vitest.config.ts"],
+    "exclude": ["node_modules", "tests-results"]
 }

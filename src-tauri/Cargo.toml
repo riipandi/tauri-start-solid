@@ -1,58 +1,83 @@
 [package]
-name = "tauri-tray-app"
-version = { workspace = true }
-description = "A Tauri application"
+name = "tauri-start-solid"
+version = "0.0.0"
+description = "A Tauri application built with Tauri, SolidJS, and TypeScript"
 authors = ["you"]
-license = "MIT OR Apache-2.0"
-repository = "http://github.com/riipandi/tauri-tray-app"
-rust-version = { workspace = true }
-edition = { workspace = true }
+license = "MIT or Apache-2.0"
+repository = "http://github.com/riipandi/tauri-start-solid"
+rust-version = "1.77"
+edition = "2021"
 publish = false
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[lib]
+# The `_lib` suffix may seem redundant but it is necessary
+# to make the lib name unique and wouldn't conflict with the bin name.
+# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
+name = "tauri_start_solid_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
 [build-dependencies]
-tauri-build = { workspace = true }
-dotenv-build = { version = "^0.1.1" }
+dotenv-build = "^0.1"
+tauri-build = { version = "2", features = [] }
 
 [dependencies]
-tauri = { workspace = true }
-tauri-plugin-log = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1", features = [
-  "colored",
-] }
-plugin-window-theme = { path = "../plugins/window-theme" }
-anyhow = { version = "^1.0" }
-reqwest = { version = "0.11", features = ["json", "blocking"] }
-tokio = { version = "^1.34", features = ["macros", "time"] }
-serde = { version = "^1.0", features = ["derive"] }
-serde_json = { version = "^1.0" }
-machine-uid = { version = "0.5.1" }
-simple-home-dir = { version = "^0.2" }
-log = { version = "^0.4" }
-ts-rs = { version = "^7.0" }
+# Tauri dependencies
+tauri = { version = "2", features = ["macos-private-api", "tray-icon", "devtools"] }
+tauri-plugin-dialog = "2"
+tauri-plugin-http = "2"
+tauri-plugin-os = "2"
+tauri-plugin-positioner = { version = "2", features = ["tray-icon"] }
+tauri-plugin-process = "2"
+tauri-plugin-shell = "2"
 
-[target.'cfg(target_os = "macos")'.dependencies]
-cocoa = { version = "0.25.0" }
-objc = { version = "0.2.7" }
+# Essential crates
+anyhow = "1.0"
+chrono = "0.4"
+persy = "1.6"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+specta = { version = "2.0.0-rc.22", features = ["derive", "serde", "serde_json"] }
+specta-typescript = "0.0.9"
+tauri-specta = { version = "2.0.0-rc.21", features = ["derive", "typescript"] }
+tokio = { version = "1.43", features = ["sync"] }
 
-[target.'cfg(target_os = "windows")'.dependencies]
-# interprocess = { version = "1.2", default-features = false }
-# windows-sys = { version = "0.52.0", features = [
-#   "Win32_Foundation",
-#   "Win32_UI_Input_KeyboardAndMouse",
-#   "Win32_UI_WindowsAndMessaging",
-# ] }
-# winreg = "0.52.0"
+# Used to call the macOS native API
+[target."cfg(target_os = \"macos\")".dependencies]
+cocoa = "0.26.0"
+objc = "0.2.7"
 
-[target.'cfg(target_os = "linux")'.dependencies]
-webkit2gtk = { version = "=0.18.2", features = [ "v2_22" ] }
+[target."cfg(target_os = \"windows\")".dependencies]
+webview2-com = "0.35"
+windows = "0.59"
+windows-core = "0.59"
+windows-version = "0.1"
 
-# Updater plugin only for desktop apps
+[target."cfg(target_os = \"linux\")".dependencies]
+gtk = { version = "0.18", features = ["v3_24"] }
+webkit2gtk = { version = "=2.0.1", features = ["v2_38"] }
+tintanum = "0.4.0"
+futures-lite = "2.6"
+tokio = { version = "1", features = ["macros"] }
+
 [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
-tauri-plugin-store = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
-tauri-plugin-positioner = { version = "1.0", features = ["system-tray"] }
+tauri-plugin-updater = "2"
 
-[features]
-# this feature is used for production builds or when `devPath` points to the filesystem
-# DO NOT REMOVE!!
-custom-protocol = ["tauri/custom-protocol"]
+[dev-dependencies]
+tauri = { version = "2", features = ["test"] }
+
+# Optimized for bundle size. If you want faster builds comment out/delete this section.
+# Reference: https://doc.rust-lang.org/cargo/reference/profiles.html
+# Reference: https://tauri.app/concept/size/
+[profile.release]
+codegen-units = 128  # Allows LLVM to perform better optimization, reduce number of codegen units to increase optimizations.
+lto = true           # Enables link-time-optimizations. LTO can produce better optimized code, at the cost of longer linking time.
+opt-level = 1        # Use slightly better optimizations. Use "s" if you prefer smaller binaries.
+panic = "abort"      # Higher performance by disabling panic handlers.
+debug = false        # Disable debug on production build.
+strip = true         # Ensures debug symbols are removed.
+
+[profile.dev]
+incremental = true   # Compile your binary in smaller steps.
+debug = "limited"    # Debug info without type or variable-level information.

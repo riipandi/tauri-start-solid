@@ -4,8 +4,9 @@
     "upgrade": true,
     "color": true,
     "root": true,
-    "deep": false,
+    "deep": true,
     "install": "always",
     "packageManager": "pnpm",
-    "reject": ["typescript"]
+    "silent": false,
+    "reject": []
 }

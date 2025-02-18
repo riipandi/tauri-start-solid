@@ -1,14 +1,16 @@
 {
     "recommendations": [
+        "biomejs.biome",
         "bradlc.vscode-tailwindcss",
-        "dbaeumer.vscode-eslint",
+        "darkriszty.markdown-table-prettify",
         "EditorConfig.EditorConfig",
-        "esbenp.prettier-vscode",
         "foxundermoon.shell-format",
         "rust-lang.rust-analyzer",
         "serayuzgur.crates",
         "tamasfe.even-better-toml",
         "tauri-apps.tauri-vscode",
+        "unifiedjs.vscode-mdx",
         "vadimcn.vscode-lldb"
-    ]
+    ],
+    "unwantedRecommendations": []
 }

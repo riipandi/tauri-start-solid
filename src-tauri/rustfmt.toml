@@ -1,4 +1,5 @@
-max_width = 100
+# https://doc.rust-lang.org/beta/style-guide/index.html
+max_width = 120
 hard_tabs = false
 tab_spaces = 4
 newline_style = "Auto"

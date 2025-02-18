@@ -1,0 +1,111 @@
+@import "tailwindcss";
+@plugin "tailwindcss-motion";
+@variant dark (&:where([data-theme="dark"] *));
+
+@theme {
+    /* Base Colors */
+    --color-black: #0f131a;
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+
+    /* Components Colors */
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+
+    /* Border & Input Colors */
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    /* Border Radius */
+    --radius: 0.6rem;
+    --radius-lg: var(--radius);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-sm: calc(var(--radius) - 4px);
+    --spacing: 0.25rem;
+
+    /* Sidebar Width */
+    --sidebar-width: 16rem;
+    --sidebar-width-mobile: 18rem;
+    --sidebar-width-icon: 3rem;
+
+    /* Typography: https://modernfontstacks.com */
+    --font-sans: system-ui, Inter, Roboto, Ubuntu, "Helvetica Neue", Calibri, Arial, sans-serif;
+    --font-mono: ui-monospace, "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+
+    /* Animation */
+    --animate-accordion-down: accordion-down 0.2s ease-out;
+    --animate-accordion-up: accordion-up 0.2s ease-out;
+
+    @keyframes accordion-down {
+        from {
+            opacity: 0.01;
+            height: 0;
+        }
+        to {
+            opacity: 1;
+            height: var(--height);
+        }
+    }
+
+    @keyframes accordion-up {
+        from {
+            opacity: 1;
+            height: var(--height);
+        }
+        to {
+            opacity: 0.01;
+            height: 0;
+        }
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    html,
+    body {
+        @apply antialiased min-h-screen scroll-smooth overflow-hidden;
+    }
+    body {
+        /* Set the background color from the Rust side */
+        @apply bg-transparent text-foreground font-sans;
+    }
+    div#root {
+        @apply overflow-hidden min-h-screen size-full;
+    }
+}
+
+/* Debug element */
+@utility debug {
+    border-width: 1px;
+    border-style: dashed;
+    border-color: #f87171;
+}
+
+@utility disable-select {
+    -webkit-user-select: none; /* Chrome all / Safari all */
+    -moz-user-select: none; /* Firefox all */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Likely future */
+}
+
+@utility force-select {
+    -webkit-user-select: all; /* Chrome 49+ */
+    -moz-user-select: all; /* Firefox 43+ */
+    -ms-user-select: all; /* No support yet */
+    user-select: all; /* Likely future */
+}

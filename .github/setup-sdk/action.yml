@@ -4,7 +4,7 @@
 # @reference: https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
 
 name: setup-sdk
-description: Prepare Nodejs environment with pnpm enabled
+description: Prepare development environment
 
 inputs:
   nodeVersion:
@@ -14,28 +14,30 @@ inputs:
   pnpmVersion:
     description: 'Specify pnpm version'
     required: false
-    default: '8'
   workspacePath:
     description: 'Specify workspaces path'
-    required: true
+    default: "./src-tauri -> target"
+    required: false
 
 runs:
   using: composite
   steps:
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.nodeVersion }}
+        cache: 'pnpm'
 
-    - uses: pnpm/action-setup@v2
+    - uses: pnpm/action-setup@v4
       with:
         version: ${{ inputs.pnpmVersion }}
-        run_install: false
+        run_install: |
+          - args: [--global, node-jq]
 
     - name: Get pnpm store directory
       shell: bash
       run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-    - uses: actions/cache@v3
+    - uses: actions/cache@v4
       name: Setup pnpm cache
       with:
         path: ${{ env.STORE_PATH }}

@@ -1,108 +1,88 @@
 {
-    "$schema": "https://github.com/tauri-apps/tauri/releases/download/tauri-build-v1.5.0/schema.json",
+    "$schema": "https://schema.tauri.app/config/2",
+    "identifier": "com.example.tauri-start-solid",
+    "productName": "Tauri App",
+    "version": "0.0.0",
     "build": {
-        "beforeDevCommand": "pnpm before-dev",
-        "beforeBuildCommand": "pnpm before-build",
-        "devPath": "http://localhost:1420",
-        "distDir": "../dist",
-        "withGlobalTauri": false
+        "beforeDevCommand": "pnpm dev:ui",
+        "beforeBuildCommand": "pnpm build:ui",
+        "frontendDist": "../.output/client",
+        "devUrl": "http://localhost:1420"
     },
-    "package": {
-        "productName": "Tauri App",
-        "version": "0.1.0"
-    },
-    "tauri": {
-        "allowlist": {
-            "all": false,
-            "shell": {
-                "all": false,
-                "open": "^(.+)/([^/]+)$"
-            },
-            "fs": {
-                "all": true,
-                "scope": ["$RESOURCE/*", "$HOME/Tauri App/*"]
-            },
-            "http": {
-                "all": false,
-                "request": true,
-                "scope": [
-                    "https://github.com/riipandi/tauri-tray-app/*",
-                    "https://raw.githubusercontent.com/riipandi/tauri-tray-app/*"
-                ]
-            },
-            "notification": {
-                "all": true
-            },
-            "window": {
-                "all": true
-            },
-            "dialog": {
-                "all": true
-            },
-            "globalShortcut": {
-                "all": true
-            }
-        },
-        "bundle": {
-            "active": true,
-            "category": "Productivity",
-            "identifier": "com.ripandis.tauri-tray-app",
-            "copyright": "Copyright © 2023 Aris Ripandi",
-            "publisher": "Aris Ripandi",
-            "shortDescription": "",
-            "longDescription": "",
-            "resources": [],
-            "targets": ["app", "dmg", "nsis", "deb", "appimage", "updater"],
-            "macOS": {
-                "minimumSystemVersion": "10.13",
-                "frameworks": [],
-                "license": "",
-                "exceptionDomain": "",
-                "entitlements": "Info.plist",
-                "providerShortName": null,
-                "signingIdentity": null
-            },
-            "windows": {
-                "allowDowngrades": true,
-                "certificateThumbprint": null,
-                "digestAlgorithm": "sha256"
-            },
-            "deb": {
-                "files": {},
-                "depends": []
-            },
-            "appimage": {
-                "bundleMediaFramework": false
-            },
-            "icon": [
-                "icons/32x32.png",
-                "icons/128x128.png",
-                "icons/128x128@2x.png",
-                "icons/icon.icns",
-                "icons/icon.ico"
-            ]
-        },
+    "app": {
+        "macOSPrivateApi": true,
+        "withGlobalTauri": true,
         "security": {
-            "csp": "default-src 'self'; connect-src ipc: http://ipc.localhost"
+            "pattern": {
+                "use": "brownfield"
+            },
+            "csp": null
         },
+        "trayIcon": null,
+        "windows": []
+    },
+    "bundle": {
+        "active": true,
+        "category": "DeveloperTool",
+        "publisher": "Your Company",
+        "copyright": "Copyright © 2025 Your Company",
+        "shortDescription": "A Tauri application",
+        "longDescription": "A Tauri application built with Tauri, SolidJS, and TypeScript",
+        "createUpdaterArtifacts": false,
+        "targets": "all",
+        "macOS": {
+            "dmg": {
+                "appPosition": {
+                    "x": 180,
+                    "y": 170
+                },
+                "applicationFolderPosition": {
+                    "x": 480,
+                    "y": 170
+                },
+                "windowSize": {
+                    "height": 400,
+                    "width": 660
+                }
+            },
+            "minimumSystemVersion": "11.0",
+            "entitlements": "Info.plist",
+            "providerShortName": null,
+            "signingIdentity": null,
+            "files": {}
+        },
+        "windows": {
+            "allowDowngrades": true,
+            "certificateThumbprint": null,
+            "digestAlgorithm": null,
+            "nsis": null,
+            "timestampUrl": null,
+            "tsp": false,
+            "webviewInstallMode": {
+                "silent": true,
+                "type": "downloadBootstrapper"
+            },
+            "wix": null
+        },
+        "resources": [],
+        "icon": [
+            "icons/32x32.png",
+            "icons/128x128.png",
+            "icons/128x128@2x.png",
+            "icons/icon.icns",
+            "icons/icon.ico"
+        ]
+    },
+    "plugins": {
         "updater": {
             "active": true,
-            "dialog": false,
-            "endpoints": [
-                "https://raw.githubusercontent.com/riipandi/tauri-tray-app/main/updates.json"
-            ],
-            "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEJBNjI1QzJCNzlCMTEzRjAKUldUd0U3RjVLMXhpdWdvUUxRT1FGQm5tVUJ0QVVJWVRtSXE4Yi9RZFNLUXJOdGtSWWFpQkRWclYK",
+            "dialog": true,
+            "dangerousInsecureTransportProtocol": true,
             "windows": {
-                "installMode": "basicUi",
-                "installerArgs": []
-            }
-        },
-        "macOSPrivateApi": true,
-        "systemTray": {
-            "iconPath": "icons/128x128@2x.png",
-            "iconAsTemplate": true,
-            "menuOnLeftClick": true
-        },
-        "windows": []
+                "installMode": "passive"
+            },
+            "endpoints": ["http://localhost:3000/updates/{{target}}/{{arch}}/{{current_version}}"],
+            "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDNCQkFCQkFCNzA0RUU2REQKUldUZDVrNXdxN3U2T3pkTytTSWsvY1AyeHoxM2xobEhoMkFORXpLZU1sMm1aWitOYk9RN284R2oK"
+        }
     }
 }

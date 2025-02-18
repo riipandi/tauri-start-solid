@@ -1,0 +1,140 @@
+{
+    "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+    "organizeImports": {
+        "enabled": true
+    },
+    "vcs": {
+        "enabled": true,
+        "clientKind": "git",
+        "useIgnoreFile": true,
+        "defaultBranch": "main"
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": true,
+            "a11y": {
+                "noSvgWithoutTitle": "off",
+                "useKeyWithClickEvents": "off"
+            },
+            "complexity": {
+                "noBannedTypes": "off",
+                "noUselessFragments": "warn"
+            },
+            "correctness": {
+                "noUnusedImports": {
+                    "level": "off",
+                    "fix": "none"
+                },
+                "noUnusedVariables": {
+                    "level": "warn",
+                    "fix": "none"
+                },
+                "useJsxKeyInIterable": "error",
+                "noUnknownFunction": "off"
+            },
+            "nursery": {
+                "useSortedClasses": {
+                    "level": "warn",
+                    "fix": "safe",
+                    "options": {
+                        "attributes": ["classList"],
+                        "functions": ["cn", "clx", "clsx", "cva", "tv", "tw"]
+                    }
+                }
+            },
+            "performance": {
+                "noReExportAll": "off"
+            },
+            "security": {
+                "noDangerouslySetInnerHtmlWithChildren": "warn",
+                "noDangerouslySetInnerHtml": "off"
+            },
+            "style": {
+                "noUnusedTemplateLiteral": "off",
+                "useConsistentArrayType": "warn",
+                "useExportType": "warn",
+                "useImportType": {
+                    "level": "off",
+                    "fix": "none"
+                },
+                "useFilenamingConvention": {
+                    "level": "off",
+                    "options": {
+                        "filenameCases": ["PascalCase", "camelCase", "kebab-case"]
+                    }
+                }
+            },
+            "suspicious": {
+                "noArrayIndexKey": "error",
+                "noAssignInExpressions": "off",
+                "noCommentText": "off",
+                "noConsoleLog": {
+                    "level": "info",
+                    "fix": "none"
+                },
+                "noDebugger": "off",
+                "noExplicitAny": "off",
+                "noConsole": {
+                    "level": "warn",
+                    "fix": "none",
+                    "options": {
+                        "allow": [
+                            "assert",
+                            "error",
+                            "info",
+                            "warn",
+                            "debug",
+                            "time",
+                            "timeEnd",
+                            "timeLog"
+                        ]
+                    }
+                },
+                "noDuplicateAtImportRules": "error",
+                "noEmptyBlock": "warn"
+            }
+        }
+    },
+    "formatter": {
+        "enabled": true,
+        "formatWithErrors": false,
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineWidth": 100,
+        "ignore": []
+    },
+    "css": {
+        "parser": {
+            "allowWrongLineComments": false
+        },
+        "formatter": {
+            "enabled": true,
+            "quoteStyle": "double"
+        }
+    },
+    "javascript": {
+        "formatter": {
+            "indentWidth": 2,
+            "quoteStyle": "single",
+            "jsxQuoteStyle": "double",
+            "arrowParentheses": "always",
+            "semicolons": "asNeeded",
+            "trailingCommas": "es5",
+            "quoteProperties": "asNeeded",
+            "bracketSpacing": true,
+            "bracketSameLine": false
+        }
+    },
+    "json": {
+        "formatter": {
+            "indentWidth": 4,
+            "trailingCommas": "none"
+        }
+    },
+    "files": {
+        "ignoreUnknown": true,
+        "include": ["**/*.js", "**/*.mjs", "**/*.ts", "**/*.tsx", "**/*.css", "**/*.json"],
+        "ignore": [".github", ".output", "dist", "**/*.rs", "target", "src/libs/bindings.ts"]
+    }
+}

@@ -1,0 +1,57 @@
+# Refer for explanation to following link:
+# https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md
+
+assert_lefthook_installed: true
+skip_lfs: true
+
+output:
+  - success        # Print successful steps
+  - failure        # Print failed steps printing
+  - execution      # Print any execution logs
+  - execution_out  # Print execution output
+  # - meta           # Print lefthook version
+  # - summary        # Print summary block (successful and failed steps)
+  # - empty_summary  # Print summary heading when there are no steps to run
+  # - execution_info # Print `EXECUTE > ...` logging
+  - skips          # Print "skip" (i.e. no files matched)
+
+pre-commit:
+  parallel: true
+  commands:
+    format-frontend:
+      tags: frontend
+      glob: "*.{js,ts,html,css,json}"
+      run: biome format . --write
+    check-frontend:
+      tags: frontend
+      glob: "*.{js,ts,html,css,json}"
+      run: biome check . --write
+    lint-frontend:
+      tags: frontend
+      glob: "*.{js,ts,html,css,json}"
+      run: biome lint . --write
+    test-frontend:
+      tags: frontend
+      glob: "*.{js,ts,html,css}"
+      run: pnpm --silent test:js
+    check-backend:
+      root: "src-tauri/"
+      glob: "*.{rs,toml,json}"
+      run: cargo check
+    format-backend:
+      root: "src-tauri/"
+      glob: "*.{rs,toml,json}"
+      run: cargo fmt
+    test-backend:
+      root: "src-tauri/"
+      glob: "*.{rs,toml,json}"
+      run: cargo test
+    # check-links:
+    #   glob: '*.md'
+    #   run: lychee --max-concurrency 3 {all_files}
+    #   exclude: [CHANGELOG.md, CONTRIBUTING.md]
+
+pre-push:
+  commands:
+    build-frontend:
+      run: pnpm --silent build:ui

@@ -1,48 +1,46 @@
 {
     "typescript.tsdk": "node_modules/typescript/lib",
-    "typescript.enablePromptUseWorkspaceTsdk": true,
-    "eslint.workingDirectories": ["./src"],
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-        "source.fixAll": "explicit",
-        "source.fixAll.eslint": "explicit"
-    },
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "typescript.enablePromptUseWorkspaceTsdk": false,
+    "editor.defaultFormatter": "biomejs.biome",
     "files.exclude": {
-        "**/.tsbuildinfo": true,
-        "**/.turbo/**": true,
-        "**/*.tgz": true,
         "**/tmp/**": true
     },
-    "files.watcherExclude": {
-        "**/.github/FUNDING.yml": true,
-        "**/.github/ISSUE_TEMPLATE/**": true,
-        "**/.github/PULL_REQUEST_TEMPLATE.md": true,
-        "**/.tsbuildinfo": true,
-        "**/.turbo/**": true,
-        "**/.vscode/**": true,
-        "**/tmp/*/**": true
-    },
     "search.exclude": {
-        "**/.tsbuildinfo": true,
-        "**/.turbo/**": true,
+        "**/.output/**": true,
         "**/.vscode/**": true,
-        "**/tmp/*/**": true
+        "**/.temp/**": true,
+        "**/build": true,
+        "**/dist": true
     },
-    "tailwindCSS.files.exclude": [
-        "**/.git/**",
-        "**/.github/**",
-        "**/.vscode/**",
-        "**/node_modules/**",
-        "**/*.{md,js,ts}"
-    ],
     "files.associations": {
         "*.yml.example": "yaml",
-        "*.css": "tailwindcss",
+        "*.css": "css",
         "*.plist": "xml"
     },
+    "tailwindCSS.experimental.classRegex": [
+        // @ref: https://github.com/paolotiu/tailwind-intellisense-regex-list
+        ["(?:twMerge|twJoin)\\(([^;]*)[\\);]", "[`'\"`]([^'\"`;]*)[`'\"`]"],
+        ["classList={{([^;]*)}}", "\\s*?[\"'`]([^\"'`]*).*?:"],
+        ["clsx\\(.*?\\)(?!\\])", "(?:'|\"|`)([^\"'`]*)(?:'|\"|`)"],
+        ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+        ["tv\\(([^)]*)\\)", "{?\\s?[\\w].*:\\s*?[\"'`]([^\"'`]*).*?,?\\s?}?"],
+        "clx\\(([^)]*)\\)", // clx(xxx)
+        "cn\\(([^)]*)\\)", // cn(xxx)
+        "cx\\(([^)]*)\\)" // cx(xxx)
+    ],
+    "tailwindCSS.files.exclude": ["**/src-tauri/**", "vite.config.ts"],
+    "[css]": {
+        "editor.defaultFormatter": "biomejs.biome"
+    },
+    "[tailwindcss]": {
+        "editor.defaultFormatter": "biomejs.biome"
+    },
     "[toml]": {
-        "editor.defaultFormatter": "tamasfe.even-better-toml"
+        "editor.defaultFormatter": "tamasfe.even-better-toml",
+        "editor.formatOnSave": false
+    },
+    "[markdown]": {
+        "editor.defaultFormatter": "darkriszty.markdown-table-prettify"
     },
     "rust-analyzer.linkedProjects": ["./src-tauri/Cargo.toml"],
     "rust-analyzer.showUnlinkedFileNotification": false

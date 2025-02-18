@@ -1,41 +1,5 @@
 {
     "$schema": "https://json.schemastore.org/tsconfig",
-    "compilerOptions": {
-        "target": "ES2021",
-        "useDefineForClassFields": true,
-        "lib": ["ES2021", "DOM", "DOM.Iterable"],
-        "module": "ESNext",
-        "skipLibCheck": true,
-
-        /* Bundler mode */
-        "moduleResolution": "bundler",
-        "allowImportingTsExtensions": true,
-        "resolveJsonModule": true,
-        "isolatedModules": true,
-        "noEmit": true,
-        "jsx": "react-jsx",
-
-        /* Linting */
-        "strict": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "noFallthroughCasesInSwitch": true,
-
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "forceConsistentCasingInFileNames": true,
-        "tsBuildInfoFile": "./node_modules/.tsbuildinfo",
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "incremental": true,
-
-        /* Absolute import */
-        "baseUrl": ".",
-        "paths": {
-            "@/*": ["src/*"],
-            "~/*": ["public/*"]
-        }
-    },
-    "include": ["src"],
-    "references": [{ "path": "./tsconfig.node.json" }]
+    "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
+    "files": []
 }

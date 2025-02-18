@@ -8,10 +8,9 @@ on:
       - release
 
 env:
-  nodeVersion: 20
+  NODE_VERSION: 20
 
-# Cancel in progress workflows on pull_requests. A Doppler Service Token provides read-only
-# access to a single config and is recommended due to its limited access scope.
+# Cancel in progress workflows on pull_requests.
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
@@ -27,17 +26,16 @@ jobs:
     runs-on: ${{ matrix.platform }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Run actions/setup-sdk@local
         uses: ./.github/setup-sdk
         with:
-          nodeVersion: ${{ env.nodeVersion }}
-          workspacePath: './src-tauri -> target'
+          NODE_VERSION: ${{ env.NODE_VERSION }}
 
       - if: ${{ steps.pnpm-cache.outputs.cache-hit != 'true' }}
         name: Install frontend dependencies
         run: |
-          pnpm install && pnpm build
+          pnpm install && pnpm build:ui
 
       - name: Build the main application
         uses: tauri-apps/tauri-action@v0

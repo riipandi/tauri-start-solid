@@ -1,35 +1,77 @@
-/// <reference types="vitest" />
-/// <reference types="vite/client" />
-
-import { resolve } from 'node:path'
-
-import react from '@vitejs/plugin-react'
+import process from 'node:process'
+import tailwindcss from '@tailwindcss/vite'
+import { resolve } from 'pathe'
+import { env, isCI, isDevelopment } from 'std-env'
 import { defineConfig } from 'vite'
+import solid from 'vite-plugin-solid'
+import tsconfigPaths from 'vite-tsconfig-paths'
+
+const host = env.TAURI_DEV_HOST
+const isDev = isDevelopment || process.env.TAURI_ENV_DEBUG
 
 export default defineConfig(async () => ({
-  plugins: [react()],
-  define: { 'import.meta.env.APP_VERSION': `"${process.env.npm_package_version}"` },
-  // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
-  // @reference: https://tauri.studio/v1/api/config#buildconfig.beforedevcommand
+  plugins: [solid(), tailwindcss(), tsconfigPaths()],
+  // Environment variables starting with the item of `envPrefix`
+  // will be exposed in tauri's source code through `import.meta.env`.
+  envPrefix: ['VITE_', 'TAURI_ENV_*'],
+  publicDir: resolve('assets'),
   clearScreen: false,
-  server: { port: 1420, strictPort: true },
-  envPrefix: ['VITE_', 'TAURI_'],
-  resolve: {
-    alias: [
-      { find: '@', replacement: resolve(__dirname, 'src') },
-      { find: '~', replacement: resolve(__dirname, 'public') },
-    ],
+  server: {
+    port: 1420,
+    strictPort: true,
+    host: host || false,
+    hmr: host ? { protocol: 'ws', host, port: 1421 } : undefined,
+    watch: {
+      // Tell vite to ignore watching `src-tauri`
+      ignored: ['**/src-tauri/**'],
+    },
   },
   build: {
+    // Tauri uses Chromium on Windows and WebKit on macOS and Linux
+    target: process.env.TAURI_ENV_PLATFORM === 'windows' ? 'chrome105' : 'safari13',
+    manifest: true,
+    minify: !isDev,
+    sourcemap: !!isDev,
     emptyOutDir: true,
-    chunkSizeWarningLimit: 1200,
+    chunkSizeWarningLimit: 1024,
     reportCompressedSize: false,
-    outDir: resolve(__dirname, 'dist'),
+    outDir: resolve('.output/client'),
+    terserOptions: { format: { comments: false } },
+    esbuild: { legalComments: 'inline' },
+    rollupOptions: {
+      output: {
+        // Output with hash in filename
+        entryFileNames: `assets/[name]-[hash].js`,
+        chunkFileNames: `assets/[name]-[hash].js`,
+        assetFileNames: `assets/[name]-[hash].[ext]`,
+      },
+    },
   },
   test: {
-    globals: true,
     environment: 'jsdom',
-    cache: { dir: './node_modules/.vitest' },
-    include: ['./**/*.{test,spec}.{ts,tsx}'],
+    exclude: ['node_modules', 'tests-e2e'],
+    reporters: isCI ? ['html', 'github-actions'] : ['html', 'default'],
+    include: ['./tests/**/*.{test,spec}.{ts,tsx}'],
+    setupFiles: ['./tests/setup-client.ts'],
+    outputFile: {
+      json: './tests-results/vitest-results.json',
+      html: './tests-results/index.html',
+    },
+    coverage: {
+      provider: 'v8',
+      reporter: ['html-spa', 'text-summary'],
+      reportsDirectory: './tests-results/coverage',
+      cleanOnRerun: true,
+      clean: true,
+      thresholds: {
+        global: {
+          statements: 80,
+          branches: 70,
+          functions: 75,
+          lines: 80,
+        },
+      },
+    },
+    globals: true,
   },
 }))
