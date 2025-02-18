@@ -3,8 +3,7 @@ import { create } from '@storybook/theming'
 const brand = {
   brandTitle: 'UI Components',
   brandUrl: '/',
-  fontBase:
-    '"Inter", Helvetica, Arial, system-ui, sans-serif, "Segoe UI", Roboto, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+  fontBase: '"Inter", Helvetica, Arial, system-ui, sans-serif, "Segoe UI", Roboto',
   appBorderRadius: 4,
   inputBorderRadius: 4,
 }

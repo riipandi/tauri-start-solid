@@ -1,3 +1,4 @@
+import process from 'node:process'
 import tailwindcss from '@tailwindcss/vite'
 import { resolve } from 'pathe'
 import { env, isCI, isDevelopment } from 'std-env'
@@ -13,6 +14,7 @@ export default defineConfig(async () => ({
   // Environment variables starting with the item of `envPrefix`
   // will be exposed in tauri's source code through `import.meta.env`.
   envPrefix: ['VITE_', 'TAURI_ENV_*'],
+  publicDir: resolve('assets'),
   clearScreen: false,
   server: {
     port: 1420,

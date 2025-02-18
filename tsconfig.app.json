@@ -20,6 +20,9 @@
         "noImplicitAny": true,
         "noImplicitOverride": true,
         "noUncheckedIndexedAccess": false,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "preserveWatchOutput": true,
         "resolveJsonModule": true,
         "rewriteRelativeImportExtensions": true,
         "skipLibCheck": true,
@@ -28,7 +31,7 @@
         "strictNullChecks": true,
         "strictPropertyInitialization": true,
         "target": "ES2023",
-        "tsBuildInfoFile": "./.temp/tsconfig.app.tsbuildinfo",
+        "tsBuildInfoFile": "./.output/tsconfig.app.tsbuildinfo",
         "types": ["vite/client", "@testing-library/jest-dom"],
         "useDefineForClassFields": true,
         "verbatimModuleSyntax": false,
@@ -39,5 +42,5 @@
         }
     },
     "include": ["src", "tests/**/*", ".storybook/**/*"],
-    "exclude": ["vite.config.ts", "vitest.*.ts", "tests-results"]
+    "exclude": ["vite.config.ts", "vitest.config.ts", "tests-results"]
 }

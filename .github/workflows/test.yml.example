@@ -39,7 +39,7 @@ jobs:
       - name: Run actions/setup-sdk@local
         uses: ./.github/setup-sdk
         with:
-          NODE_VERSION: ${{ env.NODE_VERSION }}
+          nodeVersion: ${{ env.NODE_VERSION }}
 
       - name: Install dependencies (ubuntu only)
         if: matrix.os == 'ubuntu-20.04'

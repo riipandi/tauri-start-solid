@@ -1,17 +1,17 @@
 {
     "$schema": "https://schema.tauri.app/config/2",
-    "productName": "Tauri App",
     "identifier": "com.example.tauri-start-solid",
+    "productName": "Tauri App",
     "version": "0.0.0",
     "build": {
         "beforeDevCommand": "pnpm dev:ui",
         "beforeBuildCommand": "pnpm build:ui",
-        "devUrl": "http://localhost:1420",
-        "frontendDist": "../.output/client"
+        "frontendDist": "../.output/client",
+        "devUrl": "http://localhost:1420"
     },
     "app": {
-        "withGlobalTauri": true,
         "macOSPrivateApi": true,
+        "withGlobalTauri": true,
         "security": {
             "pattern": {
                 "use": "brownfield"
@@ -28,9 +28,8 @@
         "copyright": "Copyright © 2025 Your Company",
         "shortDescription": "A Tauri application",
         "longDescription": "A Tauri application built with Tauri, SolidJS, and TypeScript",
-        "targets": ["app", "dmg", "nsis", "deb", "appimage"],
-        "createUpdaterArtifacts": true,
-        "licenseFile": "../LICENSE",
+        "createUpdaterArtifacts": false,
+        "targets": "all",
         "macOS": {
             "dmg": {
                 "appPosition": {
@@ -65,10 +64,6 @@
             },
             "wix": null
         },
-        "iOS": {
-            "minimumSystemVersion": "13.0",
-            "developmentTeam": "Your Company"
-        },
         "resources": [],
         "icon": [
             "icons/32x32.png",
@@ -79,9 +74,6 @@
         ]
     },
     "plugins": {
-        "shell": {
-            "open": true
-        },
         "updater": {
             "active": true,
             "dialog": true,

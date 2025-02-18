@@ -2,9 +2,9 @@
 
 [![Contribution welcome](https://img.shields.io/badge/Contributions-welcome-gray.svg)](https://github.com/riipandi/tauri-start-solid/pulse)
 [![Rust version](https://img.shields.io/badge/rust-v1.77-FF5500.svg?logo=rust)](https://www.rust-lang.org)
-[![Tauri version](https://img.shields.io/badge/Tauri-v2.0.0-00aaff.svg?logo=tauri)](https://tauri.app)
+[![Tauri version](https://img.shields.io/badge/Tauri-v2-00aaff.svg?logo=tauri)](https://tauri.app)
 ![Repo Size](https://img.shields.io/github/repo-size/riipandi/tauri-start-solid)
-<!-- [![CI Test](https://github.com/riipandi/tauri-start-solid/actions/workflows/ci-test.yml/badge.svg)](https://github.com/riipandi/tauri-start-solid/actions/workflows/ci-test.yml) -->
+<!-- [![CI Test](https://github.com/riipandi/tauri-start-solid/actions/workflows/test.yml/badge.svg)](https://github.com/riipandi/tauri-start-solid/actions/workflows/test.yml) -->
 
 ---
 
@@ -14,7 +14,7 @@ with tray menu support using Tauri, SolidJS, Nano Stores, Typescript, Tailwind C
 ## Quick Start
 
 ```sh
-pnpm dlx degit riipandi/tauri-start-solid my-app
+pnpm dlx tiged riipandi/tauri-start-solid my-app
 ```
 
 1. Install required toolchains: [Rust][rust], [Node.js][nodejs], [PNPM][pnpm], and [Lefthook][lefthook].
@@ -30,24 +30,25 @@ to build the application in debug mode, this will enable developer tools.
 
 ## What's Inside?
 
-- [x] Tauri v2 + essential plugins:
+- [ ] Tauri v2 + essential plugins:
     - [x] `tauri-plugin-dialog`
-    - [x] `tauri-plugin-fs`
+    - [ ] `tauri-plugin-fs`
     - [x] `tauri-plugin-http`
-    - [x] `tauri-plugin-log`
-    - [x] `tauri-plugin-notification`
+    - [ ] `tauri-plugin-log`
+    - [ ] `tauri-plugin-notification`
     - [x] `tauri-plugin-os`
+    - [x] `tauri-plugin-positioner`
     - [x] `tauri-plugin-process`
     - [x] `tauri-plugin-shell`
-- [x] Example secondary child window
 - [x] Custom titlebar (desktop)
-- [ ] Custom application menu
-- [ ] Custom application updater
+- [x] Custom application menu
+- [x] Application updater
+- [ ] Secondary child window
 - [x] Read values from `.env` file
 - [x] Auto-generated Typescript types
 - [x] Theme switcher (dark & light mode)
-- [x] Application settings with separated window
-- [x] Global state with [`native_db`][native_db] as backend
+- [ ] Application settings with separated window
+- [x] Global state with [`persy`][persy] key-value database as backend
 - [x] Frontend app with [SolidJS][solidjs] + [Tailwind CSS][tailwindcss]
 - [x] Frontend lint & format using [Biome][biome]
 - [x] Git hooks tasks with [Lefthook][lefthook]
@@ -70,8 +71,8 @@ xattr -r -d com.apple.quarantine "/Applications/Tauri App.app"
 
 ## Screenshots
 
-![Screenshot](./src/assets/images/screenshot-light.jpeg)
-![Screenshot](./src/assets/images/screenshot-dark.jpeg)
+![Screenshot](./assets/images/screenshot-light.jpeg)
+![Screenshot](./assets/images/screenshot-dark.jpeg)
 
 ## Acknowledgements
 
@@ -107,7 +108,7 @@ for more information.
 [nodejs]: https://nodejs.org/en/download
 [pnpm]: https://pnpm.io/installation
 [tailwindcss]: https://tailwindcss.com
-[native_db]: https://github.com/vincent-herlemont/native_db
+[persy]: https://crates.io/crates/persy
 [lefthook]: https://github.com/evilmartians/lefthook
 [riipandi-twitter]: https://twitter.com/intent/follow?screen_name=riipandi
 [license-mit]: https://choosealicense.com/licenses/mit/

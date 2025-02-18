@@ -1,12 +1,8 @@
 /node_modules
-/.rollup.cache
 /.fleet
 /.idea
 /.pnp
-/.cache
 /.husky
-/.temp
-/.tmp
 .pnp.js
 .DS_Store
 .DS_Store?
@@ -16,6 +12,7 @@ ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
 *tsbuildinfo
+.rollup.cache
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
@@ -34,12 +31,13 @@ build/
 dist/
 .data
 .dist
-.nitro
 .cache
 .output
 .client
 .build
 .wrangler
+.temp
+.tmp
 
 # envars
 .env.*
@@ -72,7 +70,6 @@ vitest.workspace.*
 # Miscellaneous
 pnpm-exec-summary.json
 slim.report.json
-depgraph.png
 
 # Terraform
 .terraform/
@@ -80,10 +77,6 @@ depgraph.png
 terraform.tfstate*
 terraform.tfvars*
 !terraform.tfvars.example
-
-# fly.io
-fly*.toml*
-!fly*.example.toml
 
 # Tauri
 .tauri/
