@@ -43,7 +43,7 @@
         "tauri": "tauri"
     },
     "dependencies": {
-        "@kobalte/core": "^0.13.8",
+        "@ark-ui/solid": "^4.10.1",
         "@nanostores/persistent": "^0.10.2",
         "@nanostores/solid": "^0.5.0",
         "@solidjs/router": "^0.15.3",
@@ -82,14 +82,10 @@
         "@types/node": "^22.13.4",
         "@vitest/coverage-v8": "^3.0.6",
         "@vitest/ui": "^3.0.6",
-        "autoprefixer": "^10.4.20",
-        "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "jsdom": "^26.0.0",
-        "keep-a-changelog": "^2.5.3",
         "lefthook": "^1.10.10",
         "npm-check-updates": "^17.1.14",
-        "postcss": "^8.5.2",
         "rtk": "^3.1.1",
         "storybook": "^8.5.7",
         "storybook-solidjs": "^1.0.0-beta.6",

@@ -34,14 +34,14 @@ export default function NotFound() {
           <div class="mt-10 flex items-center justify-center gap-x-4">
             <button
               type="button"
-              class="min-w-[160px] rounded-lg bg-blue-500 px-5 py-2.5 font-semibold text-black text-sm transition-all duration-200 hover:bg-blue-400 hover:shadow-blue-500/20 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:ring-offset-2 focus:ring-offset-gray-950"
+              class="min-w-[160px] rounded-lg bg-blue-500 px-5 py-2.5 font-semibold text-black text-sm duration-200 hover:bg-blue-400 hover:shadow-blue-500/20 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:ring-offset-2 focus:ring-offset-gray-950"
               onClick={handleBack}
             >
               Go back
             </button>
             <Link
               href="#"
-              class="min-w-[160px] rounded-lg border border-gray-800 bg-gray-900/80 px-5 py-2.5 text-center font-semibold text-gray-200 text-sm transition-all duration-200 hover:border-blue-500/30 hover:bg-gray-800 hover:text-blue-400 hover:shadow-blue-500/10 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:ring-offset-2 focus:ring-offset-gray-950"
+              class="min-w-[160px] rounded-lg border border-gray-800 bg-gray-900/80 px-5 py-2.5 text-center font-semibold text-gray-200 text-sm duration-200 hover:border-blue-500/30 hover:bg-gray-800 hover:text-blue-400 hover:shadow-blue-500/10 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:ring-offset-2 focus:ring-offset-gray-950"
             >
               View Documentation
             </Link>

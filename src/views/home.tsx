@@ -5,8 +5,7 @@ import { fetch } from '@tauri-apps/plugin-http'
 import { sendNotification } from '@tauri-apps/plugin-notification'
 import { isPermissionGranted, requestPermission } from '@tauri-apps/plugin-notification'
 import { Show, createEffect, createSignal, onMount } from 'solid-js'
-import { Button, Link, TextField, TextFieldRoot } from '#/components/base-ui'
-import { Card, CardContent, CardHeader, CardTitle } from '#/components/base-ui'
+import { Button, Card, CardContent, CardHeader, CardTitle, Link } from '#/components/base-ui'
 import { ThemeSwitcher } from '#/components/theme/switcher'
 import { resetUiState, saveUiState, uiStore } from '#/context/stores/ui.store'
 import { APP_NAME, commands } from '#/libs/bindings'
@@ -102,16 +101,16 @@ export default function Component() {
             </CardHeader>
             <CardContent class="space-y-6">
               <div class="space-y-4 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
-                <TextFieldRoot class="flex items-center gap-3 space-y-0">
-                  <TextField
+                <div class="flex items-center gap-3 space-y-0">
+                  <input
                     type="text"
+                    class="flex h-9 w-full flex-1 rounded-sm border border-input bg-transparent px-3 py-1 text-sm shadow-sm file:border-0 file:bg-transparent file:font-medium file:text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-[1.5px] focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                     placeholder="What's your name?"
-                    value={name()}
                     onInput={(e) => setName(e.currentTarget.value)}
-                    class="flex-1"
+                    value={name()}
                   />
                   <Button onClick={greet}>Greet</Button>
-                </TextFieldRoot>
+                </div>
 
                 <Show when={greetMsg()}>
                   <p class="whitespace-pre-line break-words p-1 text-center text-gray-700 dark:text-gray-300">

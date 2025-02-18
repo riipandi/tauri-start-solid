@@ -7,9 +7,10 @@ import { type ButtonVariants } from './button.css'
 
 const variantOptions: NonNullable<ButtonVariants['variant']>[] = [
   'default',
+  'primary',
+  'secondary',
   'destructive',
   'outline',
-  'secondary',
   'ghost',
   'link',
 ]

@@ -1,39 +1,42 @@
-import type { ButtonRootProps } from '@kobalte/core/button'
-import { Button as ButtonPrimitive } from '@kobalte/core/button'
-import type { PolymorphicProps } from '@kobalte/core/polymorphic'
-import { JSX, type ValidComponent, splitProps } from 'solid-js'
-import { clx } from '#/libs/utils'
-import { ButtonVariants, buttonStyles } from './button.css'
+import type { Assign } from '@ark-ui/solid'
+import { type HTMLArkProps, ark } from '@ark-ui/solid/factory'
+import * as Lucide from 'lucide-solid'
+import { type Component, splitProps } from 'solid-js'
+import { type ButtonVariants, buttonStyles } from './button.css'
 
-/**
- * Button component props type definition
- */
-export type ButtonProps<T extends ValidComponent = 'button'> = ButtonRootProps<T> &
-  ButtonVariants & {
-    class?: string
-    loading?: boolean
-    onClick?: (e: Event & { currentTarget: HTMLButtonElement; target: JSX.Element }) => void
-  }
+export interface ButtonProps extends Assign<HTMLArkProps<'button'>, ButtonVariants> {}
 
-/**
- * Button component with multiple variants and sizes
- */
-export const Button = <T extends ValidComponent = 'button'>(
-  props: PolymorphicProps<T, ButtonProps<T>>
-) => {
-  const [local, rest] = splitProps(props as ButtonProps, ['class', 'variant', 'size', 'fullWidth'])
+const Button: Component<ButtonProps> = (props) => {
+  const [local, others] = splitProps(props, [
+    'variant',
+    'size',
+    'class',
+    'isLoading',
+    'disabled',
+    'children',
+    'asChild',
+  ])
+
+  const isDisabled = () => local.disabled || local.isLoading
+  const styles = buttonStyles({
+    variant: local.variant,
+    size: local.size,
+    isLoading: local.isLoading,
+    class: local.class,
+  })
 
   return (
-    <ButtonPrimitive
-      class={clx(
-        buttonStyles({
-          variant: local.variant,
-          size: local.size,
-          fullWidth: local.fullWidth,
-        }),
-        local.class
-      )}
-      {...rest}
-    />
+    <ark.button
+      class={styles}
+      data-loading={local.isLoading}
+      disabled={isDisabled()}
+      asChild={local.asChild}
+      {...others}
+    >
+      {local.isLoading && <Lucide.Loader2 strokeWidth={2} />}
+      {local.children}
+    </ark.button>
   )
 }
+
+export { Button }
