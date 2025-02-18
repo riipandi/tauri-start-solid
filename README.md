@@ -30,7 +30,7 @@ to build the application in debug mode, this will enable developer tools.
 
 ## What's Inside?
 
-- [ ] Tauri v2 + essential plugins:
+- [x] Tauri v2 + essential plugins:
     - [x] `tauri-plugin-dialog`
     - [x] `tauri-plugin-http`
     - [x] `tauri-plugin-log`
