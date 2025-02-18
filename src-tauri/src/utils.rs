@@ -14,7 +14,7 @@ use tauri_plugin_updater::UpdaterExt;
 /// * `Result<(), String>` - Success or error message
 pub fn force_reload<R: Runtime>(window: &mut WebviewWindow<R>) -> Result<(), String> {
     let current_url = window.url().map_err(|e| e.to_string())?;
-    println!("Force reloading page: {}", current_url.as_str());
+    log::debug!("Force reloading page: {}", current_url.as_str());
     window.navigate(current_url).map_err(|e| e.to_string())
 }
 
@@ -36,9 +36,7 @@ pub async fn update<R: Runtime>(app: tauri::AppHandle<R>) -> tauri_plugin_update
     match app.updater()?.check().await {
         Ok(Some(update)) => {
             let mut downloaded = 0;
-
-            println!("Update download started at: {}", formatted_time);
-
+            log::info!("Update download started");
             app.emit(
                 "app-updater",
                 UpdateStatus {
@@ -79,9 +77,7 @@ pub async fn update<R: Runtime>(app: tauri::AppHandle<R>) -> tauri_plugin_update
                         let timestamp = now.duration_since(UNIX_EPOCH).unwrap().as_millis();
                         let dt = DateTime::<Local>::from(now);
                         let formatted_time = dt.format("%Y-%m-%d %H:%M:%S%.3f %Z").to_string();
-
-                        println!("Update download completed at: {}", formatted_time);
-
+                        log::info!("Update download completed");
                         app.emit(
                             "app-updater",
                             UpdateStatus {
@@ -100,7 +96,7 @@ pub async fn update<R: Runtime>(app: tauri::AppHandle<R>) -> tauri_plugin_update
                 Ok(_) => Ok(()),
                 Err(e) => {
                     let error_msg = format!("Failed to download update: {}", e);
-                    eprintln!("[{}] {}", formatted_time, error_msg);
+                    log::error!("{error_msg}");
 
                     app.emit(
                         "app-updater",
@@ -119,8 +115,7 @@ pub async fn update<R: Runtime>(app: tauri::AppHandle<R>) -> tauri_plugin_update
             }
         }
         Ok(None) => {
-            println!("No updates available at: {}", formatted_time);
-
+            log::info!("No updates available");
             app.emit(
                 "app-updater",
                 UpdateStatus {
@@ -132,13 +127,11 @@ pub async fn update<R: Runtime>(app: tauri::AppHandle<R>) -> tauri_plugin_update
                 },
             )
             .unwrap();
-
             Ok(())
         }
         Err(e) => {
             let error_msg = format!("Failed to check for updates: {}", e);
-            eprintln!("[{}] {}", formatted_time, error_msg);
-
+            log::error!("{error_msg}");
             app.emit(
                 "app-updater",
                 UpdateStatus {
@@ -150,7 +143,6 @@ pub async fn update<R: Runtime>(app: tauri::AppHandle<R>) -> tauri_plugin_update
                 },
             )
             .unwrap();
-
             Ok(())
         }
     }

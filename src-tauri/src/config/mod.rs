@@ -35,19 +35,19 @@ pub fn setup_config_store<R: tauri::Runtime>(app: &tauri::App<R>) -> Result<(), 
 
     // Load existing config or create default
     if let Ok(Some(current_config)) = config_store.get(&CONFIG_KEY.to_string()) {
-        println!("Current config: {:?}", current_config);
+        log::debug!("Current config: {:?}", current_config);
     } else {
-        println!("Creating default config");
+        log::debug!("Creating default config");
         config_store.insert(CONFIG_KEY.to_string(), &AppConfig::default())?;
     }
 
     // Debug logging in development mode
     #[cfg(debug_assertions)]
     {
-        println!("Store size: {} entries", config_store.size()?);
-        println!("Store keys: {:?}", config_store.keys()?);
-        println!("Store values: {:?}", config_store.values()?);
-        println!("Store pairs: {:?}", config_store.pairs()?);
+        log::debug!("Store size: {} entries", config_store.size()?);
+        log::debug!("Store keys: {:?}", config_store.keys()?);
+        log::debug!("Store values: {:?}", config_store.values()?);
+        log::debug!("Store pairs: {:?}", config_store.pairs()?);
     }
 
     // Register store in Tauri state management. We cannot directly mutate values

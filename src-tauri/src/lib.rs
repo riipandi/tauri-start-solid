@@ -7,7 +7,9 @@ mod tray;
 mod utils;
 mod window;
 
+use chrono::Local;
 use tauri::RunEvent;
+use tauri_plugin_log::{Target, TargetKind, TimezoneStrategy};
 use tauri_specta::collect_commands;
 use tauri_specta::Builder as SpectaBuilder;
 
@@ -43,10 +45,36 @@ pub fn run() {
     let builder = tauri::Builder::default();
     let tauri_ctx = tauri::generate_context!();
 
+    // Setup the logger (https://tauri.app/plugin/logging)
+    let plugin_log = tauri_plugin_log::Builder::new()
+        .level(log::LevelFilter::Debug)
+        .level_for("tauri", log::LevelFilter::Error)
+        .level_for("wry", log::LevelFilter::Off)
+        .level_for("tao", log::LevelFilter::Off)
+        .level_for("hyper", log::LevelFilter::Off)
+        .level_for("reqwest", log::LevelFilter::Error)
+        .level_for("tauri_plugin_updater", log::LevelFilter::Debug)
+        .timezone_strategy(TimezoneStrategy::UseLocal)
+        .format(|out, message, record| {
+            let now = Local::now();
+            let level = record.level().to_string();
+            let padding = " ".repeat(6 - level.len());
+            out.finish(format_args!(
+                "[{}][{}][{}]{}{}",
+                now.format("%Y-%m-%d"),
+                now.format("%H:%M:%S"),
+                level,
+                padding,
+                message
+            ))
+        })
+        .targets([Target::new(TargetKind::Stdout).filter(|meta| meta.level() != log::Level::Trace)]);
+
     // Register Tauri plugins
     let builder = builder
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_http::init())
+        .plugin(plugin_log.build())
         .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_positioner::init())
         .plugin(tauri_plugin_process::init())
@@ -87,8 +115,8 @@ pub fn run() {
         let handle = app.handle().clone();
         tauri::async_runtime::spawn(async move {
             match utils::update(handle).await {
-                Ok(_) => println!("Automatic update check completed successfully"),
-                Err(e) => println!("Automatic update check failed: {}", e),
+                Ok(_) => log::info!("Automatic update check completed successfully"),
+                Err(e) => log::error!("Automatic update check failed: {}", e),
             }
         });
 

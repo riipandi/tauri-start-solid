@@ -78,6 +78,7 @@
             ]
         },
         "dialog:default",
+        "log:default",
         "positioner:default",
         "process:default",
         "shell:allow-open"

@@ -52,7 +52,7 @@ async fn start_proxy<R: Runtime>(app: AppHandle<R>) {
     let proxy = match SchemeProxy::with_new_connection().await {
         Ok(proxy) => proxy,
         Err(err) => {
-            eprintln!("{:?}", err);
+            log::error!("{:?}", err);
             return;
         }
     };
@@ -60,7 +60,7 @@ async fn start_proxy<R: Runtime>(app: AppHandle<R>) {
     let mut stream = match proxy.init_and_receive_changed().await {
         Ok(stream) => stream,
         Err(err) => {
-            eprintln!("{:?}", err);
+            log::error!("{:?}", err);
             return;
         }
     };
