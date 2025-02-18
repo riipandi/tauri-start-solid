@@ -35,7 +35,7 @@ to build the application in debug mode, this will enable developer tools.
     - [ ] `tauri-plugin-fs`
     - [x] `tauri-plugin-http`
     - [x] `tauri-plugin-log`
-    - [ ] `tauri-plugin-notification`
+    - [x] `tauri-plugin-notification`
     - [x] `tauri-plugin-os`
     - [x] `tauri-plugin-positioner`
     - [x] `tauri-plugin-process`

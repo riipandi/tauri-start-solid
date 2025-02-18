@@ -69,18 +69,32 @@
         "core:window:allow-unmaximize",
         "core:window:allow-unminimize",
         "core:window:default",
+        "dialog:default",
         {
             "identifier": "http:default",
-            "allow": [
-                {
-                    "url": "https://i18n-quotes.victr.workers.dev"
-                }
-            ]
+            "allow": [{ "url": "https://i18n-quotes.victr.workers.dev" }]
         },
-        "dialog:default",
         "log:default",
+        "notification:allow-batch",
+        "notification:allow-cancel",
+        "notification:allow-check-permissions",
+        "notification:allow-create-channel",
+        "notification:allow-delete-channel",
+        "notification:allow-get-active",
+        "notification:allow-get-pending",
+        "notification:allow-is-permission-granted",
+        "notification:allow-list-channels",
+        "notification:allow-notify",
+        "notification:allow-permission-state",
+        "notification:allow-register-action-types",
+        "notification:allow-register-listener",
+        "notification:allow-remove-active",
+        "notification:allow-request-permission",
+        "notification:allow-show",
+        "os:default",
         "positioner:default",
         "process:default",
-        "shell:allow-open"
+        "shell:allow-open",
+        "updater:default"
     ]
 }

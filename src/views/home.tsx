@@ -1,5 +1,9 @@
 import { useStore } from '@nanostores/solid'
+import { getName } from '@tauri-apps/api/app'
+import { ask } from '@tauri-apps/plugin-dialog'
 import { fetch } from '@tauri-apps/plugin-http'
+import { sendNotification } from '@tauri-apps/plugin-notification'
+import { isPermissionGranted, requestPermission } from '@tauri-apps/plugin-notification'
 import { Show, createEffect, createSignal, onMount } from 'solid-js'
 import { Button, Link, TextField, TextFieldRoot } from '#/components/base-ui'
 import { Card, CardContent, CardHeader, CardTitle } from '#/components/base-ui'
@@ -43,6 +47,36 @@ export default function Component() {
 
   async function greet() {
     setGreetMsg(await commands.greet(name()))
+  }
+
+  async function handleReset() {
+    const appName = await getName()
+
+    // Create a Yes/No dialog
+    const answer = await ask('Are you sure?', {
+      title: 'Reset State',
+      kind: 'warning',
+    })
+
+    if (!answer) {
+      return
+    }
+
+    // Do you have permission to send a notification?
+    let permissionGranted = await isPermissionGranted()
+
+    // If not we need to request it
+    if (!permissionGranted) {
+      const permission = await requestPermission()
+      permissionGranted = permission === 'granted'
+    }
+
+    // Once permission has been granted we can send the notification
+    if (permissionGranted) {
+      sendNotification({ title: appName, body: 'Tauri is awesome!' })
+    }
+
+    resetUiState()
   }
 
   return (
@@ -94,7 +128,7 @@ export default function Component() {
                 >
                   Quote Number {uiState().counter}
                 </Button>
-                <Button onClick={() => resetUiState()} variant="destructive" class="w-24">
+                <Button onClick={handleReset} variant="destructive" class="w-24">
                   Reset
                 </Button>
               </div>

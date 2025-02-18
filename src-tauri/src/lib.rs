@@ -72,9 +72,10 @@ pub fn run() {
 
     // Register Tauri plugins
     let builder = builder
+        .plugin(plugin_log.build())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_http::init())
-        .plugin(plugin_log.build())
+        .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_positioner::init())
         .plugin(tauri_plugin_process::init())
