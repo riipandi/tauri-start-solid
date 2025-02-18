@@ -32,7 +32,6 @@ to build the application in debug mode, this will enable developer tools.
 
 - [ ] Tauri v2 + essential plugins:
     - [x] `tauri-plugin-dialog`
-    - [ ] `tauri-plugin-fs`
     - [x] `tauri-plugin-http`
     - [x] `tauri-plugin-log`
     - [x] `tauri-plugin-notification`
@@ -43,7 +42,6 @@ to build the application in debug mode, this will enable developer tools.
 - [x] Custom titlebar (desktop)
 - [x] Custom application menu
 - [x] Application updater
-- [ ] Secondary child window
 - [x] Read values from `.env` file
 - [x] Auto-generated Typescript types
 - [x] Theme switcher (dark & light mode)
