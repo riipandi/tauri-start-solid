@@ -10,6 +10,7 @@ import RootLayout from '#/layouts/root-layout'
 
 // Lazy loading views
 const Home = lazy(() => import('#/views/home'))
+const Settings = lazy(() => import('#/views/settings'))
 const NotFound = lazy(() => import('#/views/404'))
 
 // This is the entry point of the application.
@@ -29,6 +30,7 @@ const MainApp = () => {
   ) : (
     <Router root={RootLayout}>
       <Route path="/" component={Home} />
+      <Route path="/settings" component={Settings} />
       <Route path="*404" component={NotFound} />
     </Router>
   )

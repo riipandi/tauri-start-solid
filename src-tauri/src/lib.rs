@@ -18,7 +18,7 @@ use config::setup_config_store;
 use menu::setup_menu;
 use theme::{get_theme, set_theme};
 use tray::setup_tray;
-use window::create_main_window;
+use window::{create_main_window, create_settings_window};
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -88,6 +88,7 @@ pub fn run() {
 
         setup_config_store(app)?;
         create_main_window(app)?;
+        create_settings_window(app)?;
         setup_tray(app)?;
         setup_menu(app)?;
 

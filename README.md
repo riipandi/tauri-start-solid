@@ -45,7 +45,7 @@ to build the application in debug mode, this will enable developer tools.
 - [x] Read values from `.env` file
 - [x] Auto-generated Typescript types
 - [x] Theme switcher (dark & light mode)
-- [ ] Application settings with separated window
+- [x] Application settings with separated window
 - [x] Global state with [`persy`][persy] key-value database as backend
 - [x] Frontend app with [SolidJS][solidjs] + [Tailwind CSS][tailwindcss]
 - [x] Frontend lint & format using [Biome][biome]
