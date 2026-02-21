@@ -4,13 +4,13 @@
         "bradlc.vscode-tailwindcss",
         "darkriszty.markdown-table-prettify",
         "EditorConfig.EditorConfig",
+        "fill-labs.dependi",
         "foxundermoon.shell-format",
         "rust-lang.rust-analyzer",
-        "serayuzgur.crates",
         "tamasfe.even-better-toml",
         "tauri-apps.tauri-vscode",
-        "unifiedjs.vscode-mdx",
-        "vadimcn.vscode-lldb"
+        "vadimcn.vscode-lldb",
+        "vunguyentuan.vscode-css-variables"
     ],
     "unwantedRecommendations": []
 }

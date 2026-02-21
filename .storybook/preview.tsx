@@ -25,7 +25,7 @@ const preview: Preview = {
       exclude: ['asChild', 'onClick'],
     },
     viewport: {
-      viewports: {
+      options: {
         smallMobile: {
           name: 'Small mobile',
           styles: { width: '320px', height: '568px' },
@@ -60,7 +60,7 @@ const preview: Preview = {
         ],
       },
     },
-    backgrounds: { disable: true },
+    backgrounds: { disabled: true },
     layout: 'padded',
     chromatic: {
       modes: {
@@ -96,7 +96,6 @@ const preview: Preview = {
         title: 'Color Scheme',
         icon: 'paintbrush',
         dynamicTitle: false,
-        showName: false,
         items: [
           { title: 'Match system', value: 'system', icon: 'mirror' },
           { title: 'Light Mode', value: 'light', icon: 'circlehollow' },

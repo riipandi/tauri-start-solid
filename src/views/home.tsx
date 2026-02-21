@@ -5,7 +5,6 @@ import { sendNotification } from '@tauri-apps/plugin-notification'
 import { isPermissionGranted, requestPermission } from '@tauri-apps/plugin-notification'
 import { Show, createEffect, createSignal, onMount } from 'solid-js'
 import { Button, Card, CardContent, CardHeader, CardTitle, Link } from '#/components/base-ui'
-import { ThemeSwitcher } from '#/components/theme/switcher'
 import { resetUiState, saveUiState, uiStore } from '#/context/stores/ui.store'
 import { APP_NAME, commands } from '#/libs/bindings'
 
@@ -90,7 +89,6 @@ export default function Component() {
               </Link>
               <h1 class="font-bold text-2xl text-gray-900 dark:text-white">{APP_NAME}</h1>
             </div>
-            <ThemeSwitcher />
           </header>
 
           <div class="w-full flex-1 space-y-4">

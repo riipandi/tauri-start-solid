@@ -1,4 +1,4 @@
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 import * as Lucide from 'lucide-solid'
 import { For } from 'solid-js'
 import type { Meta, StoryObj } from 'storybook-solidjs'
