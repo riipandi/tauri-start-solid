@@ -31,16 +31,16 @@
         "strictNullChecks": true,
         "strictPropertyInitialization": true,
         "target": "ES2023",
-        "tsBuildInfoFile": "./.output/tsconfig.app.tsbuildinfo",
+        "tsBuildInfoFile": "./.output/tsconfig_app.tsbuildinfo",
         "types": ["vite/client", "@testing-library/jest-dom"],
         "useDefineForClassFields": true,
         "verbatimModuleSyntax": false,
         "baseUrl": ".",
         "paths": {
-            "#/*": ["./src/*"],
+            "#/*": ["./src-app/*"],
             "~~/*": ["./*"]
         }
     },
-    "include": ["src", "tests/**/*", ".storybook/**/*"],
+    "include": ["src-app", "tests/**/*", ".storybook/**/*"],
     "exclude": ["vite.config.ts", "vitest.config.ts", "tests-results"]
 }

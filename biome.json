@@ -135,6 +135,6 @@
     "files": {
         "ignoreUnknown": true,
         "include": ["**/*.js", "**/*.mjs", "**/*.ts", "**/*.tsx", "**/*.css", "**/*.json"],
-        "ignore": [".github", ".output", "dist", "**/*.rs", "target", "src/libs/bindings.ts"]
+        "ignore": [".github", ".output", "dist", "**/*.rs", "target", "src-app/libs/bindings.ts"]
     }
 }

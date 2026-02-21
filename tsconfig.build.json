@@ -17,7 +17,7 @@
         "strict": true,
         "strictPropertyInitialization": true,
         "target": "ES2023",
-        "tsBuildInfoFile": "./.output/tsconfig.node.tsbuildinfo"
+        "tsBuildInfoFile": "./.output/tsconfig_build.tsbuildinfo"
     },
     "include": ["vite.config.ts", "vitest.config.ts"],
     "exclude": ["node_modules", "tests-results"]

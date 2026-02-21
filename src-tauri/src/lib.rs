@@ -38,7 +38,7 @@ pub fn run() {
             .header("/* eslint-disable */");
 
         specta_builder
-            .export(export_opts, "../src/libs/bindings.ts")
+            .export(export_opts, "../src-app/libs/bindings.ts")
             .expect("Failed to export typescript bindings");
     }
 

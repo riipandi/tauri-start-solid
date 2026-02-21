@@ -4,9 +4,9 @@ import { Link } from './components/link'
 import { light } from './themes'
 
 // Import the global Tailwind CSS styles
-import '../src/styles/global.css'
-import '../src/styles/colors.css'
-import '../src/styles/scrollbar.css'
+import '../src-app/styles/global.css'
+import '../src-app/styles/colors.css'
+import '../src-app/styles/scrollbar.css'
 
 const preview: Preview = {
   // Optional parameter to center the component in the Canvas.
