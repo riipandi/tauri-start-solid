@@ -1,7 +1,7 @@
 {
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["unicorn", "typescript", "oxc"],
-  "rules": {
-    "typescript/triple-slash-reference": "allow"
-  }
+    "$schema": "./node_modules/oxlint/configuration_schema.json",
+    "plugins": ["unicorn", "typescript", "oxc"],
+    "rules": {
+        "typescript/triple-slash-reference": "allow"
+    }
 }

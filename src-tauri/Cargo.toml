@@ -24,7 +24,7 @@ tauri-build = { version = "2.5.6", features = [] }
 
 [dependencies]
 # Tauri dependencies
-tauri = { version = "2.10.3", features = [ "tray-icon", "devtools"] }
+tauri = { version = "2.10.3", features = ["macos-private-api", "tray-icon", "devtools"] }
 tauri-plugin-dialog = "2.6.0"
 tauri-plugin-http = "2.5.7"
 tauri-plugin-log = "2.8.0"

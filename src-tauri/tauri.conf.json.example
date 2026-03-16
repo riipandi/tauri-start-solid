@@ -1,11 +1,11 @@
 {
     "$schema": "https://schema.tauri.app/config/2",
-    "identifier": "com.crabbycraft.torao",
-    "productName": "Torao",
+    "identifier": "com.example.tauri-start-solid",
+    "productName": "Tauri App",
     "version": "0.0.0",
     "build": {
         "removeUnusedCommands": true,
-        "beforeDevCommand": "pnpm -s devfront",
+        "beforeDevCommand": "pnpm -s dev:ui",
         "beforeBuildCommand": "pnpm -s build:ui",
         "frontendDist": "../.output/frontend",
         "devUrl": "http://localhost:1420"
@@ -25,10 +25,10 @@
     "bundle": {
         "active": true,
         "category": "DeveloperTool",
-        "publisher": "Crabby Craft",
-        "copyright": "Copyright © 2025 Crabby Craft",
+        "publisher": "Your Company",
+        "copyright": "Copyright © 2026 Your Team",
         "shortDescription": "A Tauri application",
-        "longDescription": "A Torao with a Rust backend and Lit web components",
+        "longDescription": "A Tauri application built with Tauri, SolidJS, and TypeScript",
         "createUpdaterArtifacts": true,
         "targets": "all",
         "macOS": {

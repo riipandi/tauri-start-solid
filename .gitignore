@@ -5,6 +5,7 @@
 .pnp.js
 .DS_Store
 .DS_Store?
+/storage/
 /coverage
 /[Tt]emp/
 /[Tt]mp/
@@ -76,10 +77,6 @@ compose.env*
 *storybook.log
 storybook-static/
 
-# Application data
-public/assets/styles.css
-/storage/
-
 # Miscellaneous
 pnpm-exec-summary.json
 slim.report.json
@@ -97,3 +94,9 @@ routes.gen.ts
 terraform.tfstate*
 terraform.tfvars*
 !terraform.tfvars.example
+
+# Tauri
+.tauri/
+target/
+src-tauri/gen/
+src-app/libs/bindings.ts

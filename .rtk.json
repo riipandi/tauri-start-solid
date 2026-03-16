@@ -1,0 +1,26 @@
+{
+    "tagFormat": "v{version}",
+    "resources": [
+        {
+            "path": "package.json",
+            "type": "json",
+            "params": {
+                "property": "version"
+            }
+        },
+        {
+            "path": "src-tauri/tauri.conf.json",
+            "type": "json",
+            "params": {
+                "property": "version"
+            }
+        },
+        {
+            "path": "src-tauri/Cargo.toml",
+            "type": "toml",
+            "params": {
+                "property": "package.version"
+            }
+        }
+    ]
+}

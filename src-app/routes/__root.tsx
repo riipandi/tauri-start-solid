@@ -7,5 +7,9 @@ export const Route = createRootRoute({
 })
 
 function RootComponent() {
-  return <Outlet />
+  return (
+    <div spellcheck={false} autocapitalize='none' aria-autocomplete='none'>
+      <Outlet />
+    </div>
+  )
 }

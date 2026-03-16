@@ -6,7 +6,7 @@ import solidDevTools from 'solid-devtools/vite'
 import { defineConfig } from 'vite'
 import solidPlugin from 'vite-plugin-solid'
 
-const isProduction = process.env.NODE_ENV === 'production'
+const isProduction = process.env.NODE_ENV === 'production' || !process.env.TAURI_ENV_DEBUG
 const host = process.env.TAURI_DEV_HOST
 
 export default defineConfig({
@@ -21,6 +21,10 @@ export default defineConfig({
     }),
     solidPlugin()
   ],
+  // Environment variables starting with the item of `envPrefix`
+  // will be exposed in tauri's source code through `import.meta.env`.
+  envPrefix: ['VITE_', 'TAURI_ENV_*'],
+  publicDir: resolve('assets'),
   resolve: {
     alias: {
       '#': resolve('./src-app'),
@@ -33,20 +37,24 @@ export default defineConfig({
     port: 1420,
     strictPort: true,
     host: host || false,
-    hmr: host
-      ? {
-          protocol: 'ws',
-          host,
-          port: 1421
-        }
-      : undefined,
-    watch: {
-      // 3. tell Vite to ignore watching `src-tauri`
-      ignored: ['**/src-tauri/**']
-    }
+    hmr: host ? { protocol: 'ws', host, port: 1421 } : undefined,
+    watch: { ignored: ['**/src-tauri/**', '**/dist/**', '**/.output/**'] }
   },
   build: {
+    // Tauri uses Chromium on Windows and WebKit on macOS and Linux
+    target: process.env.TAURI_ENV_PLATFORM === 'windows' ? 'chrome105' : 'safari13',
+    minify: isProduction ? 'oxc' : false,
     chunkSizeWarningLimit: 1024 * 2,
-    minify: isProduction ? 'oxc' : false
+    emptyOutDir: true,
+    manifest: true,
+    outDir: resolve('.output/frontend'),
+    rolldownOptions: {
+      input: resolve('index.html'),
+      output: {
+        entryFileNames: `assets/[name]-[hash].js`,
+        assetFileNames: `assets/[name]-[hash][extname]`,
+        chunkFileNames: `assets/[name]-[hash].js`
+      }
+    }
   }
 })

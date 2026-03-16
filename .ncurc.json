@@ -1,12 +1,12 @@
 {
-  "$schema": "https://cdn.jsdelivr.net/gh/raineorshine/npm-check-updates@main/src/types/RunOptions.json",
-  "interactive": true,
-  "upgrade": true,
-  "color": true,
-  "root": false,
-  "deep": false,
-  "install": "always",
-  "packageManager": "pnpm",
-  "silent": false,
-  "reject": []
+    "$schema": "https://cdn.jsdelivr.net/gh/raineorshine/npm-check-updates@main/src/types/RunOptions.json",
+    "interactive": true,
+    "upgrade": true,
+    "color": true,
+    "root": false,
+    "deep": false,
+    "install": "always",
+    "packageManager": "pnpm",
+    "silent": false,
+    "reject": []
 }
