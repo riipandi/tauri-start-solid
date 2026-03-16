@@ -46,11 +46,8 @@ pub fn run() {
         builder = builder.plugin(tauri_plugin_window_state::Builder::default().build());
     }
 
-    // Setup state for key-value database and connection before setup
-    builder = builder.manage(app_state.clone());
-
-    // Setup the application hooks
-    builder = builder.setup(hooks::setup_app);
+    // Setup application hooks to load database and other resources
+    builder = builder.manage(app_state.clone()).setup(hooks::setup_app);
 
     // Handle the window events
     builder = builder.on_window_event(|window, event| {
