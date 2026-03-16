@@ -6,5 +6,8 @@ pub mod menu;
 pub mod settings;
 pub mod updater;
 
+mod logger;
+pub use self::logger::*;
+
 mod window;
 pub use self::window::*;
