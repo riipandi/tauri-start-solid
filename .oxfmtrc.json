@@ -22,5 +22,14 @@
   "experimentalSortPackageJson": {
     "sortScripts": false
   },
-  "ignorePatterns": [".wrangler", "**/*.md", "**/*.mdx", "/public/**"]
+  "ignorePatterns": [
+    ".output",
+    ".wrangler",
+    "**/*.md",
+    "**/*.mdx",
+    "**/*.rs",
+    "**/target/**",
+    "/assets/**",
+    "/public/**"
+  ]
 }

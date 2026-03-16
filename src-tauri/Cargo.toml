@@ -1,9 +1,13 @@
 [package]
 name = "tauri-start-solid"
-version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
-edition = "2021"
+version = "0.0.0"
+description = "A Tauri application built with Tauri, SolidJS, and TypeScript"
+repository = "https://github.com/riipandi/tauri-start-solid"
+authors = ["You <you@example.com>"]
+license = "MIT or Apache-2.0"
+rust-version = "1.90"
+edition = "2024"
+publish = false
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -11,14 +15,78 @@ edition = "2021"
 # The `_lib` suffix may seem redundant but it is necessary
 # to make the lib name unique and wouldn't conflict with the bin name.
 # This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
-name = "tauri_start_solid_lib"
+name = "myapp_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
+dotenv-build = "0.1.1"
 tauri-build = { version = "2.5.6", features = [] }
 
 [dependencies]
-tauri = { version = "2.10.3", features = [] }
+# Tauri dependencies
+tauri = { version = "2.10.3", features = [ "tray-icon", "devtools"] }
+tauri-plugin-dialog = "2.6.0"
+tauri-plugin-http = "2.5.7"
+tauri-plugin-log = "2.8.0"
+tauri-plugin-notification = "2.3.3"
 tauri-plugin-opener = "2.5.3"
+tauri-plugin-os = "2.3.2"
+tauri-plugin-positioner = { version = "2.3.1", features = ["tray-icon"] }
+tauri-plugin-process = "2.3.1"
+tauri-plugin-shell = "2.3.5"
+
+# Essential crates
+anyhow = "1.0.102"
+chrono = "0.4.44"
+heed3 = "0.22.0"
+log = "0.4.29"
+rust-fontconfig = "2.0.0"
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.149"
+sysinfo = { version = "0.38.4", features = ["serde"] }
+thiserror = "2.0.18"
+tokio = { version = "1.50.0", features = ["macros", "sync", "time"] }
+url = { version = "2.5.8", features = ["serde"] }
+
+# Used to call the macOS native API
+[target.'cfg(target_os = "macos")'.dependencies]
+objc2-app-kit = "0.3.2"
+objc2 = "0.6.4"
+
+[target.'cfg(target_os = "windows")'.dependencies]
+webview2-com = "0.39.1"
+windows = "0.62.2"
+windows-core = "0.62.2"
+windows-version = "0.1.7"
+
+[target.'cfg(target_os = "linux")'.dependencies]
+gtk = { version = "0.18.2", features = ["v3_24"] }
+webkit2gtk = { version = "=2.0.2", features = ["v2_38"] }
+tintanum = "0.4.0"
+futures-lite = "2.6.1"
+tokio = { version = "1.50.0", features = ["macros"] }
+
+[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+tauri-plugin-updater = "2.10.0"
+
+[target.'cfg(any(target_os = "macos", windows, target_os = "linux"))'.dependencies]
+tauri-plugin-single-instance = { version = "2.4.0", features = ["deep-link"] }
+tauri-plugin-window-state = "2.4.1"
+
+[dev-dependencies]
+tauri = { version = "2.10.3", features = ["test"] }
+
+# Optimized for bundle size. If you want faster builds comment out/delete this section.
+# Reference: https://doc.rust-lang.org/cargo/reference/profiles.html
+# Reference: https://tauri.app/concept/size/
+[profile.release]
+codegen-units = 128  # Allows LLVM to perform better optimization, reduce number of codegen units to increase optimizations.
+lto = true           # Enables link-time-optimizations. LTO can produce better optimized code, at the cost of longer linking time.
+opt-level = 1        # Use slightly better optimizations. Use "s" if you prefer smaller binaries.
+panic = "abort"      # Higher performance by disabling panic handlers.
+debug = false        # Disable debug on production build.
+strip = true         # Ensures debug symbols are removed.
+
+[profile.dev]
+incremental = true   # Compile your binary in smaller steps.
+debug = "limited"    # Debug info without type or variable-level information.

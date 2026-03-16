@@ -6,6 +6,8 @@
   },
   "files.associations": {
     "*.css": "css",
+    "*.json.example": "json",
+    "*.plist": "xml",
     "*.vars": "dotenv",
     "*.yml.example": "yaml",
     "wrangler.json": "jsonc"
@@ -19,8 +21,13 @@
     "**/routes.gen.ts": true
   },
   "search.exclude": {
-    "**/.output": true,
-    "**/.tanstack": true,
+    "**/.output/**": true,
+    "**/.tanstack/**": true,
+    "**/.vscode/**": true,
+    "**/build": true,
+    "**/dist": true,
+    "**/temp": true,
+    "**/tmp": true,
     "**/routeTree.gen.ts": true,
     "**/routes.gen.ts": true
   },
@@ -28,15 +35,6 @@
     "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[javascript]": {
-    "editor.codeActionsOnSave": {
-      "source.fixAll": "explicit",
-      "source.organizeImports.biome": "explicit"
-    },
-    "editor.defaultFormatter": "oxc.oxc-vscode",
-    "editor.formatOnPaste": true,
-    "editor.formatOnSave": true
-  },
-  "[javascriptreact]": {
     "editor.codeActionsOnSave": {
       "source.fixAll": "explicit",
       "source.organizeImports.biome": "explicit"
@@ -67,13 +65,8 @@
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true
   },
-  "[typescriptreact]": {
-    "editor.codeActionsOnSave": {
-      "source.fixAll": "explicit",
-      "source.organizeImports.biome": "explicit"
-    },
-    "editor.defaultFormatter": "oxc.oxc-vscode",
-    "editor.formatOnPaste": true,
-    "editor.formatOnSave": true
-  }
+  "rust-analyzer.linkedProjects": ["./src-tauri/Cargo.toml"],
+  "rust-analyzer.showUnlinkedFileNotification": false,
+  "rust-analyzer.checkOnSave": false,
+  "rust-analyzer.diagnostics.enable": true
 }

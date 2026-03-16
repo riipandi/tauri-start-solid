@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "darkriszty.markdown-table-prettify",
+    "EditorConfig.EditorConfig",
+    "fill-labs.dependi",
+    "foxundermoon.shell-format",
+    "oxc.oxc-vscode",
+    "rust-lang.rust-analyzer",
+    "Shellomo.enhanced-toml",
+    "tauri-apps.tauri-vscode",
+    "vadimcn.vscode-lldb"
+  ],
+  "unwantedRecommendations": []
+}
