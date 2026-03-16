@@ -1,42 +1,23 @@
-import './styles/global.css'
-import './styles/colors.css'
-import './styles/scrollbar.css'
-
-import { Route, Router } from '@solidjs/router'
-import { lazy } from 'solid-js'
-/* @refresh reload */
+import { RouterProvider, createRouter } from '@tanstack/solid-router'
 import { render } from 'solid-js/web'
-import RootLayout from '#/layouts/root-layout'
+import { routeTree } from './routes.gen'
+import '#/styles/global.css'
 
-// Lazy loading views
-const Home = lazy(() => import('#/views/home'))
-const Settings = lazy(() => import('#/views/settings'))
-const NotFound = lazy(() => import('#/views/404'))
+const router = createRouter({
+  routeTree,
+  defaultPreload: 'intent',
+  defaultPreloadStaleTime: 0,
+  scrollRestoration: true
+})
 
-// This is the entry point of the application.
-const rootElement = document.getElementById('root')
+const rootElement = document.getElementById('app')!
 
-if (!rootElement) {
-  throw new Error('Root element not found. Check if the id is correct.')
+if (!rootElement.innerHTML) {
+  render(() => <RouterProvider router={router} />, rootElement)
 }
 
-const MainApp = () => {
-  return !('__TAURI__' in window) ? (
-    <div class="flex size-full min-h-screen items-center justify-center bg-background p-4">
-      <p class="font-medium text-foreground tracking-wide">
-        This application will not work in Browser.
-      </p>
-    </div>
-  ) : (
-    <Router root={RootLayout}>
-      <Route path="/" component={Home} />
-      <Route path="/settings" component={Settings} />
-      <Route path="*404" component={NotFound} />
-    </Router>
-  )
+declare module '@tanstack/solid-router' {
+  interface Register {
+    router: typeof router
+  }
 }
-
-// Set `withGlobalTauri` to `true` in `tauri.conf.json`.
-// If the frontend running in browser, throw an error because
-// this application will not work in Browser.
-render(() => <MainApp />, rootElement)

@@ -1,13 +1,9 @@
 [package]
 name = "tauri-start-solid"
-version = "0.0.0"
-description = "A Tauri application built with Tauri, SolidJS, and TypeScript"
+version = "0.1.0"
+description = "A Tauri App"
 authors = ["you"]
-license = "MIT or Apache-2.0"
-repository = "http://github.com/riipandi/tauri-start-solid"
-rust-version = "1.77"
 edition = "2021"
-publish = false
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -19,68 +15,10 @@ name = "tauri_start_solid_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
-dotenv-build = "^0.1"
-tauri-build = { version = "2", features = [] }
+tauri-build = { version = "2.5.6", features = [] }
 
 [dependencies]
-# Tauri dependencies
-tauri = { version = "2", features = ["macos-private-api", "tray-icon", "devtools"] }
-tauri-plugin-dialog = "2"
-tauri-plugin-http = "2"
-tauri-plugin-log = "2"
-tauri-plugin-notification = "2"
-tauri-plugin-os = "2"
-tauri-plugin-positioner = { version = "2", features = ["tray-icon"] }
-tauri-plugin-process = "2"
-tauri-plugin-shell = "2"
-
-# Essential crates
-anyhow = "1.0"
-chrono = "0.4"
-log = "0.4"
-persy = "1.6"
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
-specta = { version = "2.0.0-rc.22", features = ["derive", "serde", "serde_json"] }
-specta-typescript = "0.0.9"
-tauri-specta = { version = "2.0.0-rc.21", features = ["derive", "typescript"] }
-tokio = { version = "1.43", features = ["sync"] }
-
-# Used to call the macOS native API
-[target."cfg(target_os = \"macos\")".dependencies]
-cocoa = "0.26.0"
-objc = "0.2.7"
-
-[target."cfg(target_os = \"windows\")".dependencies]
-webview2-com = "0.35"
-windows = "0.59"
-windows-core = "0.59"
-windows-version = "0.1"
-
-[target."cfg(target_os = \"linux\")".dependencies]
-gtk = { version = "0.18", features = ["v3_24"] }
-webkit2gtk = { version = "=2.0.1", features = ["v2_38"] }
-tintanum = "0.4.0"
-futures-lite = "2.6"
-tokio = { version = "1", features = ["macros"] }
-
-[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
-tauri-plugin-updater = "2"
-
-[dev-dependencies]
-tauri = { version = "2", features = ["test"] }
-
-# Optimized for bundle size. If you want faster builds comment out/delete this section.
-# Reference: https://doc.rust-lang.org/cargo/reference/profiles.html
-# Reference: https://tauri.app/concept/size/
-[profile.release]
-codegen-units = 128  # Allows LLVM to perform better optimization, reduce number of codegen units to increase optimizations.
-lto = true           # Enables link-time-optimizations. LTO can produce better optimized code, at the cost of longer linking time.
-opt-level = 1        # Use slightly better optimizations. Use "s" if you prefer smaller binaries.
-panic = "abort"      # Higher performance by disabling panic handlers.
-debug = false        # Disable debug on production build.
-strip = true         # Ensures debug symbols are removed.
-
-[profile.dev]
-incremental = true   # Compile your binary in smaller steps.
-debug = "limited"    # Debug info without type or variable-level information.
+tauri = { version = "2.10.3", features = [] }
+tauri-plugin-opener = "2.5.3"
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.149"

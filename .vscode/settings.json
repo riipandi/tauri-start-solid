@@ -1,47 +1,79 @@
 {
-    "typescript.tsdk": "node_modules/typescript/lib",
-    "typescript.enablePromptUseWorkspaceTsdk": false,
-    "editor.defaultFormatter": "biomejs.biome",
-    "files.exclude": {
-        "**/tmp/**": true
+  "biome.enabled": false,
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "always"
+  },
+  "files.associations": {
+    "*.css": "css",
+    "*.vars": "dotenv",
+    "*.yml.example": "yaml",
+    "wrangler.json": "jsonc"
+  },
+  "files.readonlyInclude": {
+    "**/routeTree.gen.ts": true,
+    "**/routes.gen.ts": true
+  },
+  "files.watcherExclude": {
+    "**/routeTree.gen.ts": true,
+    "**/routes.gen.ts": true
+  },
+  "search.exclude": {
+    "**/.output": true,
+    "**/.tanstack": true,
+    "**/routeTree.gen.ts": true,
+    "**/routes.gen.ts": true
+  },
+  "[css]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[javascript]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports.biome": "explicit"
     },
-    "search.exclude": {
-        "**/.output/**": true,
-        "**/.vscode/**": true,
-        "**/.temp/**": true,
-        "**/build": true,
-        "**/dist": true
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true
+  },
+  "[javascriptreact]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports.biome": "explicit"
     },
-    "files.associations": {
-        "*.yml.example": "yaml",
-        "*.css": "css",
-        "*.plist": "xml"
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true
+  },
+  "[json]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "darkriszty.markdown-table-prettify"
+  },
+  "[toml]": {
+    "editor.defaultFormatter": "Shellomo.enhanced-toml",
+    "editor.formatOnSave": false
+  },
+  "[typescript]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports.biome": "explicit"
     },
-    "tailwindCSS.experimental.classRegex": [
-        // @ref: https://github.com/paolotiu/tailwind-intellisense-regex-list
-        ["(?:twMerge|twJoin)\\(([^;]*)[\\);]", "[`'\"`]([^'\"`;]*)[`'\"`]"],
-        ["classList={{([^;]*)}}", "\\s*?[\"'`]([^\"'`]*).*?:"],
-        ["clsx\\(.*?\\)(?!\\])", "(?:'|\"|`)([^\"'`]*)(?:'|\"|`)"],
-        ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
-        ["tv\\(([^)]*)\\)", "{?\\s?[\\w].*:\\s*?[\"'`]([^\"'`]*).*?,?\\s?}?"],
-        "clx\\(([^)]*)\\)", // clx(xxx)
-        "cn\\(([^)]*)\\)", // cn(xxx)
-        "cx\\(([^)]*)\\)" // cx(xxx)
-    ],
-    "tailwindCSS.files.exclude": ["**/src-tauri/**", "vite.config.ts"],
-    "[css]": {
-        "editor.defaultFormatter": "biomejs.biome"
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true
+  },
+  "[typescriptreact]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports.biome": "explicit"
     },
-    "[tailwindcss]": {
-        "editor.defaultFormatter": "biomejs.biome"
-    },
-    "[toml]": {
-        "editor.defaultFormatter": "tamasfe.even-better-toml",
-        "editor.formatOnSave": false
-    },
-    "[markdown]": {
-        "editor.defaultFormatter": "darkriszty.markdown-table-prettify"
-    },
-    "rust-analyzer.linkedProjects": ["./src-tauri/Cargo.toml"],
-    "rust-analyzer.showUnlinkedFileNotification": false
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true
+  }
 }

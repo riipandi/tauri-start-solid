@@ -1,88 +1,35 @@
 {
-    "$schema": "https://schema.tauri.app/config/2",
-    "identifier": "com.example.tauri-start-solid",
-    "productName": "Tauri App",
-    "version": "0.0.0",
-    "build": {
-        "beforeDevCommand": "pnpm dev:ui",
-        "beforeBuildCommand": "pnpm build:ui",
-        "frontendDist": "../.output/client",
-        "devUrl": "http://localhost:1420"
-    },
-    "app": {
-        "macOSPrivateApi": true,
-        "withGlobalTauri": true,
-        "security": {
-            "pattern": {
-                "use": "brownfield"
-            },
-            "csp": null
-        },
-        "trayIcon": null,
-        "windows": []
-    },
-    "bundle": {
-        "active": true,
-        "category": "DeveloperTool",
-        "publisher": "Your Company",
-        "copyright": "Copyright © 2025 Your Company",
-        "shortDescription": "A Tauri application",
-        "longDescription": "A Tauri application built with Tauri, SolidJS, and TypeScript",
-        "createUpdaterArtifacts": false,
-        "targets": "all",
-        "macOS": {
-            "dmg": {
-                "appPosition": {
-                    "x": 150,
-                    "y": 160
-                },
-                "applicationFolderPosition": {
-                    "x": 445,
-                    "y": 160
-                },
-                "windowSize": {
-                    "height": 355,
-                    "width": 600
-                }
-            },
-            "minimumSystemVersion": "11.0",
-            "entitlements": "Info.plist",
-            "providerShortName": null,
-            "signingIdentity": null,
-            "files": {}
-        },
-        "windows": {
-            "allowDowngrades": true,
-            "certificateThumbprint": null,
-            "digestAlgorithm": null,
-            "nsis": null,
-            "timestampUrl": null,
-            "tsp": false,
-            "webviewInstallMode": {
-                "silent": true,
-                "type": "downloadBootstrapper"
-            },
-            "wix": null
-        },
-        "resources": [],
-        "icon": [
-            "icons/32x32.png",
-            "icons/128x128.png",
-            "icons/128x128@2x.png",
-            "icons/icon.icns",
-            "icons/icon.ico"
-        ]
-    },
-    "plugins": {
-        "updater": {
-            "active": true,
-            "dialog": true,
-            "dangerousInsecureTransportProtocol": true,
-            "windows": {
-                "installMode": "passive"
-            },
-            "endpoints": ["http://localhost:3000/updates/{{target}}/{{arch}}/{{current_version}}"],
-            "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDNCQkFCQkFCNzA0RUU2REQKUldUZDVrNXdxN3U2T3pkTytTSWsvY1AyeHoxM2xobEhoMkFORXpLZU1sMm1aWitOYk9RN284R2oK"
-        }
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "tauri-start-solid",
+  "version": "0.0.0",
+  "identifier": "com.example.tauri-start-solid",
+  "build": {
+    "beforeDevCommand": "pnpm run dev:ui",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "pnpm run build:ui",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Tauri App",
+        "width": 800,
+        "height": 600
+      }
+    ],
+    "security": {
+      "csp": null
     }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
 }
