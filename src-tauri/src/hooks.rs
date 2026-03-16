@@ -25,7 +25,6 @@ pub fn setup_app<R: tauri::Runtime>(app: &mut App<R>) -> Result<(), Box<dyn std:
     // Setup the customized main window
     match core::setup_main_window(app) {
         Ok(_) => {
-            // TODO: check if `main` window exists
             // TODO: Setup menu after window is created
             Ok(())
         }

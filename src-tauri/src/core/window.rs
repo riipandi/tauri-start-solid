@@ -20,6 +20,12 @@ const MAIN_WINDOW_HEIGHT: f64 = 320.; // 570.
 /// # Returns
 /// * `Result<WebviewWindow, Box<dyn std::error::Error>>` - The created window or an error
 pub fn setup_main_window<R: Runtime>(app: &App<R>) -> Result<WebviewWindow<R>, Box<dyn std::error::Error>> {
+    // Check if window already exists (created by tauri.conf.json)
+    if let Some(window) = app.get_webview_window(MAIN_WINDOW_ID) {
+        log::debug!("Window '{}' already exists, returning existing window", MAIN_WINDOW_ID);
+        return Ok(window);
+    }
+
     // Create a window builder with the default URL
     // - MacOS: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Safari/605.1.15"
     let mut win_builder = WebviewWindowBuilder::new(app, MAIN_WINDOW_ID, WebviewUrl::default())
