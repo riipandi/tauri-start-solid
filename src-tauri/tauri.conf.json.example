@@ -78,7 +78,7 @@
         "updater": {
             "active": true,
             "dialog": true,
-            "dangerousInsecureTransportProtocol": true,
+            "dangerousInsecureTransportProtocol": false,
             "windows": {
                 "installMode": "passive"
             },
