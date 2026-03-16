@@ -108,6 +108,12 @@ const responsiveProperties = defineProperties({
     zIndex: {
       '10': '10',
       '50': '50'
+    },
+    userSelect: {
+      none: 'none',
+      text: 'text',
+      all: 'all',
+      auto: 'auto'
     }
   },
   shorthands: {

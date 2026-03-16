@@ -30,6 +30,7 @@
     "@vanilla-extract/dynamic": "^2.1.5",
     "@vanilla-extract/recipes": "^0.5.7",
     "@vanilla-extract/sprinkles": "^1.6.5",
+    "clsx": "^2.1.1",
     "solid-js": "^1.9.11"
   },
   "devDependencies": {

@@ -1,75 +1,64 @@
 import { createFileRoute, Link } from '@tanstack/solid-router'
+import { clsx } from 'clsx'
 import { createSignal } from 'solid-js'
-import { For } from 'solid-js'
+import { Button } from '#/components/button'
 import demoService from '#/services/demo.service'
-import { pageWrap, islandKicker, featureCard, riseIn } from '#/styles/layout.css'
+import { pageWrap } from '#/styles/layout.css'
 import * as styles from '#/styles/screens/index.css'
-import { sprinkles } from '#/styles/sprinkles.css'
+import { textSelectable } from '#/styles/utils.css'
 
 export const Route = createFileRoute('/(primary)/')({ component: App })
 
 function App() {
-  const [greetMsg, setGreetMsg] = createSignal('')
   const [name, setName] = createSignal('')
+  const [greetMsg, setGreetMsg] = createSignal('')
+  const [isLoading, setIsLoading] = createSignal(false)
 
-  async function handleGreet(e: SubmitEvent) {
+  async function handleGreet(e: Event) {
     e.preventDefault()
-    setGreetMsg(await demoService.greet(name()))
+    if (!name()) return
+
+    setIsLoading(true)
+    try {
+      const msg = await demoService.greet(name())
+      setGreetMsg(msg)
+    } catch (error) {
+      console.error('Greet error:', error)
+      setGreetMsg('Error calling greet command')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
-  const features = [
-    ['Type-Safe Routing', 'Routes and links stay in sync across every page.'],
-    ['Server Functions', 'Call server code from your UI without creating API boilerplate.'],
-    ['Streaming by Default', 'Ship progressively rendered responses for faster experiences.'],
-    ['Vanilla Extract Native', 'Design quickly with type-safe styling and reusable tokens.']
-  ]
-
   return (
-    <main class={`${pageWrap} ${sprinkles({ px: '4', pb: '8', pt: '14' })}`}>
-      <section class={`${styles.heroSection} ${riseIn}`}>
-        <div class={styles.heroGradientA} />
-        <div class={styles.heroGradientB} />
-        <p class={islandKicker}>TanStack Start Base Template</p>
-        <h1 class={styles.heroTitle}>Start simple, ship quickly.</h1>
-        <p class={styles.heroDescription}>
-          This base starter intentionally keeps things light: two routes, clean structure, and the
-          essentials you need to build from scratch.
-        </p>
-        <div class={styles.buttonGroup}>
-          <Link to='/settings' class={styles.primaryButton}>
-            Settings
+    <main class={pageWrap}>
+      <div class={styles.card}>
+        <h1 class={clsx(styles.title, textSelectable)}>Tauri + SolidJS</h1>
+
+        <form onSubmit={handleGreet} class={styles.greetForm}>
+          <input
+            class={styles.greetInput}
+            type='text'
+            value={name()}
+            onInput={(e) => setName(e.currentTarget.value)}
+            placeholder='Enter your name...'
+          />
+          <Button type='submit' disabled={isLoading() || !name()}>
+            {isLoading() ? 'Sending...' : 'Greet'}
+          </Button>
+        </form>
+
+        {greetMsg() && <div class={styles.response}>{greetMsg()}</div>}
+
+        <div class={styles.navButtons}>
+          <Link to='/settings'>
+            <Button variant='primary'>Settings</Button>
           </Link>
-          <a href='/404' class={styles.secondaryButton}>
-            404 Screen
+          <a href='/404' class={styles.linkWrapper}>
+            <Button variant='secondary'>404 Example</Button>
           </a>
         </div>
-      </section>
-
-      <section>
-        <form onSubmit={handleGreet}>
-          <input
-            id='greet-input'
-            onChange={(e) => setName(e.currentTarget.value)}
-            placeholder='Enter a name...'
-          />
-          <button type='submit'>Greet</button>
-        </form>
-        <p>{greetMsg()}</p>
-      </section>
-
-      <section class={styles.featuresGrid}>
-        <For each={features}>
-          {([title, desc], index) => (
-            <article
-              class={`${styles.featureItem} ${featureCard} ${riseIn}`}
-              style={{ 'animation-delay': `${index() * 90 + 80}ms` }}
-            >
-              <h2 class={styles.featureTitle}>{title}</h2>
-              <p class={styles.featureDescription}>{desc}</p>
-            </article>
-          )}
-        </For>
-      </section>
+      </div>
     </main>
   )
 }

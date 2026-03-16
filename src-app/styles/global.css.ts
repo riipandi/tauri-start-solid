@@ -22,7 +22,18 @@ globalStyle('body', {
   `,
   overflowX: 'hidden',
   WebkitFontSmoothing: 'antialiased',
-  MozOsxFontSmoothing: 'grayscale'
+  MozOsxFontSmoothing: 'grayscale',
+  WebkitUserSelect: 'none',
+  MozUserSelect: 'none',
+  msUserSelect: 'none',
+  userSelect: 'none'
+})
+
+globalStyle('input, textarea, select, [contenteditable]', {
+  WebkitUserSelect: 'text',
+  MozUserSelect: 'text',
+  msUserSelect: 'text',
+  userSelect: 'text'
 })
 
 globalStyle('a', {
