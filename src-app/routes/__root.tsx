@@ -1,4 +1,5 @@
 import { Outlet, createRootRoute } from '@tanstack/solid-router'
+import { SettingsProvider } from '#/components/settings-provider'
 import { GlobalNotFound } from '#/routes/-errors'
 
 export const Route = createRootRoute({
@@ -8,8 +9,10 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   return (
-    <div spellcheck={false} autocapitalize='none' aria-autocomplete='none'>
-      <Outlet />
-    </div>
+    <SettingsProvider>
+      <div spellcheck={false} autocapitalize='none' aria-autocomplete='none'>
+        <Outlet />
+      </div>
+    </SettingsProvider>
   )
 }

@@ -17,6 +17,7 @@ pub fn get_current_timestamp() -> String {
 ///
 /// # Returns
 /// * `String` - Formatted timestamp string with milliseconds
+#[allow(dead_code)]
 pub fn get_formatted_timestamp() -> String {
     let now = SystemTime::now();
     let dt = DateTime::<Local>::from(now);
@@ -27,6 +28,7 @@ pub fn get_formatted_timestamp() -> String {
 ///
 /// # Returns
 /// * `u128` - Timestamp in milliseconds
+#[allow(dead_code)]
 pub fn get_timestamp_ms() -> u128 {
     SystemTime::now()
         .duration_since(UNIX_EPOCH)

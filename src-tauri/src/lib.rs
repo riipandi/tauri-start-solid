@@ -81,7 +81,12 @@ pub fn run() {
 
     // Finally, build and run the application
     builder
-        .invoke_handler(tauri::generate_handler![commands::demo::greet,])
+        .invoke_handler(tauri::generate_handler![
+            commands::settings::get_settings,
+            commands::settings::update_settings,
+            commands::settings::reset_settings,
+            commands::demo::greet,
+        ])
         .build(tauri_ctx)
         .expect("error while running tauri application")
         .run(|_, event| {

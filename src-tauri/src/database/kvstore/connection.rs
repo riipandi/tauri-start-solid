@@ -17,30 +17,38 @@ use tauri::Manager;
 /// * `app` - The Tauri application handle
 ///
 /// # Returns
-/// * `Result<PathBuf, Box<dyn std::error::Error + Send + Sync>>` - The database directory path or an error
+/// * `Result<PathBuf, Box<dyn std::error::Error + Send + Sync>>` - The database file path or an error
+///
+/// # Note
+/// Database is stored in $APPDATA directory (platform-specific app data folder):
+/// - Windows: %APPDATA%\{app-name}\
+/// - macOS: ~/Library/Application Support/{app-name}/
+/// - Linux: ~/.local/share/{app-name}/
 pub fn get_kv_database_path<R: tauri::Runtime>(
     app: &AppHandle<R>,
 ) -> Result<PathBuf, Box<dyn std::error::Error + Send + Sync>> {
-    // Get application config directory
-    let data_dir = app.path().app_config_dir()?;
-    std::fs::create_dir_all(&data_dir)?;
+    // Get APPDATA directory (platform-specific app data folder)
+    let data_dir = app.path().app_data_dir()?;
+
+    // Create directory if it doesn't exist
+    std::fs::create_dir_all(&data_dir).map_err(|e| format!("Failed to create app data directory: {}", e))?;
 
     // Get app name and convert to kebab-case if needed
     let app_name = app
         .config()
         .product_name
         .clone()
-        .unwrap_or_else(|| "lmdb".to_string())
+        .unwrap_or_else(|| "app".to_string())
         .replace(" ", "-")
         .to_lowercase();
 
-    // Directory name for storing database, separated based on environment
+    // Environment suffix for debug builds
     let suffix = if cfg!(debug_assertions) { "-debug" } else { "" };
-    let dir_name = format!("{}{}-db", app_name, suffix);
 
-    // Setup database directory path
-    let db_path = data_dir.join(dir_name);
-    std::fs::create_dir_all(&db_path)?;
+    // Database file path (LMDB database file, not directory)
+    let db_path = data_dir.join(format!("{}{}.mdb", app_name, suffix));
+
+    log::debug!("Using database at: {}", db_path.display());
 
     Ok(db_path)
 }
@@ -59,9 +67,19 @@ pub async fn setup_kv_database(
 ) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     // Setup the database for the app with the specified path
     let db_path_str = db_path.to_str().ok_or("Invalid database path")?;
-    log::debug!("Using database at: {}", db_path_str);
+    log::debug!("Database file path: {}", db_path_str);
 
-    // Open the environment with a 10MB map size
+    // LMDB requires a DIRECTORY path, not a file path
+    // Extract the parent directory from the database file path
+    let db_dir = db_path.parent().ok_or("Invalid database path (no parent directory)")?;
+    let db_dir_str = db_dir.to_str().ok_or("Invalid database directory path")?;
+    log::debug!("Opening LMDB environment at directory: {}", db_dir_str);
+
+    // CRITICAL: Ensure database directory exists before LMDB open()
+    std::fs::create_dir_all(db_dir).map_err(|e| format!("Failed to create database directory: {}", e))?;
+    log::debug!("Ensured database directory exists: {}", db_dir.display());
+
+    // Open the environment with a 50MB map size
     // Using unsafe here because Heed's EnvOpenOptions::open requires it as it:
     // 1. Interacts with LMDB's C API which can't be verified by Rust's safety guarantees
     // 2. Performs memory mapping operations that could lead to undefined behavior if misused
@@ -82,8 +100,8 @@ pub async fn setup_kv_database(
             // NoSync improves performance but reduces durability guarantees
             // Only use if data loss during power failure is acceptable
             //.flags(heed3::EnvFlags::NO_SYNC)
-            // Open the database at the specified path
-            .open(db_path)?
+            // Open the LMDB environment at the specified DIRECTORY (not file!)
+            .open(db_dir)?
     };
 
     // Create a write transaction to initialize databases
