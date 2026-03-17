@@ -7,8 +7,6 @@ export interface UISettings {
   theme_light: string
   theme_dark: string
   enable_spell_check: boolean
-  enable_auto_capitalize: boolean
-  enable_auto_complete_form: boolean
 }
 
 export interface AppSettings {

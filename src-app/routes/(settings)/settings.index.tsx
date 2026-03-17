@@ -46,9 +46,7 @@ function Settings() {
     }
   }
 
-  async function handleToggleChange(
-    field: 'enable_spell_check' | 'enable_auto_capitalize' | 'enable_auto_complete_form'
-  ) {
+  async function handleToggleChange(field: 'enable_spell_check') {
     setIsSaving(true)
     try {
       await updateUISettings({ [field]: !ui.get()[field] })
@@ -177,32 +175,6 @@ function Settings() {
               <span>Enable Spell Check</span>
             </label>
             <p class={styles.help}>Check spelling as you type</p>
-          </div>
-
-          <div class={styles.field}>
-            <label class={styles.checkboxLabel}>
-              <input
-                type='checkbox'
-                checked={ui.get().enable_auto_capitalize}
-                onChange={() => handleToggleChange('enable_auto_capitalize')}
-                disabled={isSaving()}
-              />
-              <span>Enable Auto Capitalize</span>
-            </label>
-            <p class={styles.help}>Automatically capitalize first letter of sentences</p>
-          </div>
-
-          <div class={styles.field}>
-            <label class={styles.checkboxLabel}>
-              <input
-                type='checkbox'
-                checked={ui.get().enable_auto_complete_form}
-                onChange={() => handleToggleChange('enable_auto_complete_form')}
-                disabled={isSaving()}
-              />
-              <span>Enable Auto Complete Form</span>
-            </label>
-            <p class={styles.help}>Suggest completions for form fields</p>
           </div>
         </section>
 

@@ -7,9 +7,7 @@ export const settingsStore = atom<AppSettings>({
     theme_mode: 'auto',
     theme_light: 'defaultLight',
     theme_dark: 'defaultDark',
-    enable_spell_check: true,
-    enable_auto_capitalize: true,
-    enable_auto_complete_form: true
+    enable_spell_check: true
   }
 })
 

@@ -40,6 +40,15 @@ export function SettingsProvider(props: SettingsProviderProps) {
   useThemeAttributes()
 
   console.log('[SettingsProvider] Theme attributes hook initialized')
+  const uiSettings = settingsStore.get().ui
 
-  return props.children
+  return (
+    <div
+      spellcheck={uiSettings.enable_spell_check}
+      autocapitalize={!uiSettings.enable_spell_check ? 'none' : undefined}
+      aria-autocomplete={!uiSettings.enable_spell_check ? 'none' : undefined}
+    >
+      {props.children}
+    </div>
+  )
 }

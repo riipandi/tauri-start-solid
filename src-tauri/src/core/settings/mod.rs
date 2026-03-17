@@ -20,8 +20,6 @@ pub struct UISettings {
     pub theme_light: String,
     pub theme_dark: String,
     pub enable_spell_check: bool,
-    pub enable_auto_capitalize: bool,
-    pub enable_auto_complete_form: bool,
 }
 
 impl Default for UISettings {
@@ -31,8 +29,6 @@ impl Default for UISettings {
             theme_light: "defaultLight".to_string(),
             theme_dark: "defaultDark".to_string(),
             enable_spell_check: true,
-            enable_auto_capitalize: true,
-            enable_auto_complete_form: true,
         }
     }
 }

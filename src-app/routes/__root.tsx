@@ -10,9 +10,7 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <SettingsProvider>
-      <div spellcheck={false} autocapitalize='none' aria-autocomplete='none'>
-        <Outlet />
-      </div>
+      <Outlet />
     </SettingsProvider>
   )
 }
