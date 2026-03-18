@@ -3,6 +3,7 @@ import { clsx } from 'clsx'
 import { createSignal } from 'solid-js'
 import { Button } from '#/components/button'
 import demoService from '#/services/demo.service'
+import settingService from '#/services/settings.service'
 import { pageWrap } from '#/styles/layout.css'
 import * as styles from '#/styles/screens/index.css'
 import { textSelectable } from '#/styles/utils.css'
@@ -51,9 +52,9 @@ function App() {
         {greetMsg() && <div class={styles.response}>{greetMsg()}</div>}
 
         <div class={styles.navButtons}>
-          <Link to='/settings'>
-            <Button variant='primary'>Settings</Button>
-          </Link>
+          <button type='button' onClick={settingService.openWindow}>
+            Settings
+          </button>
           <a href='/404' class={styles.linkWrapper}>
             <Button variant='secondary'>404 Example</Button>
           </a>

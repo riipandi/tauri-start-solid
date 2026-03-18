@@ -3,9 +3,23 @@
 use crate::core::settings::{AppSettings, SETTINGS_KEY, ThemeMode};
 use crate::database::kvstore::{Namespace, get_value, set_value};
 use crate::state::AppState;
-use std::sync::Arc;
-use std::sync::Mutex;
-use tauri::Emitter;
+use std::sync::{Arc, Mutex};
+use tauri::{AppHandle, Emitter};
+
+/// Open settings window
+///
+/// # Arguments
+/// * `app` - The Tauri application handle
+///
+/// # Returns
+/// * `Result<(), String>` - Success or error message
+#[tauri::command]
+pub async fn open_settings_window(app: AppHandle) -> Result<(), String> {
+    match crate::core::create_settings_window(&app) {
+        Ok(_) => Ok(()),
+        Err(e) => Err(format!("Failed to open settings window: {}", e)),
+    }
+}
 
 /// Get all settings from the database
 ///

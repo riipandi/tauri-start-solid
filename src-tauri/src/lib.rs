@@ -83,8 +83,9 @@ pub fn run() {
     builder
         .invoke_handler(tauri::generate_handler![
             commands::settings::get_settings,
-            commands::settings::update_settings,
+            commands::settings::open_settings_window,
             commands::settings::reset_settings,
+            commands::settings::update_settings,
             commands::demo::greet,
         ])
         .build(tauri_ctx)
