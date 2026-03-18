@@ -1,6 +1,6 @@
 import { listen } from '@tauri-apps/api/event'
 import { type JSX, onMount, onCleanup } from 'solid-js'
-import { useThemeAttributes } from '#/hooks/use-theme-attributes'
+import { useThemeAttributes } from '#/hooks/use-theme'
 import { settingsStore, loadSettings } from '#/stores/settings'
 import type { AppSettings } from '#/types/settings'
 

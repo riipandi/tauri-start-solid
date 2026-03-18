@@ -1,7 +1,7 @@
 import { RouterProvider, createRouter } from '@tanstack/solid-router'
 import { render } from 'solid-js/web'
 import { routeTree } from './routes.gen'
-import '#/styles/global.css'
+import './styles/globals.css'
 
 const router = createRouter({
   routeTree,
@@ -10,11 +10,29 @@ const router = createRouter({
   scrollRestoration: true
 })
 
-const rootElement = document.getElementById('app')!
-
-if (!rootElement.innerHTML) {
-  render(() => <RouterProvider router={router} />, rootElement)
+// Create root element and ensure exists.
+const rootElement = document.getElementById('app')
+if (!rootElement) {
+  throw new Error("Root element not found. Check if it's in your index.html")
 }
+
+const MainApp = () => {
+  const hasTauriEnv = '__TAURI__' in window
+  return import.meta.env.DEV && !hasTauriEnv ? (
+    <div class='flex size-full min-h-screen items-center justify-center bg-background p-4'>
+      <p class='font-medium text-foreground tracking-wide'>
+        This application will not work in Browser.
+      </p>
+    </div>
+  ) : (
+    <RouterProvider router={router} />
+  )
+}
+
+// Set `withGlobalTauri` to `true` in `tauri.conf.json`.
+// If the frontend running in browser, throw an error because
+// this application will not work in Browser.
+render(() => <MainApp />, rootElement)
 
 declare module '@tanstack/solid-router' {
   interface Register {

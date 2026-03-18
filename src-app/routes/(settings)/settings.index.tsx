@@ -1,14 +1,8 @@
 import { createFileRoute } from '@tanstack/solid-router'
+import { clsx } from 'clsx'
 import { createSignal, Show, onMount, createEffect } from 'solid-js'
-import {
-  uiSettings,
-  updateUISettings,
-  resetSettings,
-  currentTheme,
-  settingsStore
-} from '#/stores/settings'
-import { pageWrap } from '#/styles/layout.css'
-import * as styles from '#/styles/screens/settings.css'
+import { uiSettings, settingsStore } from '#/stores/settings'
+import { updateUISettings, resetSettings, currentTheme } from '#/stores/settings'
 
 export const Route = createFileRoute('/(settings)/settings/')({
   component: Settings
@@ -88,27 +82,34 @@ function Settings() {
   }
 
   return (
-    <main class={pageWrap}>
-      <div class={styles.container}>
-        <header class={styles.header}>
-          <h1>Settings</h1>
-          <p class={styles.subtitle}>Manage your application preferences</p>
+    <main class='min-w-[1080px] mx-auto my-0 w-[min(1080px,calc(100%-2rem))]'>
+      <div class='max-w-800 mx-auto py-8'>
+        <header class='mb-12'>
+          <h1 class='text-2xl font-bold mb-2'>Settings</h1>
+          <p class='text-sm text-slate-600'>Manage your application preferences</p>
         </header>
 
         <Show when={message()}>
           {(msg) => (
-            <div class={msg().type === 'success' ? styles.success : styles.error}>{msg().text}</div>
+            <div
+              class={clsx(
+                'py-4 px-4 rounded-lg mb-8 text-sm',
+                msg().type === 'success' ? 'bg-emerald-500 text-white' : 'bg-red-500 text-white'
+              )}
+            >
+              {msg().text}
+            </div>
           )}
         </Show>
 
-        <section class={styles.section}>
-          <h2 class={styles.sectionTitle}>Appearance</h2>
+        <section class='mb-12'>
+          <h2 class='text-xl font-bold mb-6 text-slate-800'>Appearance</h2>
 
-          <div class={styles.field}>
-            <label class={styles.label}>
+          <div class='mb-6'>
+            <label class='block mb-2 font-medium text-sm'>
               Theme Mode
               <select
-                class={styles.select}
+                class='w-full py-3 px-4 rounded-md border border-slate-600 bg-white mt-2 text-sm'
                 value={ui.get().theme_mode}
                 onChange={(e) => handleThemeModeChange(e.target.value as 'auto' | 'dark' | 'light')}
                 disabled={isSaving()}
@@ -118,54 +119,59 @@ function Settings() {
                 <option value='light'>Light</option>
               </select>
             </label>
-            <p class={styles.help}>Choose between auto, dark, or light theme</p>
+            <p class='text-xs text-slate-600 mt-2'>Choose between auto, dark, or light theme</p>
           </div>
 
-          <div class={styles.field}>
-            <label class={styles.label}>
+          <div class='mb-6'>
+            <label class='block mb-2 font-medium text-sm'>
               Current Theme
-              <input type='text' class={styles.input} value={currentTheme.get()} disabled={true} />
+              <input
+                type='text'
+                class='w-full py-3 px-4 rounded-md border border-slate-600 bg-white mt-2 text-sm'
+                value={currentTheme.get()}
+                disabled={true}
+              />
             </label>
-            <p class={styles.help}>
+            <p class='text-xs text-slate-600 mt-2'>
               Active theme based on theme mode (Auto: {ui.get().theme_dark}, Dark:{' '}
               {ui.get().theme_dark}, Light: {ui.get().theme_light})
             </p>
           </div>
 
-          <div class={styles.field}>
-            <label class={styles.label}>
+          <div class='mb-6'>
+            <label class='block mb-2 font-medium text-sm'>
               Light Mode Theme
               <input
                 type='text'
-                class={styles.input}
+                class='w-full py-3 px-4 rounded-md border border-slate-600 bg-white mt-2 text-sm'
                 value={ui.get().theme_light}
                 onChange={(e) => updateUISettings({ theme_light: e.target.value })}
                 disabled={isSaving()}
               />
             </label>
-            <p class={styles.help}>Theme to use when theme mode is set to light</p>
+            <p class='text-xs text-slate-600 mt-2'>Theme to use when theme mode is set to light</p>
           </div>
 
-          <div class={styles.field}>
-            <label class={styles.label}>
+          <div class='mb-6'>
+            <label class='block mb-2 font-medium text-sm'>
               Dark Mode Theme
               <input
                 type='text'
-                class={styles.input}
+                class='w-full py-3 px-4 rounded-md border border-slate-600 bg-white mt-2 text-sm'
                 value={ui.get().theme_dark}
                 onChange={(e) => updateUISettings({ theme_dark: e.target.value })}
                 disabled={isSaving()}
               />
             </label>
-            <p class={styles.help}>Theme to use when theme mode is set to dark</p>
+            <p class='text-xs text-slate-600 mt-2'>Theme to use when theme mode is set to dark</p>
           </div>
         </section>
 
-        <section class={styles.section}>
-          <h2 class={styles.sectionTitle}>Text Editing</h2>
+        <section class='mb-12'>
+          <h2 class='text-xl font-bold mb-6 text-slate-800'>Text Editing</h2>
 
-          <div class={styles.field}>
-            <label class={styles.checkboxLabel}>
+          <div class='mb-6'>
+            <label class='flex items-center gap-3 text-sm'>
               <input
                 type='checkbox'
                 checked={ui.get().enable_spell_check}
@@ -174,16 +180,16 @@ function Settings() {
               />
               <span>Enable Spell Check</span>
             </label>
-            <p class={styles.help}>Check spelling as you type</p>
+            <p class='text-xs text-slate-600 mt-2'>Check spelling as you type</p>
           </div>
         </section>
 
-        <section class={styles.section}>
-          <h2 class={styles.sectionTitle}>Danger Zone</h2>
+        <section class='mb-12'>
+          <h2 class='text-xl font-bold mb-6 text-slate-800'>Danger Zone</h2>
 
           <button
             type='button'
-            class={styles.resetButton}
+            class='py-3 px-6 bg-red-500 text-white border-0 rounded-md text-sm font-medium hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed'
             onClick={handleReset}
             disabled={isSaving()}
           >
@@ -192,7 +198,9 @@ function Settings() {
         </section>
 
         <Show when={isSaving()}>
-          <div class={styles.savingIndicator}>Saving changes...</div>
+          <div class='fixed bottom-8 right-8 py-4 px-8 bg-slate-800 text-white rounded-md text-sm shadow-[0_4px_6px_rgba(0,0,0,0.1)]'>
+            Saving changes...
+          </div>
         </Show>
       </div>
     </main>

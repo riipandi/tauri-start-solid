@@ -1,5 +1,5 @@
+import tailwindcss from '@tailwindcss/vite'
 import { tanstackRouter } from '@tanstack/router-plugin/vite'
-import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
 import process from 'node:process'
 import { resolve } from 'pathe'
 import solidDevTools from 'solid-devtools/vite'
@@ -12,7 +12,7 @@ const host = process.env.TAURI_DEV_HOST
 export default defineConfig({
   plugins: [
     solidDevTools(),
-    vanillaExtractPlugin(),
+    tailwindcss(),
     tanstackRouter({
       routesDirectory: resolve('./src-app/routes'),
       generatedRouteTree: resolve('./src-app/routes.gen.ts'),

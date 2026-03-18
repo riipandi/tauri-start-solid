@@ -1,0 +1,22 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@layer base {
+  html,
+  body {
+    @apply antialiased overflow-hidden;
+  }
+  body {
+    @apply bg-white text-black text-base font-sans;
+  }
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: default;
+  }
+}
+
+@utility debug {
+  border-width: 1px;
+  border-style: dashed;
+  border-color: oklch(0.7294 0.1664 22.22);
+}

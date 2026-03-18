@@ -42,7 +42,8 @@ pub fn setup_main_window<R: Runtime>(app: &App<R>) -> Result<WebviewWindow<R>, B
             .traffic_light_position(LogicalPosition::new(13., 21.5))
             .title_bar_style(TitleBarStyle::Overlay)
             .hidden_title(true)
-            .decorations(true);
+            .decorations(true)
+            .transparent(false);
     }
 
     #[cfg(not(target_os = "macos"))]

@@ -1,40 +1,51 @@
 import { clsx } from 'clsx'
 import { Show } from 'solid-js'
 import { useTitleBar } from '#/hooks/use-title-bar'
-import * as styles from '#/styles/components/title-bar.css'
 
-interface TitleBarProps {
-  appTitle?: string
-}
-
-export function TitleBar(props: TitleBarProps) {
+export function TitleBar(props: { title?: string }) {
   const { platform, isFullscreen, isMaximized, minimize, toggleMaximize, close } = useTitleBar()
-  const appTitle = () => props.appTitle || 'Tauri App'
+  const windowTitle = () => props.title || 'Tauri App'
 
   return (
     <Show when={!isFullscreen()}>
-      <div class={clsx(styles.titleBar)} data-platform={platform()} data-tauri-drag-region>
-        <div class={styles.leftSection} data-tauri-drag-region>
+      <div
+        class='flex items-center justify-between w-full relative z-50 select-none shrink-0 h-9.5 bg-white/80 backdrop-blur-md border-b border-slate-200'
+        data-platform={platform()}
+        data-tauri-drag-region
+      >
+        <div class='flex items-center shrink-0' data-tauri-drag-region>
           <Show when={platform() !== 'macos'}>
-            <span class={styles.appTitle}>{appTitle()}</span>
+            <span class='text-sm font-medium text-slate-800 opacity-90 whitespace-nowrap overflow-hidden text-ellipsis'>
+              {windowTitle()}
+            </span>
           </Show>
         </div>
 
         <Show when={platform() === 'macos'}>
-          <div class={styles.centerSection} data-tauri-drag-region>
-            <span class={styles.appTitle}>{appTitle()}</span>
+          <div
+            class='absolute left-1/2 -translate-x-1/2 pointer-events-none'
+            data-tauri-drag-region
+          >
+            <span class='text-sm font-medium text-slate-800 opacity-90 whitespace-nowrap overflow-hidden text-ellipsis'>
+              {windowTitle()}
+            </span>
           </div>
         </Show>
 
         <Show when={platform() !== 'macos'}>
-          <div class={styles.controls}>
-            <button type='button' onClick={minimize} class={styles.controlButton} title='Minimize'>
+          <div class='flex items-center h-full pr-2 pl-2 gap-0.5'>
+            <button
+              type='button'
+              onClick={minimize}
+              class='inline-flex items-center justify-center w-11.5 h-full bg-transparent border-0 transition-colors duration-150 text-slate-800 hover:bg-slate-800/8 active:bg-slate-800/12'
+              title='Minimize'
+            >
               <MinimizeIcon />
             </button>
             <button
               type='button'
               onClick={toggleMaximize}
-              class={styles.controlButton}
+              class='inline-flex items-center justify-center w-11.5 h-full bg-transparent border-0 transition-colors duration-150 text-slate-800 hover:bg-slate-800/8 active:bg-slate-800/12'
               title={isMaximized() ? 'Restore' : 'Maximize'}
             >
               <Show when={isMaximized()} fallback={<MaximizeIcon />}>
@@ -44,7 +55,10 @@ export function TitleBar(props: TitleBarProps) {
             <button
               type='button'
               onClick={close}
-              class={styles.controlButton}
+              class={clsx(
+                'inline-flex items-center justify-center w-11.5 h-full bg-transparent border-0 transition-colors duration-150 text-slate-800 hover:bg-slate-800/8 active:bg-slate-800/12',
+                'hover:bg-[#e81123] hover:stroke-white'
+              )}
               data-close
               title='Close'
             >
