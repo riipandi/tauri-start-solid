@@ -6,7 +6,8 @@ globalStyle('*', {
 })
 
 globalStyle('html, body, #app', {
-  minHeight: '100%'
+  height: '100%',
+  overflow: 'hidden'
 })
 
 globalStyle('body', {
@@ -20,7 +21,8 @@ globalStyle('body', {
     radial-gradient(720px 380px at 50% 115%, rgba(79, 184, 178, 0.1), transparent 68%),
     linear-gradient(180deg, color-mix(in oklab, ${vars.color.sand} 68%, white) 0%, ${vars.color.foam} 44%, ${vars.bg.base} 100%)
   `,
-  overflowX: 'hidden',
+  backgroundAttachment: 'fixed',
+  overflow: 'hidden',
   WebkitFontSmoothing: 'antialiased',
   MozOsxFontSmoothing: 'grayscale',
   WebkitUserSelect: 'none',

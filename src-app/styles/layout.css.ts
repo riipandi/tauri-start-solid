@@ -1,6 +1,19 @@
 import { style } from '@vanilla-extract/css'
 import { vars } from '#/styles/theme.css'
 
+export const appContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  height: '100vh',
+  overflow: 'hidden'
+})
+
+export const appContent = style({
+  flex: 1,
+  overflowY: 'auto',
+  overflowX: 'hidden'
+})
+
 export const pageWrap = style({
   width: 'min(1080px, calc(100% - 2rem))',
   marginInline: 'auto'
