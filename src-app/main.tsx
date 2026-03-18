@@ -19,9 +19,9 @@ if (!rootElement) {
 const MainApp = () => {
   const hasTauriEnv = '__TAURI__' in window
   return import.meta.env.DEV && !hasTauriEnv ? (
-    <div class='flex size-full min-h-screen items-center justify-center bg-background p-4'>
-      <p class='font-medium text-foreground tracking-wide'>
-        This application will not work in Browser.
+    <div class='flex size-full min-h-screen items-center justify-center bg-background p-4 bg-background-page'>
+      <p class='font-medium text-foreground tracking-wide text-foreground-neutral'>
+        This application will not work in browser.
       </p>
     </div>
   ) : (

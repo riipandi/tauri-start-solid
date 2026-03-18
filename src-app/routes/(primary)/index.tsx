@@ -1,12 +1,15 @@
 import { createFileRoute } from '@tanstack/solid-router'
+import { consola } from 'consola'
 import { createSignal } from 'solid-js'
 import { Button } from '#/components/button'
 import demoService from '#/services/demo.service'
 import settingService from '#/services/settings.service'
 
-export const Route = createFileRoute('/(primary)/')({ component: App })
+export const Route = createFileRoute('/(primary)/')({
+  component: RouteComponent
+})
 
-function App() {
+function RouteComponent() {
   const [name, setName] = createSignal('')
   const [greetMsg, setGreetMsg] = createSignal('')
   const [isLoading, setIsLoading] = createSignal(false)
@@ -20,7 +23,7 @@ function App() {
       const msg = await demoService.greet(name())
       setGreetMsg(msg)
     } catch (error) {
-      console.error('Greet error:', error)
+      consola.error('Greet error:', error)
       setGreetMsg('Error calling greet command')
     } finally {
       setIsLoading(false)
@@ -31,7 +34,7 @@ function App() {
     <main class='mx-auto my-0 w-full'>
       <div class='rounded-3xl py-12 px-8 max-w-125 w-full mt-[20vh] mx-auto'>
         <h1 class='text-[2.5rem] font-bold mb-8 text-center text-slate-800 select-text'>
-          Tauri + SolidJS
+          Tauri Application
         </h1>
 
         <form onSubmit={handleGreet} class='flex gap-3 w-full mb-6'>

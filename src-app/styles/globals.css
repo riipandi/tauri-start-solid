@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@import './theme.css';
+
+@variant dark (&:where([data-theme="dark"] *));
 
 @layer base {
   html,
@@ -7,12 +10,93 @@
     @apply antialiased overflow-hidden;
   }
   body {
-    @apply bg-white text-black text-base font-sans;
+    @apply bg-background-page text-foreground-neutral text-base font-sans;
   }
   button:not(:disabled),
   [role='button']:not(:disabled) {
     cursor: default;
   }
+}
+
+@theme inline {
+  /* Color schemes */
+  --color-brand: var(--ui-color-brand);
+  --color-black: var(--ui-color-black);
+  --color-white: var(--ui-color-white);
+
+  --color-on-background-neutral: var(--ui-color-on-background-neutral);
+  --color-on-background-primary: var(--ui-color-on-background-primary);
+  --color-on-background-positive: var(--ui-color-on-background-positive);
+  --color-on-background-critical: var(--ui-color-on-background-critical);
+  --color-on-background-warning: var(--ui-color-on-background-warning);
+  --color-on-brand: var(--ui-color-on-brand);
+
+  --color-background-page: var(--ui-color-background-page);
+  --color-background-page-faded: var(--ui-color-background-page-faded);
+  --color-background-neutral: var(--ui-color-background-neutral);
+  --color-background-neutral-faded: var(--ui-color-background-neutral-faded);
+  --color-background-primary: var(--ui-color-background-primary);
+  --color-background-primary-faded: var(--ui-color-background-primary-faded);
+  --color-background-positive: var(--ui-color-background-positive);
+  --color-background-positive-faded: var(--ui-color-background-positive-faded);
+  --color-background-critical: var(--ui-color-background-critical);
+  --color-background-critical-faded: var(--ui-color-background-critical-faded);
+  --color-background-warning: var(--ui-color-background-warning);
+  --color-background-warning-faded: var(--ui-color-background-warning-faded);
+  --color-background-disabled: var(--ui-color-background-disabled);
+  --color-background-disabled-faded: var(--ui-color-background-disabled-faded);
+  --color-background-elevation-base: var(--ui-color-background-elevation-base);
+  --color-background-elevation-raised: var(--ui-color-background-elevation-raised);
+  --color-background-elevation-overlay: var(--ui-color-background-elevation-overlay);
+
+  --color-foreground-neutral: var(--ui-color-foreground-neutral);
+  --color-foreground-neutral-faded: var(--ui-color-foreground-neutral-faded);
+  --color-foreground-primary: var(--ui-color-foreground-primary);
+  --color-foreground-positive: var(--ui-color-foreground-positive);
+  --color-foreground-critical: var(--ui-color-foreground-critical);
+  --color-foreground-warning: var(--ui-color-foreground-warning);
+  --color-foreground-disabled: var(--ui-color-foreground-disabled);
+
+  --color-border-neutral: var(--ui-color-border-neutral);
+  --color-border-neutral-faded: var(--ui-color-border-neutral-faded);
+  --color-border-primary: var(--ui-color-border-primary);
+  --color-border-primary-faded: var(--ui-color-border-primary-faded);
+  --color-border-positive: var(--ui-color-border-positive);
+  --color-border-positive-faded: var(--ui-color-border-positive-faded);
+  --color-border-critical: var(--ui-color-border-critical);
+  --color-border-critical-faded: var(--ui-color-border-critical-faded);
+  --color-border-warning: var(--ui-color-border-warning);
+  --color-border-warning-faded: var(--ui-color-border-warning-faded);
+  --color-border-disabled: var(--ui-color-border-disabled);
+
+  /* Elevation */
+  --shadow-raised: var(--ui-shadow-raised);
+  --shadow-overlay: var(--ui-shadow-overlay);
+
+  /* Border Radius */
+  --radius: var(--ui-radius);
+  --radius-xs: var(--ui-radius-xs);
+  --radius-sm: var(--ui-radius-sm);
+  --radius-md: var(--ui-radius-md);
+  --radius-lg: var(--ui-radius-lg);
+  --radius-xl: var(--ui-radius-xl);
+
+  /* Typography */
+  --font-sans: var(--ui-font-sans);
+  --font-mono: var(--ui-font-mono);
+  --text-xs: var(--ui-text-xs);
+  --text-sm: var(--ui-text-sm);
+  --text-base: var(--ui-text-base);
+  --text-lg: var(--ui-text-lg);
+  --text-xl: var(--ui-text-xl);
+  --text-2xl: var(--ui-text-2xl);
+  --text-3xl: var(--ui-text-3xl);
+  --text-4xl: var(--ui-text-4xl);
+  --text-5xl: var(--ui-text-5xl);
+  --text-6xl: var(--ui-text-6xl);
+  --text-7xl: var(--ui-text-7xl);
+  --text-8xl: var(--ui-text-8xl);
+  --text-9xl: var(--ui-text-9xl);
 }
 
 @utility debug {

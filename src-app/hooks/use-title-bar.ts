@@ -1,10 +1,11 @@
 import { listen } from '@tauri-apps/api/event'
 import { getCurrentWindow } from '@tauri-apps/api/window'
 import { platform, type Platform } from '@tauri-apps/plugin-os'
+import { consola } from 'consola'
 import { createSignal, onCleanup, onMount } from 'solid-js'
 
 export function useTitleBar() {
-  const [currentPlatform, setCurrentPlatform] = createSignal<Platform>('linux')
+  const [currentPlatform, setCurrentPlatform] = createSignal<Platform>('macos')
   const [isFullscreen, setIsFullscreen] = createSignal(false)
   const [isMaximized, setIsMaximized] = createSignal(false)
 
@@ -15,7 +16,7 @@ export function useTitleBar() {
       const fs = await appWindow.isFullscreen()
       setIsFullscreen(fs)
     } catch (error) {
-      console.error('[useTitleBar] Failed to check fullscreen:', error)
+      consola.error('[useTitleBar] Failed to check fullscreen:', error)
     }
   }
 
@@ -24,14 +25,14 @@ export function useTitleBar() {
       const maximized = await appWindow.isMaximized()
       setIsMaximized(maximized)
     } catch (error) {
-      console.error('[useTitleBar] Failed to check maximized:', error)
+      consola.error('[useTitleBar] Failed to check maximized:', error)
     }
   }
 
   onMount(async () => {
     const platformResult = await platform()
     setCurrentPlatform(platformResult)
-    console.log('[useTitleBar] Platform:', platformResult)
+    consola.log('[useTitleBar] Platform:', platformResult)
 
     await checkFullscreen()
     await checkMaximized()
@@ -49,28 +50,28 @@ export function useTitleBar() {
   const minimize = async () => {
     try {
       await appWindow.minimize()
-      console.log('[useTitleBar] Window minimized')
+      consola.log('[useTitleBar] Window minimized')
     } catch (error) {
-      console.error('[useTitleBar] Failed to minimize:', error)
+      consola.error('[useTitleBar] Failed to minimize:', error)
     }
   }
 
   const toggleMaximize = async () => {
     try {
       await appWindow.toggleMaximize()
-      console.log('[useTitleBar] Window maximize toggled')
+      consola.log('[useTitleBar] Window maximize toggled')
       await checkMaximized()
     } catch (error) {
-      console.error('[useTitleBar] Failed to toggle maximize:', error)
+      consola.error('[useTitleBar] Failed to toggle maximize:', error)
     }
   }
 
   const close = async () => {
     try {
       await appWindow.close()
-      console.log('[useTitleBar] Window close requested')
+      consola.log('[useTitleBar] Window close requested')
     } catch (error) {
-      console.error('[useTitleBar] Failed to close:', error)
+      consola.error('[useTitleBar] Failed to close:', error)
     }
   }
 

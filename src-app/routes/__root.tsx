@@ -1,16 +1,19 @@
 import { Outlet, createRootRoute } from '@tanstack/solid-router'
 import { SettingsProvider } from '#/providers/settings-provider'
+import { ThemeProvider } from '#/providers/theme-provider'
 import { GlobalNotFound } from '#/routes/-errors'
 
 export const Route = createRootRoute({
-  component: RootComponent,
-  notFoundComponent: GlobalNotFound
+  notFoundComponent: GlobalNotFound,
+  component: RootComponent
 })
 
 function RootComponent() {
   return (
     <SettingsProvider>
-      <Outlet />
+      <ThemeProvider>
+        <Outlet />
+      </ThemeProvider>
     </SettingsProvider>
   )
 }

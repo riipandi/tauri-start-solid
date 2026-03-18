@@ -59,6 +59,7 @@
         "@tauri-apps/plugin-updater": "^2.10.0",
         "@tauri-apps/plugin-window-state": "^2.4.1",
         "clsx": "^2.1.1",
+        "consola": "^3.4.2",
         "nanostores": "^1.2.0",
         "solid-js": "^1.9.11",
         "tailwind-merge": "^3.5.0",

@@ -1,3 +1,4 @@
+import { consola } from 'consola'
 import { createEffect, onCleanup } from 'solid-js'
 import { themeMode, currentTheme } from '#/stores/settings'
 
@@ -24,7 +25,7 @@ export function useThemeAttributes() {
     rootElement.setAttribute('data-theme', theme)
 
     if (import.meta.env.DEV) {
-      console.log('[useThemeAttributes]', {
+      consola.log('[useThemeAttributes]', {
         'data-appearance': mode,
         'data-theme': theme
       })
@@ -37,7 +38,7 @@ export function useThemeAttributes() {
     rootElement.removeAttribute('data-theme')
 
     if (import.meta.env.DEV) {
-      console.log('[useThemeAttributes] Cleaned up attributes')
+      consola.log('[useThemeAttributes] Cleaned up attributes')
     }
   })
 }

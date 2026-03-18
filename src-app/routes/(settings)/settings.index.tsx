@@ -1,38 +1,39 @@
 import { createFileRoute } from '@tanstack/solid-router'
 import { clsx } from 'clsx'
+import { consola } from 'consola'
 import { createSignal, Show, onMount, createEffect } from 'solid-js'
 import { uiSettings, settingsStore } from '#/stores/settings'
 import { updateUISettings, resetSettings, currentTheme } from '#/stores/settings'
 
 export const Route = createFileRoute('/(settings)/settings/')({
-  component: Settings
+  component: RouteComponent
 })
 
-function Settings() {
+function RouteComponent() {
   const ui = uiSettings
   const [isSaving, setIsSaving] = createSignal(false)
   const [message, setMessage] = createSignal<{ type: 'success' | 'error'; text: string }>()
 
   // Debug: Log when component mounts
   onMount(() => {
-    console.log('[Settings Component] Mounted')
-    console.log('[Settings Component] Current UI from store:', ui.get())
+    consola.log('[Settings Component] Mounted')
+    consola.log('[Settings Component] Current UI from store:', ui.get())
   })
 
   // Debug: Log whenever ui store changes
   createEffect(() => {
     const currentUI = ui.get()
-    console.log('[Settings Component] UI store changed, new value:', currentUI)
+    consola.log('[Settings Component] UI store changed, new value:', currentUI)
   })
 
   async function handleThemeModeChange(value: 'auto' | 'dark' | 'light') {
-    console.log('[Settings] handleThemeModeChange() called with:', value)
+    consola.log('[Settings] handleThemeModeChange() called with:', value)
     setIsSaving(true)
     try {
       await updateUISettings({ theme_mode: value })
       setMessage({ type: 'success', text: 'Theme mode updated successfully' })
     } catch (error) {
-      console.error('[Settings] Error in handleThemeModeChange:', error)
+      consola.error('[Settings] Error in handleThemeModeChange:', error)
       setMessage({ type: 'error', text: 'Failed to update theme mode' })
     } finally {
       setIsSaving(false)
@@ -46,7 +47,7 @@ function Settings() {
       await updateUISettings({ [field]: !ui.get()[field] })
       setMessage({ type: 'success', text: 'Setting updated successfully' })
     } catch (error) {
-      console.error('[Settings] Error in handleToggleChange:', error)
+      consola.error('[Settings] Error in handleToggleChange:', error)
       setMessage({ type: 'error', text: 'Failed to update setting' })
     } finally {
       setIsSaving(false)
@@ -56,24 +57,24 @@ function Settings() {
 
   async function handleReset() {
     if (!confirm('Are you sure you want to reset all settings to default?')) {
-      console.log('[Settings] handleReset() cancelled by user')
+      consola.log('[Settings] handleReset() cancelled by user')
       return
     }
 
-    console.log('[Settings] handleReset() proceeding with reset')
+    consola.log('[Settings] handleReset() proceeding with reset')
     setIsSaving(true)
     try {
       const beforeReset = settingsStore.get()
-      console.log('[Settings] handleReset() Store state BEFORE reset:', beforeReset)
+      consola.log('[Settings] handleReset() Store state BEFORE reset:', beforeReset)
 
       await resetSettings()
 
       const afterReset = settingsStore.get()
-      console.log('[Settings] handleReset() Store state AFTER reset:', afterReset)
+      consola.log('[Settings] handleReset() Store state AFTER reset:', afterReset)
 
       setMessage({ type: 'success', text: 'Settings reset to defaults' })
     } catch (error) {
-      console.error('[Settings] Error in handleReset:', error)
+      consola.error('[Settings] Error in handleReset:', error)
       setMessage({ type: 'error', text: 'Failed to reset settings' })
     } finally {
       setIsSaving(false)
@@ -82,7 +83,7 @@ function Settings() {
   }
 
   return (
-    <main class='min-w-[1080px] mx-auto my-0 w-[min(1080px,calc(100%-2rem))]'>
+    <main class='max-w-2xl mx-auto my-0 w-full'>
       <div class='max-w-800 mx-auto py-8'>
         <header class='mb-12'>
           <h1 class='text-2xl font-bold mb-2'>Settings</h1>
