@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from '@tanstack/solid-router'
+import { createFileRoute } from '@tanstack/solid-router'
 import { clsx } from 'clsx'
 import { createSignal } from 'solid-js'
 import { Button } from '#/components/button'

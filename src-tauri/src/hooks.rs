@@ -68,7 +68,11 @@ pub fn setup_app<R: tauri::Runtime>(app: &mut App<R>) -> Result<(), Box<dyn std:
     // Setup the customized main window
     match core::setup_main_window(app) {
         Ok(_) => {
-            log::info!("Main window setup completed");
+            // Setup menu after window is created
+            if let Err(e) = core::menu::setup_menu(app) {
+                log::error!("Error setting up menu: {}", e);
+                return Err(Box::<dyn std::error::Error>::from(format!("{}", e)));
+            }
             Ok(())
         }
         Err(e) => {
