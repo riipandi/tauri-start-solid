@@ -11,6 +11,7 @@ export interface UISettings {
 }
 
 export interface AppSettings {
+  license_key?: string
   ui: UISettings
 }
 

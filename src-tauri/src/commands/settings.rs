@@ -60,23 +60,13 @@ pub async fn update_settings(app: AppHandle, mut settings: AppSettings) -> Resul
         }
     }
 
-    log::debug!(
-        "Validated settings: theme_mode={:?}, theme_dark={}, theme_light={}",
-        settings.ui.theme_mode,
-        settings.ui.theme_dark,
-        settings.ui.theme_light
-    );
-
     // Save to JSON file
     match save_settings(&app, &settings) {
         Ok(_) => {
-            log::info!("Settings updated successfully");
-
             // Emit event to all windows
             if let Err(e) = app.emit("settings://updated", settings.clone()) {
                 log::error!("Failed to emit settings update event: {}", e);
             }
-
             Ok(settings)
         }
         Err(e) => {

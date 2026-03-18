@@ -1,5 +1,6 @@
 import * as BaseToast from '@kobalte/core/toast'
 import { clsx } from 'clsx'
+import { Show } from 'solid-js'
 
 export function ToastProvider() {
   return (
@@ -31,7 +32,7 @@ export function Toast(props: {
       )}
     >
       <div class='shrink-0 pt-0.5'>
-        {props.type === 'success' ? (
+        <Show when={props.type === 'success'}>
           <svg
             class='w-5 h-5'
             fill='none'
@@ -46,7 +47,9 @@ export function Toast(props: {
               d='M5 13l4 4L19 7'
             />
           </svg>
-        ) : (
+        </Show>
+
+        <Show when={props.type !== 'success'}>
           <svg
             class='w-5 h-5'
             fill='none'
@@ -61,7 +64,7 @@ export function Toast(props: {
               d='M6 18L18 6M6 6l12 12'
             />
           </svg>
-        )}
+        </Show>
       </div>
 
       <div class='flex-1'>

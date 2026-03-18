@@ -36,13 +36,17 @@ tauri-plugin-process = "2.3.1"
 tauri-plugin-shell = "2.3.5"
 
 # Essential crates
+aes-gcm = "0.10.3"
 anyhow = "1.0.102"
+base64 = "0.22.1"
 chrono = "0.4.44"
 heed3 = "0.22.0"
 log = "0.4.29"
+machine-id = "0.4.0"
 rust-fontconfig = "2.0.0"
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.149"
+sha2 = "0.10.9"
 sysinfo = { version = "0.38.4", features = ["serde"] }
 thiserror = "2.0.18"
 tokio = { version = "1.50.0", features = ["macros", "sync", "time"] }

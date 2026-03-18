@@ -3,6 +3,7 @@ import { settingsService } from '#/services/settings.service'
 import type { AppSettings, UISettings, ThemeName } from '#/types/settings'
 
 export const settingsStore = atom<AppSettings>({
+  license_key: undefined,
   ui: {
     theme_mode: 'auto',
     theme_light: 'default-light',
@@ -15,6 +16,7 @@ export const systemThemeStore = atom<'light' | 'dark'>('light')
 
 export const uiSettings = computed(settingsStore, (s) => s.ui)
 export const themeMode = computed(settingsStore, (s) => s.ui.theme_mode)
+export const licenseKey = computed(settingsStore, (s) => s.license_key)
 
 export const currentTheme = computed([settingsStore, systemThemeStore], (settings, systemTheme) => {
   switch (settings.ui.theme_mode) {
@@ -62,6 +64,10 @@ export async function updateTheme(mode: 'light' | 'dark', theme: ThemeName) {
   }
 
   return updateUISettings(updatedUI)
+}
+
+export async function updateLicenseKey(licenseKey: string) {
+  return updateSettings({ license_key: licenseKey })
 }
 
 loadSettings()

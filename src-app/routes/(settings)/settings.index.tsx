@@ -3,12 +3,12 @@ import { useStore } from '@nanostores/solid'
 import { createFileRoute } from '@tanstack/solid-router'
 import { confirm } from '@tauri-apps/plugin-dialog'
 import { consola } from 'consola'
-import { createSignal } from 'solid-js'
+import { createSignal, Show } from 'solid-js'
 import { Select, type SelectOption } from '#/components/select'
 import { Switch } from '#/components/switch'
 import { Toast } from '#/components/toast'
-import { uiSettings, currentTheme } from '#/stores/settings'
-import { updateUISettings, resetSettings, updateTheme } from '#/stores/settings'
+import { uiSettings, currentTheme, licenseKey } from '#/stores/settings'
+import { updateLicenseKey, updateUISettings, resetSettings, updateTheme } from '#/stores/settings'
 
 export const Route = createFileRoute('/(settings)/settings/')({
   component: RouteComponent
@@ -17,7 +17,9 @@ export const Route = createFileRoute('/(settings)/settings/')({
 function RouteComponent() {
   const ui = useStore(uiSettings)
   const theme = useStore(currentTheme)
+  const license = useStore(licenseKey)
   const [isSaving, setIsSaving] = createSignal(false)
+  const [licenseKeyInput, setLicenseKeyInput] = createSignal('')
 
   function showToast(type: 'success' | 'error', message: string) {
     toaster.show((props) => <Toast toast={props} type={type} title={message} />)
@@ -61,6 +63,41 @@ function RouteComponent() {
     } catch (error) {
       consola.error('[Settings] Error in handleToggleChange:', error)
       showToast('error', 'Failed to update setting')
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  async function handleLicenseKeySave() {
+    const value = licenseKeyInput().trim()
+
+    if (!value) {
+      showToast('error', 'License key cannot be empty')
+      return
+    }
+
+    setIsSaving(true)
+    try {
+      await updateLicenseKey(value)
+      showToast('success', 'License key saved successfully')
+      setLicenseKeyInput('')
+    } catch (error) {
+      consola.error('[Settings] Error saving license key:', error)
+      showToast('error', 'Failed to save license key')
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  async function handleLicenseKeyClear() {
+    setIsSaving(true)
+    try {
+      await updateLicenseKey('')
+      showToast('success', 'License key cleared')
+      setLicenseKeyInput('')
+    } catch (error) {
+      consola.error('[Settings] Error clearing license key:', error)
+      showToast('error', 'Failed to clear license key')
     } finally {
       setIsSaving(false)
     }
@@ -169,6 +206,65 @@ function RouteComponent() {
               onChange={() => handleToggleChange('enable_spell_check')}
               disabled={isSaving()}
             />
+          </div>
+        </section>
+
+        <section class='mb-12'>
+          <h2 class='text-lg font-semibold mb-6 text-foreground-neutral'>License</h2>
+
+          <div class='space-y-4'>
+            <Show when={!license()}>
+              <div>
+                <label
+                  for='license-key-input'
+                  class='block mb-2 font-medium text-sm text-foreground-neutral'
+                >
+                  License Key
+                </label>
+                <input
+                  id='license-key-input'
+                  type='text'
+                  class='w-full py-2.5 px-3 rounded-md border border-border-neutral bg-background-neutral text-sm text-foreground-neutral placeholder:text-foreground-neutral-faded/50 focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed'
+                  placeholder='Enter your license key...'
+                  value={licenseKeyInput()}
+                  onInput={(e) => setLicenseKeyInput(e.currentTarget.value)}
+                  disabled={isSaving()}
+                />
+                <p class='text-xs text-foreground-neutral-faded mt-2'>
+                  Your license key is encrypted and stored securely on this device.
+                </p>
+
+                <div class='flex gap-3 mt-4'>
+                  <button
+                    type='button'
+                    class='px-6 py-2.5 rounded-lg bg-primary text-on-background-primary border-0 text-sm font-medium hover:bg-primary/90 active:bg-primary/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
+                    onClick={handleLicenseKeySave}
+                    disabled={isSaving() || !licenseKeyInput().trim()}
+                  >
+                    Save License Key
+                  </button>
+                </div>
+              </div>
+            </Show>
+
+            <Show when={license()}>
+              <div class='p-3 rounded-md bg-background-neutral/50 border border-border-neutral'>
+                <div class='flex items-center justify-between'>
+                  <div class='flex items-center gap-2'>
+                    <div class='w-2 h-2 rounded-full bg-success' />
+                    <span class='text-sm text-foreground-neutral'>License key is configured</span>
+                  </div>
+                  <button
+                    type='button'
+                    class='px-3 py-1.5 rounded-md text-xs font-medium text-critical hover:bg-critical/10 active:bg-critical/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
+                    onClick={handleLicenseKeyClear}
+                    disabled={isSaving()}
+                  >
+                    Clear
+                  </button>
+                </div>
+              </div>
+            </Show>
           </div>
         </section>
 

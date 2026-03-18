@@ -3,6 +3,7 @@
 //! Provides JSON file-based storage for application settings.
 
 use crate::core::settings::AppSettings;
+use crate::utils::crypto::{CryptoError, is_encrypted, maybe_decrypt, maybe_encrypt};
 use std::path::PathBuf;
 use tauri::{AppHandle, Manager};
 use thiserror::Error;
@@ -27,6 +28,15 @@ pub enum SettingsError {
 
     #[error("Failed to serialize settings JSON: {0}")]
     SerializeJson(String),
+
+    #[error("Crypto error: {0}")]
+    Crypto(String),
+}
+
+impl From<CryptoError> for SettingsError {
+    fn from(err: CryptoError) -> Self {
+        SettingsError::Crypto(err.to_string())
+    }
 }
 
 /// Get the settings file path based on the environment
@@ -81,8 +91,24 @@ pub fn load_settings<R: tauri::Runtime>(app: &AppHandle<R>) -> Result<AppSetting
     let json_content = std::fs::read_to_string(&settings_path)
         .map_err(|e| SettingsError::ReadFile(format!("{}: {}", settings_path.display(), e)))?;
 
-    serde_json::from_str::<AppSettings>(&json_content)
-        .map_err(|e| SettingsError::ParseJson(format!("{}: {}", e, json_content)))
+    let mut settings: AppSettings = serde_json::from_str::<AppSettings>(&json_content)
+        .map_err(|e| SettingsError::ParseJson(format!("{}: {}", e, json_content)))?;
+
+    if let Some(ref license_key) = settings.license_key {
+        if is_encrypted(license_key) {
+            match maybe_decrypt(license_key) {
+                Ok(decrypted) => {
+                    settings.license_key = Some(decrypted);
+                    log::info!("Successfully decrypted license_key");
+                }
+                Err(e) => {
+                    log::warn!("Failed to decrypt license_key: {}. Keeping as-is.", e);
+                }
+            }
+        }
+    }
+
+    Ok(settings)
 }
 
 /// Save settings to the JSON file
@@ -94,14 +120,32 @@ pub fn load_settings<R: tauri::Runtime>(app: &AppHandle<R>) -> Result<AppSetting
 /// # Returns
 /// * `Result<(), SettingsError>` - Success or an error
 pub fn save_settings<R: tauri::Runtime>(app: &AppHandle<R>, settings: &AppSettings) -> Result<(), SettingsError> {
+    let mut settings_to_save = settings.clone();
+
+    if let Some(ref license_key) = settings.license_key {
+        // Treat empty string as "clear this field"
+        if license_key.is_empty() {
+            settings_to_save.license_key = None;
+        } else if !is_encrypted(license_key) {
+            match maybe_encrypt(license_key) {
+                Ok(encrypted) => {
+                    settings_to_save.license_key = Some(encrypted);
+                    log::info!("Successfully encrypted license_key before saving");
+                }
+                Err(e) => {
+                    log::warn!("Failed to encrypt license_key: {}. Saving as-is.", e);
+                }
+            }
+        }
+    }
+
     let settings_path = get_settings_file_path(app)?;
 
     let json_content =
-        serde_json::to_string_pretty(settings).map_err(|e| SettingsError::SerializeJson(format!("{}", e)))?;
+        serde_json::to_string_pretty(&settings_to_save).map_err(|e| SettingsError::SerializeJson(format!("{}", e)))?;
 
     std::fs::write(&settings_path, json_content)
         .map_err(|e| SettingsError::WriteFile(format!("{}: {}", settings_path.display(), e)))?;
 
-    log::info!("Settings saved successfully to {:?}", settings_path);
     Ok(())
 }

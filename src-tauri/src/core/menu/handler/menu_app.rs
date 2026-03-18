@@ -15,7 +15,7 @@ pub fn handle_menu_settings<R: Runtime>(app_handle: &AppHandle<R>) {
     } else {
         // If it doesn't exist, create a new one using our dedicated function
         match core::create_settings_window(app_handle) {
-            Ok(_) => log::debug!("Settings window created successfully"),
+            Ok(_) => {}
             Err(e) => log::error!("Failed to create settings window: {}", e),
         }
     }
