@@ -1,80 +1,69 @@
+import { toaster } from '@kobalte/core/toast'
+import { useStore } from '@nanostores/solid'
 import { createFileRoute } from '@tanstack/solid-router'
-import { clsx } from 'clsx'
 import { consola } from 'consola'
-import { createSignal, Show, onMount, createEffect } from 'solid-js'
-import { uiSettings, settingsStore } from '#/stores/settings'
-import {
-  updateUISettings,
-  resetSettings,
-  currentTheme,
-  updateThemeWithSync
-} from '#/stores/settings'
+import { createSignal } from 'solid-js'
+import { Select, type SelectOption } from '#/components/select'
+import { Switch } from '#/components/switch'
+import { Toast } from '#/components/toast'
+import { uiSettings, currentTheme } from '#/stores/settings'
+import { updateUISettings, resetSettings, updateThemeWithSync } from '#/stores/settings'
 
 export const Route = createFileRoute('/(settings)/settings/')({
   component: RouteComponent
 })
 
 function RouteComponent() {
-  const ui = uiSettings
+  const ui = useStore(uiSettings)
+  const theme = useStore(currentTheme)
   const [isSaving, setIsSaving] = createSignal(false)
-  const [message, setMessage] = createSignal<{ type: 'success' | 'error'; text: string }>()
 
-  // Debug: Log when component mounts
-  onMount(() => {
-    consola.log('[Settings Component] Mounted')
-    consola.log('[Settings Component] Current UI from store:', ui.get())
-  })
+  function showToast(type: 'success' | 'error', message: string) {
+    toaster.show((props) => <Toast toast={props} type={type} title={message} />)
+  }
 
-  // Debug: Log whenever ui store changes
-  createEffect(() => {
-    const currentUI = ui.get()
-    consola.log('[Settings Component] UI store changed, new value:', currentUI)
-  })
-
-  async function handleThemeModeChange(value: 'auto' | 'dark' | 'light') {
+  async function handleThemeModeChange(option: SelectOption | null) {
+    if (!option) return
+    const value = option.value as 'auto' | 'dark' | 'light'
     consola.log('[Settings] handleThemeModeChange() called with:', value)
     setIsSaving(true)
     try {
       await updateUISettings({ theme_mode: value })
-      setMessage({ type: 'success', text: 'Theme mode updated successfully' })
+      showToast('success', 'Theme mode updated successfully')
     } catch (error) {
       consola.error('[Settings] Error in handleThemeModeChange:', error)
-      setMessage({ type: 'error', text: 'Failed to update theme mode' })
+      showToast('error', 'Failed to update theme mode')
     } finally {
       setIsSaving(false)
-      setTimeout(() => setMessage(undefined), 3000)
     }
   }
 
-  async function handleThemeChange(mode: 'light' | 'dark', value: string) {
+  async function handleThemeChange(mode: 'light' | 'dark', option: SelectOption | null) {
+    if (!option) return
+    const value = option.value
     consola.log('[Settings] handleThemeChange() called with:', { mode, value })
     setIsSaving(true)
     try {
       await updateThemeWithSync(mode, value as any)
-      setMessage({
-        type: 'success',
-        text: `Theme updated successfully (${mode} mode: ${value})`
-      })
+      showToast('success', `Theme updated successfully (${mode} mode: ${value})`)
     } catch (error) {
       consola.error('[Settings] Error in handleThemeChange:', error)
-      setMessage({ type: 'error', text: 'Failed to update theme' })
+      showToast('error', 'Failed to update theme')
     } finally {
       setIsSaving(false)
-      setTimeout(() => setMessage(undefined), 3000)
     }
   }
 
   async function handleToggleChange(field: 'enable_spell_check') {
     setIsSaving(true)
     try {
-      await updateUISettings({ [field]: !ui.get()[field] })
-      setMessage({ type: 'success', text: 'Setting updated successfully' })
+      await updateUISettings({ [field]: !ui()[field] })
+      showToast('success', 'Setting updated successfully')
     } catch (error) {
       consola.error('[Settings] Error in handleToggleChange:', error)
-      setMessage({ type: 'error', text: 'Failed to update setting' })
+      showToast('error', 'Failed to update setting')
     } finally {
       setIsSaving(false)
-      setTimeout(() => setMessage(undefined), 3000)
     }
   }
 
@@ -87,161 +76,112 @@ function RouteComponent() {
     consola.log('[Settings] handleReset() proceeding with reset')
     setIsSaving(true)
     try {
-      const beforeReset = settingsStore.get()
-      consola.log('[Settings] handleReset() Store state BEFORE reset:', beforeReset)
-
       await resetSettings()
-
-      const afterReset = settingsStore.get()
-      consola.log('[Settings] handleReset() Store state AFTER reset:', afterReset)
-
-      setMessage({ type: 'success', text: 'Settings reset to defaults' })
+      showToast('success', 'Settings reset to defaults')
     } catch (error) {
       consola.error('[Settings] Error in handleReset:', error)
-      setMessage({ type: 'error', text: 'Failed to reset settings' })
+      showToast('error', 'Failed to reset settings')
     } finally {
       setIsSaving(false)
-      setTimeout(() => setMessage(undefined), 3000)
     }
   }
 
   return (
-    <main class='max-w-2xl mx-auto my-0 w-full'>
-      <div class='max-w-800 mx-auto py-8'>
+    <main class='max-w-xl mx-auto my-0 w-full'>
+      <div class='mx-auto py-8 px-4'>
         <header class='mb-12'>
-          <h1 class='text-2xl font-bold mb-2'>Settings</h1>
+          <h1 class='text-2xl font-bold mb-2 text-foreground-neutral'>Settings</h1>
           <p class='text-sm text-foreground-neutral-faded'>Manage your application preferences</p>
         </header>
 
-        <Show when={message()}>
-          {(msg) => (
-            <div
-              class={clsx(
-                'py-4 px-4 rounded-lg mb-8 text-sm',
-                msg().type === 'success'
-                  ? 'bg-positive text-on-background-positive'
-                  : 'bg-critical text-on-background-critical'
-              )}
-            >
-              {msg().text}
-            </div>
-          )}
-        </Show>
-
         <section class='mb-12'>
-          <h2 class='text-xl font-bold mb-6 text-foreground-neutral'>Appearance</h2>
+          <h2 class='text-lg font-semibold mb-6 text-foreground-neutral'>Appearance</h2>
 
-          <div class='mb-6'>
-            <label class='block mb-2 font-medium text-sm'>
-              Theme Mode
-              <select
-                class='w-full py-3 px-4 rounded-md border border-border-neutral bg-background-page mt-2 text-sm'
-                value={ui.get().theme_mode}
-                onChange={(e) => handleThemeModeChange(e.target.value as 'auto' | 'dark' | 'light')}
-                disabled={isSaving()}
-              >
-                <option value='auto'>Auto (System)</option>
-                <option value='dark'>Dark</option>
-                <option value='light'>Light</option>
-              </select>
-            </label>
-            <p class='text-xs text-foreground-neutral-faded mt-2'>
-              Auto mode follows your system preference. Dark/Light forces specific mode.
-            </p>
-          </div>
+          <div class='space-y-6'>
+            <Select
+              name='theme_mode'
+              label='Theme Mode'
+              description='Auto mode follows your system preference. Dark/Light forces specific mode.'
+              value={ui().theme_mode}
+              onChange={handleThemeModeChange}
+              disabled={isSaving()}
+              options={[
+                { value: 'auto', label: 'Auto (System)' },
+                { value: 'dark', label: 'Dark' },
+                { value: 'light', label: 'Light' }
+              ]}
+            />
 
-          <div class='mb-6'>
-            <label class='block mb-2 font-medium text-sm'>
-              Current Active Theme
+            <div>
+              <label class='block mb-2 font-medium text-sm text-foreground-neutral'>
+                Current Active Theme
+              </label>
               <input
                 type='text'
-                class='w-full py-3 px-4 rounded-md border border-border-neutral bg-background-page mt-2 text-sm'
-                value={currentTheme.get()}
+                class='w-full py-2.5 px-3 rounded-md border border-border-neutral bg-background-neutral/50 text-sm text-foreground-neutral-faded cursor-not-allowed'
+                value={theme()}
                 disabled={true}
               />
-            </label>
-            <p class='text-xs text-foreground-neutral-faded mt-2'>
-              Active theme based on your mode and system preference
-            </p>
-          </div>
-
-          <div class='grid grid-cols-2 gap-4 mb-6'>
-            <div>
-              <label class='block mb-2 font-medium text-sm'>
-                Light Theme
-                <select
-                  class='w-full py-3 px-4 rounded-md border border-border-neutral bg-background-page mt-2 text-sm'
-                  value={ui.get().theme_light}
-                  onChange={(e) => handleThemeChange('light', e.target.value)}
-                  disabled={isSaving()}
-                >
-                  <option value='default-light'>Default Light</option>
-                  <option value='modern-light'>Modern Light</option>
-                </select>
-              </label>
-              <p class='text-xs text-foreground-neutral-faded mt-2'>Theme for light mode</p>
+              <p class='text-xs text-foreground-neutral-faded mt-2'>
+                Active theme based on your mode and system preference
+              </p>
             </div>
 
-            <div>
-              <label class='block mb-2 font-medium text-sm'>
-                Dark Theme
-                <select
-                  class='w-full py-3 px-4 rounded-md border border-border-neutral bg-background-page mt-2 text-sm'
-                  value={ui.get().theme_dark}
-                  onChange={(e) => handleThemeChange('dark', e.target.value)}
-                  disabled={isSaving()}
-                >
-                  <option value='default-dark'>Default Dark</option>
-                  <option value='modern-dark'>Modern Dark</option>
-                </select>
-              </label>
-              <p class='text-xs text-foreground-neutral-faded mt-2'>Theme for dark mode</p>
-            </div>
-          </div>
+            <Select
+              name='theme_light'
+              label='Light Theme'
+              description='Theme for light mode'
+              value={ui().theme_light}
+              onChange={(option) => handleThemeChange('light', option)}
+              disabled={isSaving()}
+              options={[
+                { value: 'default-light', label: 'Default Light' },
+                { value: 'modern-light', label: 'Modern Light' }
+              ]}
+            />
 
-          <div class='bg-background-primary-faded border border-border-primary-faded rounded-lg p-4 mb-6'>
-            <p class='text-sm text-foreground-primary'>
-              <strong>💡 Tip:</strong> Light and dark themes are automatically paired. When you
-              select a theme, its counterpart is automatically applied to the other mode.
-            </p>
+            <Select
+              name='theme_dark'
+              label='Dark Theme'
+              description='Theme for dark mode'
+              value={ui().theme_dark}
+              onChange={(option) => handleThemeChange('dark', option)}
+              disabled={isSaving()}
+              options={[
+                { value: 'default-dark', label: 'Default Dark' },
+                { value: 'modern-dark', label: 'Modern Dark' }
+              ]}
+            />
           </div>
         </section>
 
         <section class='mb-12'>
-          <h2 class='text-xl font-bold mb-6 text-foreground-neutral'>Text Editing</h2>
+          <h2 class='text-lg font-semibold mb-6 text-foreground-neutral'>Text Editing</h2>
 
-          <div class='mb-6'>
-            <label class='flex items-center gap-3 text-sm'>
-              <input
-                type='checkbox'
-                checked={ui.get().enable_spell_check}
-                onChange={() => handleToggleChange('enable_spell_check')}
-                disabled={isSaving()}
-              />
-              <span>Enable Spell Check</span>
-            </label>
-            <p class='text-xs text-foreground-neutral-faded mt-2'>Check spelling as you type</p>
+          <div class='space-y-6'>
+            <Switch
+              name='enable_spell_check'
+              label='Enable Spell Check'
+              description='Check spelling as you type'
+              checked={ui().enable_spell_check}
+              onChange={() => handleToggleChange('enable_spell_check')}
+              disabled={isSaving()}
+            />
           </div>
         </section>
 
         <section class='mb-12'>
-          <h2 class='text-xl font-bold mb-6 text-foreground-neutral'>Danger Zone</h2>
+          <h2 class='text-lg font-semibold mb-6 text-foreground-neutral'>Danger Zone</h2>
 
           <button
             type='button'
-            class='py-3 px-6 bg-critical text-on-background-critical border-0 rounded-md text-sm font-medium hover:bg-critical-faded disabled:opacity-50 disabled:cursor-not-allowed'
+            class='px-6 py-2.5 rounded-lg bg-critical text-on-background-critical border-0 text-sm font-medium hover:bg-critical/90 active:bg-critical/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
             onClick={handleReset}
             disabled={isSaving()}
           >
             Reset All Settings
           </button>
         </section>
-
-        <Show when={isSaving()}>
-          <div class='fixed bottom-8 right-8 py-4 px-8 bg-foreground-neutral text-on-background-neutral rounded-md text-sm shadow-raised'>
-            Saving changes...
-          </div>
-        </Show>
       </div>
     </main>
   )

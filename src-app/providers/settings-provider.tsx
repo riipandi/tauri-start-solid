@@ -1,7 +1,7 @@
 import { listen } from '@tauri-apps/api/event'
 import { consola } from 'consola'
 import { type JSX, onMount, onCleanup } from 'solid-js'
-import { useThemeAttributes } from '#/hooks/use-theme'
+import { useTheme } from '#/hooks/use-theme'
 import { settingsStore, loadSettings, initSystemThemeListener } from '#/stores/settings'
 import type { AppSettings } from '#/types/settings'
 
@@ -46,7 +46,7 @@ export function SettingsProvider(props: SettingsProviderProps) {
     consola.log('[SettingsProvider] System theme listener cleaned up')
   })
 
-  useThemeAttributes()
+  useTheme()
 
   consola.log('[SettingsProvider] Theme attributes hook initialized')
   const uiSettings = settingsStore.get().ui

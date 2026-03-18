@@ -15,7 +15,7 @@ import { themeMode, currentTheme } from '#/stores/settings'
  * or
  * <body data-appearance="auto" data-theme="default-light">
  */
-export function useThemeAttributes() {
+export function useTheme() {
   // Bridge nanostores to SolidJS reactivity
   const mode = useStore(themeMode)
   const theme = useStore(currentTheme)
@@ -27,7 +27,7 @@ export function useThemeAttributes() {
     rootElement.setAttribute('data-theme', theme())
 
     if (import.meta.env.DEV) {
-      consola.log('[useThemeAttributes]', {
+      consola.log('[useTheme]', {
         'data-appearance': mode(),
         'data-theme': theme()
       })
@@ -40,7 +40,7 @@ export function useThemeAttributes() {
     rootElement.removeAttribute('data-theme')
 
     if (import.meta.env.DEV) {
-      consola.log('[useThemeAttributes] Cleaned up attributes')
+      consola.log('[useTheme] Cleaned up attributes')
     }
   })
 }
