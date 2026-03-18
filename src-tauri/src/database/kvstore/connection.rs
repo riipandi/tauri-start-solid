@@ -66,7 +66,7 @@ pub async fn setup_kv_database(
     // LMDB requires a DIRECTORY path, not a file path.
     let db_dir = db_path.parent().ok_or("Invalid database path (no parent directory)")?;
 
-    // CRITICAL: Ensure database directory exists before LMDB open()
+    // Ensure database directory exists before LMDB open()
     std::fs::create_dir_all(db_dir).map_err(|e| format!("Failed to create database directory: {}", e))?;
 
     // Open the environment with a 50MB map size

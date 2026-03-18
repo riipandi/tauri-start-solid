@@ -36,27 +36,23 @@ pub fn setup_app<R: tauri::Runtime>(app: &mut App<R>) -> Result<(), Box<dyn std:
 
     // Run async initialization in blocking context during setup
     tauri::async_runtime::block_on(async move {
-        // CRITICAL: Setup database MUST succeed
+        // Setup database MUST succeed
         match setup_kv_database(state_clone.clone(), db_path.clone()).await {
             Ok(_) => {
                 log::info!("Database initialized successfully at: {}", db_path.display());
             }
             Err(e) => {
-                let err_msg = format!(
-                    "CRITICAL: Failed to initialize database at {}: {}",
-                    db_path.display(),
-                    e
-                );
+                let err_msg = format!("Failed to initialize database at {}: {}", db_path.display(), e);
                 log::error!("{}", err_msg);
                 panic!("Application cannot start without database: {}", err_msg);
             }
         }
 
-        // CRITICAL: Initialize default settings MUST succeed
+        // Initialize default settings MUST succeed
         match init_default_settings(&state_clone).await {
             Ok(_) => {}
             Err(e) => {
-                let err_msg = format!("CRITICAL: Failed to initialize default settings: {}", e);
+                let err_msg = format!("Failed to initialize default settings: {}", e);
                 log::error!("{}", err_msg);
                 panic!("Application cannot start without settings: {}", err_msg);
             }

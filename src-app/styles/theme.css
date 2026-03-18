@@ -4,23 +4,7 @@
 /* Size: x|sm|md|lg|xl */
 
 :root {
-  /* Common properties across all themes */
-  --ui-color-black: oklch(0 0 0);
-  --ui-color-white: oklch(1 0 0);
-
-  /* Elevation */
-  --ui-shadow-raised: 0px 1px 5px -4px rgba(0, 0, 0, 0.5), 0px 4px 8px 0px rgba(0, 0, 0, 0.05);
-  --ui-shadow-overlay: 0px 5px 10px 0px rgba(0, 0, 0, 0.05), 0px 15px 25px 0px rgba(0, 0, 0, 0.07);
-
-  /* Border Radius */
-  --ui-radius: 0.5rem; /* Base radius 8px */
-  --ui-radius-xs: max(0.375rem, calc(var(--ui-radius) - 0.25rem));
-  --ui-radius-sm: calc(var(--ui-radius) + 0.05rem);
-  --ui-radius-md: var(--ui-radius);
-  --ui-radius-lg: calc(var(--ui-radius) + 0.15rem);
-  --ui-radius-xl: calc(var(--ui-radius) + 0.35rem);
-
-  /* Typography - font size scale (16px base) */
+  /* Typography */
   --ui-font-sans: system-ui, -apple-system, Inter, Roboto, Aptos, Helvetica, Arial, sans-serif;
   --ui-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace;
   --ui-text-xs: 0.75rem /* 12px */;
@@ -43,6 +27,23 @@
   --chevron-right-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E");
   --chevron-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
   --chevron-down-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+
+  /* Border Radius */
+  --ui-radius: 0.625rem; /* Base radius 10px */
+  --ui-radius-xs: max(0.5rem, calc(var(--ui-radius) - 0.25rem));
+  --ui-radius-sm: calc(var(--ui-radius) + 0.05rem);
+  --ui-radius-md: var(--ui-radius);
+  --ui-radius-lg: calc(var(--ui-radius) + 0.2rem);
+  --ui-radius-xl: calc(var(--ui-radius) + 0.4rem);
+
+  /* Common colors across all themes */
+  --ui-color-black: oklch(0 0 0);
+  --ui-color-white: oklch(1 0 0);
+
+  /* Elevation */
+  --ui-shadow-raised: 0px 2px 8px -2px rgba(0, 0, 0, 0.08), 0px 4px 16px -4px rgba(0, 0, 0, 0.04);
+  --ui-shadow-overlay:
+    0px 8px 24px -4px rgba(0, 0, 0, 0.08), 0px 16px 48px -8px rgba(0, 0, 0, 0.04);
 }
 
 /* Default Light Theme */
@@ -55,46 +56,43 @@
   --ui-color-on-background-critical: oklch(1 0 0);
   --ui-color-on-background-warning: oklch(0 0 0);
 
-  /* Background colors */
-  --ui-color-background-page: oklch(1 0 0);
-  --ui-color-background-page-faded: oklch(0.983 0.003 287);
-  --ui-color-background-neutral: oklch(0.913 0.011 270);
-  --ui-color-background-neutral-faded: oklch(0.965 0.003 287);
-  --ui-color-background-primary: oklch(0.578 0.206 263);
-  --ui-color-background-primary-faded: oklch(0.953 0.021 262);
-  --ui-color-background-positive: oklch(0.553 0.13 156);
-  --ui-color-background-positive-faded: oklch(0.98 0.02 164);
-  --ui-color-background-critical: oklch(0.592 0.216 27);
-  --ui-color-background-critical-faded: oklch(0.959 0.017 18);
-  --ui-color-background-warning: oklch(0.861 0.173 92);
-  --ui-color-background-warning-faded: oklch(0.984 0.023 93);
-  --ui-color-background-disabled: oklch(0.949 0.006 265);
-  --ui-color-background-disabled-faded: oklch(0.973 0.004 272);
-  --ui-color-background-elevation-base: oklch(1 0 0);
-  --ui-color-background-elevation-raised: oklch(1 0 0);
-  --ui-color-background-elevation-overlay: oklch(1 0 0);
+  --ui-color-background-page: oklch(0.985 0.003 90);
+  --ui-color-background-page-faded: oklch(0.97 0.004 90);
+  --ui-color-background-neutral: oklch(0.94 0.005 90);
+  --ui-color-background-neutral-faded: oklch(0.965 0.003 90);
+  --ui-color-background-primary: oklch(0.68 0.22 305);
+  --ui-color-background-primary-faded: oklch(0.96 0.03 305);
+  --ui-color-background-positive: oklch(0.55 0.17 142);
+  --ui-color-background-positive-faded: oklch(0.97 0.025 142);
+  --ui-color-background-critical: oklch(0.62 0.23 27);
+  --ui-color-background-critical-faded: oklch(0.96 0.03 27);
+  --ui-color-background-warning: oklch(0.8 0.14 65);
+  --ui-color-background-warning-faded: oklch(0.975 0.025 65);
+  --ui-color-background-disabled: oklch(0.93 0.006 90);
+  --ui-color-background-disabled-faded: oklch(0.96 0.004 90);
+  --ui-color-background-elevation-base: oklch(0.98 0.002 90);
+  --ui-color-background-elevation-raised: oklch(0.993 0.001 90);
+  --ui-color-background-elevation-overlay: oklch(0.95 0.004 90);
 
-  /* Foreground colors */
-  --ui-color-foreground-neutral: oklch(0.208 0.015 262);
-  --ui-color-foreground-neutral-faded: oklch(0.51 0.041 266);
-  --ui-color-foreground-primary: oklch(0.573 0.234 265);
-  --ui-color-foreground-positive: oklch(0.496 0.117 156);
-  --ui-color-foreground-critical: oklch(0.533 0.194 27);
-  --ui-color-foreground-warning: oklch(0.509 0.102 92);
-  --ui-color-foreground-disabled: oklch(0.845 0.02 267);
+  --ui-color-foreground-neutral: oklch(0.2 0.015 270);
+  --ui-color-foreground-neutral-faded: oklch(0.5 0.035 265);
+  --ui-color-foreground-primary: oklch(0.58 0.24 305);
+  --ui-color-foreground-positive: oklch(0.42 0.15 142);
+  --ui-color-foreground-critical: oklch(0.48 0.2 27);
+  --ui-color-foreground-warning: oklch(0.55 0.12 65);
+  --ui-color-foreground-disabled: oklch(0.78 0.018 267);
 
-  /* Border colors */
-  --ui-color-border-neutral: oklch(0 0 0 / 0.12);
-  --ui-color-border-neutral-faded: oklch(0 0 0 / 0.08);
-  --ui-color-border-primary: oklch(0.546 0.215 263);
-  --ui-color-border-primary-faded: oklch(0.932 0.032 256);
-  --ui-color-border-positive: oklch(0.475 0.112 156);
-  --ui-color-border-positive-faded: oklch(0.921 0.037 156);
-  --ui-color-border-critical: oklch(0.523 0.19 27);
-  --ui-color-border-critical-faded: oklch(0.908 0.028 29);
-  --ui-color-border-warning: oklch(0.748 0.15 92);
-  --ui-color-border-warning-faded: oklch(0.913 0.041 92);
-  --ui-color-border-disabled: oklch(0.913 0.011 270);
+  --ui-color-border-neutral: oklch(0.8 0.004 270 / 0.18);
+  --ui-color-border-neutral-faded: oklch(0.82 0.004 270 / 0.12);
+  --ui-color-border-primary: oklch(0.64 0.22 305);
+  --ui-color-border-primary-faded: oklch(0.92 0.035 305);
+  --ui-color-border-positive: oklch(0.5 0.17 142);
+  --ui-color-border-positive-faded: oklch(0.92 0.035 142);
+  --ui-color-border-critical: oklch(0.56 0.23 27);
+  --ui-color-border-critical-faded: oklch(0.9 0.035 27);
+  --ui-color-border-warning: oklch(0.72 0.14 65);
+  --ui-color-border-warning-faded: oklch(0.91 0.04 65);
+  --ui-color-border-disabled: oklch(0.88 0.006 270);
 }
 
 /* Default Dark Theme */
@@ -107,148 +105,139 @@
   --ui-color-on-background-critical: oklch(1 0 0);
   --ui-color-on-background-warning: oklch(0 0 0);
 
-  /* Background colors */
-  --ui-color-background-page: oklch(0.178 0.011 268);
-  --ui-color-background-page-faded: oklch(0.187 0.013 271);
-  --ui-color-background-neutral: oklch(0.429 0.029 270);
-  --ui-color-background-neutral-faded: oklch(0.277 0.026 265);
-  --ui-color-background-primary: oklch(0.578 0.206 263);
-  --ui-color-background-primary-faded: oklch(0.251 0.052 282);
-  --ui-color-background-positive: oklch(0.507 0.114 157);
-  --ui-color-background-positive-faded: oklch(0.272 0.02 157);
-  --ui-color-background-critical: oklch(0.555 0.204 27);
-  --ui-color-background-critical-faded: oklch(0.282 0.048 21);
-  --ui-color-background-warning: oklch(0.838 0.169 92);
-  --ui-color-background-warning-faded: oklch(0.276 0.016 80);
-  --ui-color-background-disabled: oklch(0.249 0.018 271);
-  --ui-color-background-disabled-faded: oklch(0.215 0.016 274);
-  --ui-color-background-elevation-base: oklch(0.206 0.014 273);
-  --ui-color-background-elevation-raised: oklch(0.224 0.016 274);
-  --ui-color-background-elevation-overlay: oklch(0.24 0.018 271);
+  --ui-color-background-page: oklch(0.16 0.008 268);
+  --ui-color-background-page-faded: oklch(0.18 0.01 268);
+  --ui-color-background-neutral: oklch(0.21 0.012 265);
+  --ui-color-background-neutral-faded: oklch(0.245 0.01 262);
+  --ui-color-background-primary: oklch(0.68 0.22 305);
+  --ui-color-background-primary-faded: oklch(0.3 0.08 305);
+  --ui-color-background-positive: oklch(0.53 0.16 142);
+  --ui-color-background-positive-faded: oklch(0.27 0.035 142);
+  --ui-color-background-critical: oklch(0.6 0.21 27);
+  --ui-color-background-critical-faded: oklch(0.29 0.06 27);
+  --ui-color-background-warning: oklch(0.78 0.13 65);
+  --ui-color-background-warning-faded: oklch(0.28 0.03 65);
+  --ui-color-background-disabled: oklch(0.23 0.016 267);
+  --ui-color-background-disabled-faded: oklch(0.2 0.014 269);
+  --ui-color-background-elevation-base: oklch(0.17 0.009 268);
+  --ui-color-background-elevation-raised: oklch(0.195 0.011 266);
+  --ui-color-background-elevation-overlay: oklch(0.15 0.008 270);
 
-  /* Foreground colors */
-  --ui-color-foreground-neutral: oklch(0.958 0.006 265);
-  --ui-color-foreground-neutral-faded: oklch(0.827 0.023 269);
-  --ui-color-foreground-primary: oklch(0.714 0.143 255);
-  --ui-color-foreground-positive: oklch(0.654 0.154 156);
-  --ui-color-foreground-critical: oklch(0.693 0.169 23);
-  --ui-color-foreground-warning: oklch(0.672 0.135 92);
-  --ui-color-foreground-disabled: oklch(0.406 0.028 269);
+  --ui-color-foreground-neutral: oklch(0.98 0.005 265);
+  --ui-color-foreground-neutral-faded: oklch(0.7 0.022 268);
+  --ui-color-foreground-primary: oklch(0.78 0.18 305);
+  --ui-color-foreground-positive: oklch(0.72 0.15 142);
+  --ui-color-foreground-critical: oklch(0.75 0.18 27);
+  --ui-color-foreground-warning: oklch(0.72 0.12 65);
+  --ui-color-foreground-disabled: oklch(0.42 0.028 269);
 
-  /* Border colors */
-  --ui-color-border-neutral: oklch(1 0 0 / 0.14);
-  --ui-color-border-neutral-faded: oklch(1 0 0 / 0.08);
-  --ui-color-border-primary: oklch(0.714 0.143 255);
-  --ui-color-border-primary-faded: oklch(0.346 0.074 256);
-  --ui-color-border-positive: oklch(0.656 0.148 157);
-  --ui-color-border-positive-faded: oklch(0.357 0.049 155);
-  --ui-color-border-critical: oklch(0.693 0.172 23);
-  --ui-color-border-critical-faded: oklch(0.357 0.065 28);
-  --ui-color-border-warning: oklch(0.672 0.136 92);
-  --ui-color-border-warning-faded: oklch(0.358 0.047 93);
-  --ui-color-border-disabled: oklch(0.285 0.019 268);
+  --ui-color-border-neutral: oklch(1 0 0 / 0.11);
+  --ui-color-border-neutral-faded: oklch(1 0 0 / 0.07);
+  --ui-color-border-primary: oklch(0.74 0.18 305);
+  --ui-color-border-primary-faded: oklch(0.38 0.09 305);
+  --ui-color-border-positive: oklch(0.7 0.16 142);
+  --ui-color-border-positive-faded: oklch(0.38 0.06 142);
+  --ui-color-border-critical: oklch(0.72 0.2 27);
+  --ui-color-border-critical-faded: oklch(0.4 0.07 27);
+  --ui-color-border-warning: oklch(0.7 0.13 65);
+  --ui-color-border-warning-faded: oklch(0.4 0.05 65);
+  --ui-color-border-disabled: oklch(1 0 0 / 0.08);
 }
 
 /* Modern Light Theme */
 [data-theme='modern-light'] {
   color-scheme: light;
 
-  --ui-color-on-background-neutral: oklch(0.15 0.01 270);
-  --ui-color-on-background-primary: oklch(0.98 0.01 90);
-  --ui-color-on-background-positive: oklch(0.98 0.01 90);
-  --ui-color-on-background-critical: oklch(0.98 0.01 90);
-  --ui-color-on-background-warning: oklch(0.15 0.01 270);
+  --ui-color-on-background-neutral: oklch(0.25 0.02 50);
+  --ui-color-on-background-primary: oklch(0.98 0.01 85);
+  --ui-color-on-background-positive: oklch(0.25 0.02 50);
+  --ui-color-on-background-critical: oklch(0.98 0.01 85);
+  --ui-color-on-background-warning: oklch(0.25 0.02 50);
 
-  /* Background colors - warmer tones */
-  --ui-color-background-page: oklch(0.98 0.005 85);
-  --ui-color-background-page-faded: oklch(0.96 0.008 85);
-  --ui-color-background-neutral: oklch(0.94 0.01 85);
-  --ui-color-background-neutral-faded: oklch(0.97 0.005 85);
-  --ui-color-background-primary: oklch(0.62 0.19 250);
-  --ui-color-background-primary-faded: oklch(0.94 0.03 250);
-  --ui-color-background-positive: oklch(0.58 0.15 155);
-  --ui-color-background-positive-faded: oklch(0.96 0.025 155);
-  --ui-color-background-critical: oklch(0.65 0.2 25);
-  --ui-color-background-critical-faded: oklch(0.95 0.025 25);
-  --ui-color-background-warning: oklch(0.88 0.18 85);
-  --ui-color-background-warning-faded: oklch(0.97 0.02 85);
-  --ui-color-background-disabled: oklch(0.93 0.008 85);
-  --ui-color-background-disabled-faded: oklch(0.96 0.006 85);
-  --ui-color-background-elevation-base: oklch(0.98 0.005 85);
-  --ui-color-background-elevation-raised: oklch(1 0 0);
-  --ui-color-background-elevation-overlay: oklch(1 0 0);
+  --ui-color-background-page: oklch(0.97 0.01 85);
+  --ui-color-background-page-faded: oklch(0.94 0.012 85);
+  --ui-color-background-neutral: oklch(0.92 0.015 80);
+  --ui-color-background-neutral-faded: oklch(0.95 0.012 85);
+  --ui-color-background-primary: oklch(0.55 0.18 50);
+  --ui-color-background-primary-faded: oklch(0.93 0.04 50);
+  --ui-color-background-positive: oklch(0.62 0.12 145);
+  --ui-color-background-positive-faded: oklch(0.95 0.025 145);
+  --ui-color-background-critical: oklch(0.6 0.2 35);
+  --ui-color-background-critical-faded: oklch(0.94 0.03 35);
+  --ui-color-background-warning: oklch(0.75 0.12 65);
+  --ui-color-background-warning-faded: oklch(0.96 0.025 65);
+  --ui-color-background-disabled: oklch(0.91 0.012 85);
+  --ui-color-background-disabled-faded: oklch(0.94 0.01 85);
+  --ui-color-background-elevation-base: oklch(0.96 0.01 85);
+  --ui-color-background-elevation-raised: oklch(0.99 0.005 85);
+  --ui-color-background-elevation-overlay: oklch(0.93 0.015 85);
 
-  /* Foreground colors */
-  --ui-color-foreground-neutral: oklch(0.25 0.015 265);
-  --ui-color-foreground-neutral-faded: oklch(0.5 0.035 265);
-  --ui-color-foreground-primary: oklch(0.58 0.22 255);
-  --ui-color-foreground-positive: oklch(0.52 0.13 155);
-  --ui-color-foreground-critical: oklch(0.58 0.2 25);
-  --ui-color-foreground-warning: oklch(0.55 0.12 85);
-  --ui-color-foreground-disabled: oklch(0.8 0.015 265);
+  --ui-color-foreground-neutral: oklch(0.28 0.018 55);
+  --ui-color-foreground-neutral-faded: oklch(0.52 0.025 60);
+  --ui-color-foreground-primary: oklch(0.42 0.16 50);
+  --ui-color-foreground-positive: oklch(0.4 0.1 145);
+  --ui-color-foreground-critical: oklch(0.4 0.18 35);
+  --ui-color-foreground-warning: oklch(0.45 0.1 65);
+  --ui-color-foreground-disabled: oklch(0.72 0.02 85);
 
-  /* Border colors */
-  --ui-color-border-neutral: oklch(0.15 0.01 270 / 0.15);
-  --ui-color-border-neutral-faded: oklch(0.15 0.01 270 / 0.1);
-  --ui-color-border-primary: oklch(0.58 0.22 255);
-  --ui-color-border-primary-faded: oklch(0.92 0.035 255);
-  --ui-color-border-positive: oklch(0.5 0.12 155);
-  --ui-color-border-positive-faded: oklch(0.91 0.04 155);
-  --ui-color-border-critical: oklch(0.58 0.2 25);
-  --ui-color-border-critical-faded: oklch(0.9 0.03 25);
-  --ui-color-border-warning: oklch(0.72 0.14 85);
-  --ui-color-border-warning-faded: oklch(0.9 0.04 85);
-  --ui-color-border-disabled: oklch(0.9 0.012 270);
+  --ui-color-border-neutral: oklch(0.65 0.02 70 / 0.2);
+  --ui-color-border-neutral-faded: oklch(0.7 0.02 75 / 0.14);
+  --ui-color-border-primary: oklch(0.48 0.18 50);
+  --ui-color-border-primary-faded: oklch(0.9 0.035 50);
+  --ui-color-border-positive: oklch(0.52 0.12 145);
+  --ui-color-border-positive-faded: oklch(0.9 0.03 145);
+  --ui-color-border-critical: oklch(0.52 0.2 35);
+  --ui-color-border-critical-faded: oklch(0.88 0.035 35);
+  --ui-color-border-warning: oklch(0.62 0.12 65);
+  --ui-color-border-warning-faded: oklch(0.89 0.04 65);
+  --ui-color-border-disabled: oklch(0.8 0.012 85);
 }
 
 /* Modern Dark Theme */
 [data-theme='modern-dark'] {
   color-scheme: dark;
 
-  --ui-color-on-background-neutral: oklch(0.97 0.005 270);
-  --ui-color-on-background-primary: oklch(0.98 0.01 90);
-  --ui-color-on-background-positive: oklch(0.98 0.01 90);
-  --ui-color-on-background-critical: oklch(0.98 0.01 90);
-  --ui-color-on-background-warning: oklch(0.15 0.01 270);
+  --ui-color-on-background-neutral: oklch(0.96 0.008 85);
+  --ui-color-on-background-primary: oklch(0.98 0.01 85);
+  --ui-color-on-background-positive: oklch(0.96 0.008 85);
+  --ui-color-on-background-critical: oklch(0.98 0.01 85);
+  --ui-color-on-background-warning: oklch(0.28 0.018 55);
 
-  /* Background colors - deeper, richer tones */
-  --ui-color-background-page: oklch(0.15 0.01 270);
-  --ui-color-background-page-faded: oklch(0.17 0.012 272);
-  --ui-color-background-neutral: oklch(0.22 0.02 270);
-  --ui-color-background-neutral-faded: oklch(0.18 0.018 268);
-  --ui-color-background-primary: oklch(0.62 0.19 250);
-  --ui-color-background-primary-faded: oklch(0.28 0.06 252);
-  --ui-color-background-positive: oklch(0.54 0.12 157);
-  --ui-color-background-positive-faded: oklch(0.26 0.025 157);
-  --ui-color-background-critical: oklch(0.6 0.21 27);
-  --ui-color-background-critical-faded: oklch(0.29 0.055 27);
-  --ui-color-background-warning: oklch(0.85 0.18 92);
-  --ui-color-background-warning-faded: oklch(0.28 0.02 85);
-  --ui-color-background-disabled: oklch(0.24 0.018 271);
-  --ui-color-background-disabled-faded: oklch(0.2 0.016 274);
-  --ui-color-background-elevation-base: oklch(0.18 0.012 272);
-  --ui-color-background-elevation-raised: oklch(0.22 0.016 274);
-  --ui-color-background-elevation-overlay: oklch(0.26 0.02 271);
+  --ui-color-background-page: oklch(0.22 0.015 65);
+  --ui-color-background-page-faded: oklch(0.245 0.016 68);
+  --ui-color-background-neutral: oklch(0.28 0.018 65);
+  --ui-color-background-neutral-faded: oklch(0.24 0.016 62);
+  --ui-color-background-primary: oklch(0.58 0.19 50);
+  --ui-color-background-primary-faded: oklch(0.32 0.08 50);
+  --ui-color-background-positive: oklch(0.58 0.11 145);
+  --ui-color-background-positive-faded: oklch(0.3 0.04 145);
+  --ui-color-background-critical: oklch(0.62 0.19 35);
+  --ui-color-background-critical-faded: oklch(0.34 0.07 35);
+  --ui-color-background-warning: oklch(0.72 0.11 65);
+  --ui-color-background-warning-faded: oklch(0.32 0.035 65);
+  --ui-color-background-disabled: oklch(0.3 0.018 65);
+  --ui-color-background-disabled-faded: oklch(0.26 0.016 67);
+  --ui-color-background-elevation-base: oklch(0.23 0.016 65);
+  --ui-color-background-elevation-raised: oklch(0.265 0.018 68);
+  --ui-color-background-elevation-overlay: oklch(0.21 0.014 62);
 
-  /* Foreground colors */
-  --ui-color-foreground-neutral: oklch(0.94 0.008 270);
-  --ui-color-foreground-neutral-faded: oklch(0.8 0.025 270);
-  --ui-color-foreground-primary: oklch(0.72 0.15 255);
-  --ui-color-foreground-positive: oklch(0.68 0.16 156);
-  --ui-color-foreground-critical: oklch(0.72 0.18 23);
-  --ui-color-foreground-warning: oklch(0.7 0.14 92);
-  --ui-color-foreground-disabled: oklch(0.42 0.03 270);
+  --ui-color-foreground-neutral: oklch(0.94 0.008 85);
+  --ui-color-foreground-neutral-faded: oklch(0.68 0.02 80);
+  --ui-color-foreground-primary: oklch(0.8 0.16 50);
+  --ui-color-foreground-positive: oklch(0.78 0.12 145);
+  --ui-color-foreground-critical: oklch(0.82 0.17 35);
+  --ui-color-foreground-warning: oklch(0.78 0.1 65);
+  --ui-color-foreground-disabled: oklch(0.55 0.02 65);
 
-  /* Border colors */
-  --ui-color-border-neutral: oklch(0.97 0.005 270 / 0.16);
-  --ui-color-border-neutral-faded: oklch(0.97 0.005 270 / 0.1);
-  --ui-color-border-primary: oklch(0.72 0.15 255);
-  --ui-color-border-primary-faded: oklch(0.38 0.08 255);
-  --ui-color-border-positive: oklch(0.68 0.16 157);
-  --ui-color-border-positive-faded: oklch(0.4 0.055 157);
-  --ui-color-border-critical: oklch(0.72 0.18 23);
-  --ui-color-border-critical-faded: oklch(0.4 0.07 23);
-  --ui-color-border-warning: oklch(0.7 0.14 92);
-  --ui-color-border-warning-faded: oklch(0.4 0.05 92);
-  --ui-color-border-disabled: oklch(0.3 0.02 270);
+  --ui-color-border-neutral: oklch(0.96 0.008 85 / 0.12);
+  --ui-color-border-neutral-faded: oklch(0.94 0.008 85 / 0.08);
+  --ui-color-border-primary: oklch(0.7 0.18 50);
+  --ui-color-border-primary-faded: oklch(0.4 0.09 50);
+  --ui-color-border-positive: oklch(0.72 0.11 145);
+  --ui-color-border-positive-faded: oklch(0.42 0.05 145);
+  --ui-color-border-critical: oklch(0.76 0.18 35);
+  --ui-color-border-critical-faded: oklch(0.44 0.08 35);
+  --ui-color-border-warning: oklch(0.74 0.11 65);
+  --ui-color-border-warning-faded: oklch(0.42 0.05 65);
+  --ui-color-border-disabled: oklch(0.96 0.008 85 / 0.1);
 }

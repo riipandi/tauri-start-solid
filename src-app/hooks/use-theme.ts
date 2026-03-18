@@ -1,5 +1,4 @@
 import { useStore } from '@nanostores/solid'
-import { consola } from 'consola'
 import { createEffect, onCleanup } from 'solid-js'
 import { themeMode, currentTheme } from '#/stores/settings'
 
@@ -22,25 +21,13 @@ export function useTheme() {
 
   createEffect(() => {
     const rootElement = document.documentElement || document.body
-
     rootElement.setAttribute('data-appearance', mode())
     rootElement.setAttribute('data-theme', theme())
-
-    if (import.meta.env.DEV) {
-      consola.log('[useTheme]', {
-        'data-appearance': mode(),
-        'data-theme': theme()
-      })
-    }
   })
 
   onCleanup(() => {
     const rootElement = document.documentElement || document.body
     rootElement.removeAttribute('data-appearance')
     rootElement.removeAttribute('data-theme')
-
-    if (import.meta.env.DEV) {
-      consola.log('[useTheme] Cleaned up attributes')
-    }
   })
 }

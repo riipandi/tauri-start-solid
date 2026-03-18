@@ -30,35 +30,6 @@ export const currentTheme = computed([settingsStore, systemThemeStore], (setting
   }
 })
 
-const themePairMap: Record<ThemeName, ThemeName> = {
-  'default-light': 'default-dark',
-  'default-dark': 'default-light',
-  'modern-light': 'modern-dark',
-  'modern-dark': 'modern-light'
-}
-
-export function getPairedTheme(theme: ThemeName): ThemeName {
-  return themePairMap[theme]
-}
-
-export function initSystemThemeListener(): (() => void) | undefined {
-  if (typeof window === 'undefined') return undefined
-
-  const updateSystemTheme = () => {
-    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    systemThemeStore.set(isDark ? 'dark' : 'light')
-  }
-
-  updateSystemTheme()
-
-  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-  mediaQuery.addEventListener('change', updateSystemTheme)
-
-  return () => {
-    mediaQuery.removeEventListener('change', updateSystemTheme)
-  }
-}
-
 export async function loadSettings() {
   settingsStore.set(await settingsService.getSettings())
 }
@@ -81,16 +52,13 @@ export async function updateUISettings(update: Partial<UISettings>) {
   return updateSettings({ ui: mergedUI })
 }
 
-export async function updateThemeWithSync(mode: 'light' | 'dark', theme: ThemeName) {
-  const pairedTheme = getPairedTheme(theme)
+export async function updateTheme(mode: 'light' | 'dark', theme: ThemeName) {
   const updatedUI: Partial<UISettings> = {}
 
   if (mode === 'light') {
     updatedUI.theme_light = theme
-    updatedUI.theme_dark = pairedTheme
   } else {
     updatedUI.theme_dark = theme
-    updatedUI.theme_light = pairedTheme
   }
 
   return updateUISettings(updatedUI)

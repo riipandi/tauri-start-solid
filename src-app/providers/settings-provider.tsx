@@ -1,8 +1,7 @@
 import { listen } from '@tauri-apps/api/event'
-import { consola } from 'consola'
 import { type JSX, onMount, onCleanup } from 'solid-js'
 import { useTheme } from '#/hooks/use-theme'
-import { settingsStore, loadSettings, initSystemThemeListener } from '#/stores/settings'
+import { settingsStore, loadSettings, systemThemeStore } from '#/stores/settings'
 import type { AppSettings } from '#/types/settings'
 
 interface SettingsProviderProps {
@@ -14,41 +13,35 @@ export function SettingsProvider(props: SettingsProviderProps) {
   let cleanupSystemThemeListener: (() => void) | undefined
 
   onMount(async () => {
-    consola.log('[SettingsProvider] onMount() - Loading initial settings')
+    const updateSystemTheme = () => {
+      const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      systemThemeStore.set(isDark ? 'dark' : 'light')
+    }
 
-    // Set up system theme listener FIRST
-    consola.log('[SettingsProvider] Setting up system theme listener')
-    cleanupSystemThemeListener = initSystemThemeListener()
-    consola.log('[SettingsProvider] System theme listener initialized')
+    updateSystemTheme()
 
-    // CRITICAL: Set up event listener FIRST before loading settings
-    consola.log('[SettingsProvider] Setting up event listener for settings://updated')
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    mediaQuery.addEventListener('change', updateSystemTheme)
+
+    cleanupSystemThemeListener = () => {
+      mediaQuery.removeEventListener('change', updateSystemTheme)
+    }
+
+    // Set up event listener FIRST before loading settings
     unlisten = await listen<AppSettings>('settings://updated', (event) => {
-      consola.log('[SettingsProvider] ✅ Event received: settings://updated')
-      consola.log('[SettingsProvider] Event payload:', event.payload)
-      consola.log('[SettingsProvider] Store state BEFORE update:', settingsStore.get())
-
       settingsStore.set(event.payload)
-
-      consola.log('[SettingsProvider] Store state AFTER update:', settingsStore.get())
     })
-    consola.log('[SettingsProvider] Event listener registered successfully')
 
-    // Now load initial settings
     await loadSettings()
-    consola.log('[SettingsProvider] Initial settings loaded')
   })
 
   onCleanup(() => {
-    consola.log('[SettingsProvider] onCleanup() - Cleaning up')
     unlisten?.()
     cleanupSystemThemeListener?.()
-    consola.log('[SettingsProvider] System theme listener cleaned up')
   })
 
   useTheme()
 
-  consola.log('[SettingsProvider] Theme attributes hook initialized')
   const uiSettings = settingsStore.get().ui
 
   return (

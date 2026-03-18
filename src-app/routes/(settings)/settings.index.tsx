@@ -7,7 +7,7 @@ import { Select, type SelectOption } from '#/components/select'
 import { Switch } from '#/components/switch'
 import { Toast } from '#/components/toast'
 import { uiSettings, currentTheme } from '#/stores/settings'
-import { updateUISettings, resetSettings, updateThemeWithSync } from '#/stores/settings'
+import { updateUISettings, resetSettings, updateTheme } from '#/stores/settings'
 
 export const Route = createFileRoute('/(settings)/settings/')({
   component: RouteComponent
@@ -25,7 +25,6 @@ function RouteComponent() {
   async function handleThemeModeChange(option: SelectOption | null) {
     if (!option) return
     const value = option.value as 'auto' | 'dark' | 'light'
-    consola.log('[Settings] handleThemeModeChange() called with:', value)
     setIsSaving(true)
     try {
       await updateUISettings({ theme_mode: value })
@@ -41,10 +40,9 @@ function RouteComponent() {
   async function handleThemeChange(mode: 'light' | 'dark', option: SelectOption | null) {
     if (!option) return
     const value = option.value
-    consola.log('[Settings] handleThemeChange() called with:', { mode, value })
     setIsSaving(true)
     try {
-      await updateThemeWithSync(mode, value as any)
+      await updateTheme(mode, value as any)
       showToast('success', `Theme updated successfully (${mode} mode: ${value})`)
     } catch (error) {
       consola.error('[Settings] Error in handleThemeChange:', error)
@@ -69,11 +67,9 @@ function RouteComponent() {
 
   async function handleReset() {
     if (!confirm('Are you sure you want to reset all settings to default?')) {
-      consola.log('[Settings] handleReset() cancelled by user')
       return
     }
 
-    consola.log('[Settings] handleReset() proceeding with reset')
     setIsSaving(true)
     try {
       await resetSettings()
@@ -130,7 +126,7 @@ function RouteComponent() {
             <Select
               name='theme_light'
               label='Light Theme'
-              description='Theme for light mode'
+              description='Theme used when in light mode or when system is in light mode (auto)'
               value={ui().theme_light}
               onChange={(option) => handleThemeChange('light', option)}
               disabled={isSaving()}
@@ -143,7 +139,7 @@ function RouteComponent() {
             <Select
               name='theme_dark'
               label='Dark Theme'
-              description='Theme for dark mode'
+              description='Theme used when in dark mode or when system is in dark mode (auto)'
               value={ui().theme_dark}
               onChange={(option) => handleThemeChange('dark', option)}
               disabled={isSaving()}
