@@ -9,13 +9,13 @@ export function TitleBar(props: { title?: string }) {
   return (
     <Show when={!isFullscreen()}>
       <div
-        class='flex items-center justify-between w-full relative z-50 select-none shrink-0 h-9.5 bg-white/80 backdrop-blur-md border-b border-slate-200'
+        class='flex items-center justify-between w-full relative z-50 select-none shrink-0 h-9.5 bg-background-page/80 backdrop-blur-md border-b border-border-neutral'
         data-platform={platform()}
         data-tauri-drag-region
       >
         <div class='flex items-center shrink-0' data-tauri-drag-region>
           <Show when={platform() !== 'macos'}>
-            <span class='text-sm font-medium text-slate-800 opacity-90 whitespace-nowrap overflow-hidden text-ellipsis'>
+            <span class='text-sm font-medium text-foreground-neutral opacity-90 whitespace-nowrap overflow-hidden text-ellipsis'>
               {windowTitle()}
             </span>
           </Show>
@@ -26,7 +26,7 @@ export function TitleBar(props: { title?: string }) {
             class='absolute left-1/2 -translate-x-1/2 pointer-events-none'
             data-tauri-drag-region
           >
-            <span class='text-sm font-medium text-slate-800 opacity-90 whitespace-nowrap overflow-hidden text-ellipsis'>
+            <span class='text-sm font-medium text-foreground-neutral opacity-90 whitespace-nowrap overflow-hidden text-ellipsis'>
               {windowTitle()}
             </span>
           </div>
@@ -37,7 +37,7 @@ export function TitleBar(props: { title?: string }) {
             <button
               type='button'
               onClick={minimize}
-              class='inline-flex items-center justify-center w-11.5 h-full bg-transparent border-0 transition-colors duration-150 text-slate-800 hover:bg-slate-800/8 active:bg-slate-800/12'
+              class='inline-flex items-center justify-center w-11.5 h-full bg-transparent border-0 transition-colors duration-150 text-foreground-neutral hover:bg-foreground-neutral/8 active:bg-foreground-neutral/12'
               title='Minimize'
             >
               <MinimizeIcon />
@@ -45,7 +45,7 @@ export function TitleBar(props: { title?: string }) {
             <button
               type='button'
               onClick={toggleMaximize}
-              class='inline-flex items-center justify-center w-11.5 h-full bg-transparent border-0 transition-colors duration-150 text-slate-800 hover:bg-slate-800/8 active:bg-slate-800/12'
+              class='inline-flex items-center justify-center w-11.5 h-full bg-transparent border-0 transition-colors duration-150 text-foreground-neutral hover:bg-foreground-neutral/8 active:bg-foreground-neutral/12'
               title={isMaximized() ? 'Restore' : 'Maximize'}
             >
               <Show when={isMaximized()} fallback={<MaximizeIcon />}>
@@ -56,7 +56,7 @@ export function TitleBar(props: { title?: string }) {
               type='button'
               onClick={close}
               class={clsx(
-                'inline-flex items-center justify-center w-11.5 h-full bg-transparent border-0 transition-colors duration-150 text-slate-800 hover:bg-slate-800/8 active:bg-slate-800/12',
+                'inline-flex items-center justify-center w-11.5 h-full bg-transparent border-0 transition-colors duration-150 text-foreground-neutral hover:bg-foreground-neutral/8 active:bg-foreground-neutral/12',
                 'hover:bg-[#e81123] hover:stroke-white'
               )}
               data-close

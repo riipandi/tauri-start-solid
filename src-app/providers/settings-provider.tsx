@@ -2,7 +2,7 @@ import { listen } from '@tauri-apps/api/event'
 import { consola } from 'consola'
 import { type JSX, onMount, onCleanup } from 'solid-js'
 import { useThemeAttributes } from '#/hooks/use-theme'
-import { settingsStore, loadSettings } from '#/stores/settings'
+import { settingsStore, loadSettings, initSystemThemeListener } from '#/stores/settings'
 import type { AppSettings } from '#/types/settings'
 
 interface SettingsProviderProps {
@@ -11,9 +11,15 @@ interface SettingsProviderProps {
 
 export function SettingsProvider(props: SettingsProviderProps) {
   let unlisten: (() => void) | undefined
+  let cleanupSystemThemeListener: (() => void) | undefined
 
   onMount(async () => {
     consola.log('[SettingsProvider] onMount() - Loading initial settings')
+
+    // Set up system theme listener FIRST
+    consola.log('[SettingsProvider] Setting up system theme listener')
+    cleanupSystemThemeListener = initSystemThemeListener()
+    consola.log('[SettingsProvider] System theme listener initialized')
 
     // CRITICAL: Set up event listener FIRST before loading settings
     consola.log('[SettingsProvider] Setting up event listener for settings://updated')
@@ -36,6 +42,8 @@ export function SettingsProvider(props: SettingsProviderProps) {
   onCleanup(() => {
     consola.log('[SettingsProvider] onCleanup() - Cleaning up')
     unlisten?.()
+    cleanupSystemThemeListener?.()
+    consola.log('[SettingsProvider] System theme listener cleaned up')
   })
 
   useThemeAttributes()

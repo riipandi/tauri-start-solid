@@ -12,9 +12,9 @@ interface ButtonProps {
 
 const variantStyles = {
   primary:
-    'border border-teal-600/30 bg-teal-500/14 text-teal-600 hover:-translate-y-0.5 hover:bg-teal-500/24 active:translate-y-0',
+    'border border-primary/30 bg-primary/14 text-primary hover:-translate-y-0.5 hover:bg-primary/24 active:translate-y-0',
   secondary:
-    'border border-slate-800/20 bg-white/50 text-slate-800 hover:-translate-y-0.5 hover:border-slate-800/35 active:translate-y-0'
+    'border border-border-neutral/20 bg-background-page/50 text-foreground-neutral hover:-translate-y-0.5 hover:border-foreground-neutral/35 active:translate-y-0'
 }
 
 export function Button(props: ButtonProps) {

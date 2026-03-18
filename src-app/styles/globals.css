@@ -2,8 +2,6 @@
 @import 'tw-animate-css';
 @import './theme.css';
 
-@variant dark (&:where([data-theme="dark"] *));
-
 @layer base {
   html,
   body {
@@ -20,7 +18,6 @@
 
 @theme inline {
   /* Color schemes */
-  --color-brand: var(--ui-color-brand);
   --color-black: var(--ui-color-black);
   --color-white: var(--ui-color-white);
 
@@ -29,7 +26,6 @@
   --color-on-background-positive: var(--ui-color-on-background-positive);
   --color-on-background-critical: var(--ui-color-on-background-critical);
   --color-on-background-warning: var(--ui-color-on-background-warning);
-  --color-on-brand: var(--ui-color-on-brand);
 
   --color-background-page: var(--ui-color-background-page);
   --color-background-page-faded: var(--ui-color-background-page-faded);

@@ -33,13 +33,13 @@ function RouteComponent() {
   return (
     <main class='mx-auto my-0 w-full'>
       <div class='rounded-3xl py-12 px-8 max-w-125 w-full mt-[20vh] mx-auto'>
-        <h1 class='text-[2.5rem] font-bold mb-8 text-center text-slate-800 select-text'>
+        <h1 class='text-[2.5rem] font-bold mb-8 text-center text-foreground-neutral select-text'>
           Tauri Application
         </h1>
 
         <form onSubmit={handleGreet} class='flex gap-3 w-full mb-6'>
           <input
-            class='flex-1 py-3.5 px-4 rounded-lg border border-slate-200 bg-white/50 text-base text-slate-800 outline-none transition-all focus:border-teal-600 focus:shadow-[0_0_0_3px_rgba(79,184,178,0.1)] placeholder:text-slate-600'
+            class='flex-1 py-3.5 px-4 rounded-lg border border-border-neutral bg-background-page/50 text-base text-foreground-neutral outline-none transition-all focus:border-primary focus:shadow-raised placeholder:text-foreground-neutral-faded'
             type='text'
             value={name()}
             onInput={(e) => setName(e.currentTarget.value)}
@@ -51,7 +51,7 @@ function RouteComponent() {
         </form>
 
         {greetMsg() && (
-          <div class='mt-0 mb-8 py-4 px-5 rounded-xl bg-linear-to-br from-white/95 to-white/80 border border-slate-200 text-base leading-relaxed text-slate-800 text-center shadow-[0_1px_0_white_inset,0_18px_34px_rgba(30,90,72,0.1),0_4px_14px_rgba(23,58,64,0.06)]'>
+          <div class='mt-0 mb-8 py-4 px-5 rounded-xl bg-linear-to-br from-background-page/95 to-background-page/80 border border-border-neutral text-base leading-relaxed text-foreground-neutral text-center shadow-raised'>
             {greetMsg()}
           </div>
         )}
@@ -60,7 +60,7 @@ function RouteComponent() {
           <button
             type='button'
             onClick={settingService.openWindow}
-            class='px-5 py-2.5 rounded-full border border-slate-800/20 bg-white/50 text-sm font-semibold text-slate-800 transition-all hover:-translate-y-0.5 hover:border-slate-800/35 active:translate-y-0'
+            class='px-5 py-2.5 rounded-full border border-border-neutral/20 bg-background-page/50 text-sm font-semibold text-foreground-neutral transition-all hover:-translate-y-0.5 hover:border-foreground-neutral/35 active:translate-y-0'
           >
             Settings
           </button>

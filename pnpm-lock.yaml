@@ -11,6 +11,9 @@ importers:
       '@kobalte/core':
         specifier: ^0.13.11
         version: 0.13.11(solid-js@1.9.11)
+      '@nanostores/solid':
+        specifier: ^1.1.1
+        version: 1.1.1(nanostores@1.2.0)(solid-js@1.9.11)
       '@tanstack/solid-router':
         specifier: ^1.167.3
         version: 1.167.4(solid-js@1.9.11)
@@ -714,6 +717,12 @@ packages:
     peerDependencies:
       '@types/react': '>=16'
       react: '>=16'
+
+  '@nanostores/solid@1.1.1':
+    resolution: {integrity: sha512-gF0Eat1/c3hOaklBMSVoEjcNzJc5zGk4VSg94H9LPmXYww1pxgr7zylpi3jjyxRu24c8+aYNkmRWzolAwzSA1A==}
+    peerDependencies:
+      nanostores: '>=0.9.0 <2.0.0'
+      solid-js: ^1.6.0
 
   '@napi-rs/wasm-runtime@1.1.1':
     resolution: {integrity: sha512-p64ah1M1ld8xjWv3qbvFwHiFVWrq1yFvV4f7w+mzaqiR4IlSgkqhcRdHwsGgomwzBH51sRY4NEowLxnaBjcW/A==}
@@ -3632,6 +3641,11 @@ snapshots:
       '@types/mdx': 2.0.13
       '@types/react': 19.2.14
       react: 19.2.4
+
+  '@nanostores/solid@1.1.1(nanostores@1.2.0)(solid-js@1.9.11)':
+    dependencies:
+      nanostores: 1.2.0
+      solid-js: 1.9.11
 
   '@napi-rs/wasm-runtime@1.1.1':
     dependencies:

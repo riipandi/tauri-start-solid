@@ -3,7 +3,12 @@ import { clsx } from 'clsx'
 import { consola } from 'consola'
 import { createSignal, Show, onMount, createEffect } from 'solid-js'
 import { uiSettings, settingsStore } from '#/stores/settings'
-import { updateUISettings, resetSettings, currentTheme } from '#/stores/settings'
+import {
+  updateUISettings,
+  resetSettings,
+  currentTheme,
+  updateThemeWithSync
+} from '#/stores/settings'
 
 export const Route = createFileRoute('/(settings)/settings/')({
   component: RouteComponent
@@ -35,6 +40,24 @@ function RouteComponent() {
     } catch (error) {
       consola.error('[Settings] Error in handleThemeModeChange:', error)
       setMessage({ type: 'error', text: 'Failed to update theme mode' })
+    } finally {
+      setIsSaving(false)
+      setTimeout(() => setMessage(undefined), 3000)
+    }
+  }
+
+  async function handleThemeChange(mode: 'light' | 'dark', value: string) {
+    consola.log('[Settings] handleThemeChange() called with:', { mode, value })
+    setIsSaving(true)
+    try {
+      await updateThemeWithSync(mode, value as any)
+      setMessage({
+        type: 'success',
+        text: `Theme updated successfully (${mode} mode: ${value})`
+      })
+    } catch (error) {
+      consola.error('[Settings] Error in handleThemeChange:', error)
+      setMessage({ type: 'error', text: 'Failed to update theme' })
     } finally {
       setIsSaving(false)
       setTimeout(() => setMessage(undefined), 3000)
@@ -87,7 +110,7 @@ function RouteComponent() {
       <div class='max-w-800 mx-auto py-8'>
         <header class='mb-12'>
           <h1 class='text-2xl font-bold mb-2'>Settings</h1>
-          <p class='text-sm text-slate-600'>Manage your application preferences</p>
+          <p class='text-sm text-foreground-neutral-faded'>Manage your application preferences</p>
         </header>
 
         <Show when={message()}>
@@ -95,7 +118,9 @@ function RouteComponent() {
             <div
               class={clsx(
                 'py-4 px-4 rounded-lg mb-8 text-sm',
-                msg().type === 'success' ? 'bg-emerald-500 text-white' : 'bg-red-500 text-white'
+                msg().type === 'success'
+                  ? 'bg-positive text-on-background-positive'
+                  : 'bg-critical text-on-background-critical'
               )}
             >
               {msg().text}
@@ -104,72 +129,86 @@ function RouteComponent() {
         </Show>
 
         <section class='mb-12'>
-          <h2 class='text-xl font-bold mb-6 text-slate-800'>Appearance</h2>
+          <h2 class='text-xl font-bold mb-6 text-foreground-neutral'>Appearance</h2>
 
           <div class='mb-6'>
             <label class='block mb-2 font-medium text-sm'>
               Theme Mode
               <select
-                class='w-full py-3 px-4 rounded-md border border-slate-600 bg-white mt-2 text-sm'
+                class='w-full py-3 px-4 rounded-md border border-border-neutral bg-background-page mt-2 text-sm'
                 value={ui.get().theme_mode}
                 onChange={(e) => handleThemeModeChange(e.target.value as 'auto' | 'dark' | 'light')}
                 disabled={isSaving()}
               >
-                <option value='auto'>Auto</option>
+                <option value='auto'>Auto (System)</option>
                 <option value='dark'>Dark</option>
                 <option value='light'>Light</option>
               </select>
             </label>
-            <p class='text-xs text-slate-600 mt-2'>Choose between auto, dark, or light theme</p>
-          </div>
-
-          <div class='mb-6'>
-            <label class='block mb-2 font-medium text-sm'>
-              Current Theme
-              <input
-                type='text'
-                class='w-full py-3 px-4 rounded-md border border-slate-600 bg-white mt-2 text-sm'
-                value={currentTheme.get()}
-                disabled={true}
-              />
-            </label>
-            <p class='text-xs text-slate-600 mt-2'>
-              Active theme based on theme mode (Auto: {ui.get().theme_dark}, Dark:{' '}
-              {ui.get().theme_dark}, Light: {ui.get().theme_light})
+            <p class='text-xs text-foreground-neutral-faded mt-2'>
+              Auto mode follows your system preference. Dark/Light forces specific mode.
             </p>
           </div>
 
           <div class='mb-6'>
             <label class='block mb-2 font-medium text-sm'>
-              Light Mode Theme
+              Current Active Theme
               <input
                 type='text'
-                class='w-full py-3 px-4 rounded-md border border-slate-600 bg-white mt-2 text-sm'
-                value={ui.get().theme_light}
-                onChange={(e) => updateUISettings({ theme_light: e.target.value })}
-                disabled={isSaving()}
+                class='w-full py-3 px-4 rounded-md border border-border-neutral bg-background-page mt-2 text-sm'
+                value={currentTheme.get()}
+                disabled={true}
               />
             </label>
-            <p class='text-xs text-slate-600 mt-2'>Theme to use when theme mode is set to light</p>
+            <p class='text-xs text-foreground-neutral-faded mt-2'>
+              Active theme based on your mode and system preference
+            </p>
           </div>
 
-          <div class='mb-6'>
-            <label class='block mb-2 font-medium text-sm'>
-              Dark Mode Theme
-              <input
-                type='text'
-                class='w-full py-3 px-4 rounded-md border border-slate-600 bg-white mt-2 text-sm'
-                value={ui.get().theme_dark}
-                onChange={(e) => updateUISettings({ theme_dark: e.target.value })}
-                disabled={isSaving()}
-              />
-            </label>
-            <p class='text-xs text-slate-600 mt-2'>Theme to use when theme mode is set to dark</p>
+          <div class='grid grid-cols-2 gap-4 mb-6'>
+            <div>
+              <label class='block mb-2 font-medium text-sm'>
+                Light Theme
+                <select
+                  class='w-full py-3 px-4 rounded-md border border-border-neutral bg-background-page mt-2 text-sm'
+                  value={ui.get().theme_light}
+                  onChange={(e) => handleThemeChange('light', e.target.value)}
+                  disabled={isSaving()}
+                >
+                  <option value='default-light'>Default Light</option>
+                  <option value='modern-light'>Modern Light</option>
+                </select>
+              </label>
+              <p class='text-xs text-foreground-neutral-faded mt-2'>Theme for light mode</p>
+            </div>
+
+            <div>
+              <label class='block mb-2 font-medium text-sm'>
+                Dark Theme
+                <select
+                  class='w-full py-3 px-4 rounded-md border border-border-neutral bg-background-page mt-2 text-sm'
+                  value={ui.get().theme_dark}
+                  onChange={(e) => handleThemeChange('dark', e.target.value)}
+                  disabled={isSaving()}
+                >
+                  <option value='default-dark'>Default Dark</option>
+                  <option value='modern-dark'>Modern Dark</option>
+                </select>
+              </label>
+              <p class='text-xs text-foreground-neutral-faded mt-2'>Theme for dark mode</p>
+            </div>
+          </div>
+
+          <div class='bg-background-primary-faded border border-border-primary-faded rounded-lg p-4 mb-6'>
+            <p class='text-sm text-foreground-primary'>
+              <strong>💡 Tip:</strong> Light and dark themes are automatically paired. When you
+              select a theme, its counterpart is automatically applied to the other mode.
+            </p>
           </div>
         </section>
 
         <section class='mb-12'>
-          <h2 class='text-xl font-bold mb-6 text-slate-800'>Text Editing</h2>
+          <h2 class='text-xl font-bold mb-6 text-foreground-neutral'>Text Editing</h2>
 
           <div class='mb-6'>
             <label class='flex items-center gap-3 text-sm'>
@@ -181,16 +220,16 @@ function RouteComponent() {
               />
               <span>Enable Spell Check</span>
             </label>
-            <p class='text-xs text-slate-600 mt-2'>Check spelling as you type</p>
+            <p class='text-xs text-foreground-neutral-faded mt-2'>Check spelling as you type</p>
           </div>
         </section>
 
         <section class='mb-12'>
-          <h2 class='text-xl font-bold mb-6 text-slate-800'>Danger Zone</h2>
+          <h2 class='text-xl font-bold mb-6 text-foreground-neutral'>Danger Zone</h2>
 
           <button
             type='button'
-            class='py-3 px-6 bg-red-500 text-white border-0 rounded-md text-sm font-medium hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed'
+            class='py-3 px-6 bg-critical text-on-background-critical border-0 rounded-md text-sm font-medium hover:bg-critical-faded disabled:opacity-50 disabled:cursor-not-allowed'
             onClick={handleReset}
             disabled={isSaving()}
           >
@@ -199,7 +238,7 @@ function RouteComponent() {
         </section>
 
         <Show when={isSaving()}>
-          <div class='fixed bottom-8 right-8 py-4 px-8 bg-slate-800 text-white rounded-md text-sm shadow-[0_4px_6px_rgba(0,0,0,0.1)]'>
+          <div class='fixed bottom-8 right-8 py-4 px-8 bg-foreground-neutral text-on-background-neutral rounded-md text-sm shadow-raised'>
             Saving changes...
           </div>
         </Show>

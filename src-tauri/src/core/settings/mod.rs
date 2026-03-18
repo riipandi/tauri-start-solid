@@ -26,9 +26,9 @@ impl Default for UISettings {
     fn default() -> Self {
         Self {
             theme_mode: ThemeMode::Auto,
-            theme_light: "defaultLight".to_string(),
-            theme_dark: "defaultDark".to_string(),
-            enable_spell_check: true,
+            theme_light: "default-light".to_string(),
+            theme_dark: "default-dark".to_string(),
+            enable_spell_check: false,
         }
     }
 }

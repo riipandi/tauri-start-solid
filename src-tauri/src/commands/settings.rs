@@ -26,22 +26,14 @@ pub async fn open_settings_window(app: AppHandle) -> Result<(), String> {
 /// Returns the current settings or default values if none exist
 #[tauri::command]
 pub async fn get_settings(state: tauri::State<'_, Arc<Mutex<AppState>>>) -> Result<AppSettings, String> {
-    log::debug!("Fetching settings from database");
-
     match get_value(&state, SETTINGS_KEY, Some(Namespace::CONFIG)).await {
-        Ok(Some(item)) => {
-            log::debug!("Found existing settings in database");
-            match serde_json::from_str::<AppSettings>(&item.value) {
-                Ok(settings) => {
-                    log::debug!("Successfully deserialized settings");
-                    Ok(settings)
-                }
-                Err(e) => {
-                    log::error!("Failed to deserialize settings: {}", e);
-                    Ok(AppSettings::default())
-                }
+        Ok(Some(item)) => match serde_json::from_str::<AppSettings>(&item.value) {
+            Ok(settings) => Ok(settings),
+            Err(e) => {
+                log::error!("Failed to deserialize settings: {}", e);
+                Ok(AppSettings::default())
             }
-        }
+        },
         Ok(None) => {
             log::info!("No settings found, returning defaults");
             Ok(AppSettings::default())
@@ -62,30 +54,24 @@ pub async fn update_settings(
     app: tauri::AppHandle,
     mut settings: AppSettings,
 ) -> Result<AppSettings, String> {
-    log::debug!("Updating settings in database");
-
     // Validate theme fields based on theme_mode
     match settings.ui.theme_mode {
         ThemeMode::Dark => {
             if settings.ui.theme_dark.is_empty() {
-                log::debug!("theme_dark is empty, setting to default");
-                settings.ui.theme_dark = "defaultDark".to_string();
+                settings.ui.theme_dark = "default-dark".to_string();
             }
         }
         ThemeMode::Light => {
             if settings.ui.theme_light.is_empty() {
-                log::debug!("theme_light is empty, setting to default");
-                settings.ui.theme_light = "defaultLight".to_string();
+                settings.ui.theme_light = "default-light".to_string();
             }
         }
         ThemeMode::Auto => {
             if settings.ui.theme_dark.is_empty() {
-                log::debug!("theme_dark is empty, setting to default");
-                settings.ui.theme_dark = "defaultDark".to_string();
+                settings.ui.theme_dark = "default-dark".to_string();
             }
             if settings.ui.theme_light.is_empty() {
-                log::debug!("theme_light is empty, setting to default");
-                settings.ui.theme_light = "defaultLight".to_string();
+                settings.ui.theme_light = "default-light".to_string();
             }
         }
     }

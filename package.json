@@ -45,6 +45,7 @@
     },
     "dependencies": {
         "@kobalte/core": "^0.13.11",
+        "@nanostores/solid": "^1.1.1",
         "@tanstack/solid-router": "^1.167.3",
         "@tauri-apps/api": "^2.10.1",
         "@tauri-apps/plugin-dialog": "^2.6.0",
