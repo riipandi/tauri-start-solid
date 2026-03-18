@@ -177,10 +177,7 @@ pub async fn init_default_settings(state: &Arc<Mutex<AppState>>) -> Result<AppSe
             })?;
 
             match set_value(state, SETTINGS_KEY, &json_value, Some(Namespace::CONFIG)).await {
-                Ok(_) => {
-                    log::info!("Default settings initialized");
-                    Ok(default_settings)
-                }
+                Ok(_) => Ok(default_settings),
                 Err(e) => {
                     log::error!("Failed to save default settings: {}", e);
                     Err(format!("Failed to save default settings: {}", e))

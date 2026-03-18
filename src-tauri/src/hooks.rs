@@ -34,14 +34,12 @@ pub fn setup_app<R: tauri::Runtime>(app: &mut App<R>) -> Result<(), Box<dyn std:
         }
     };
 
-    log::info!("Database path: {}", db_path.display());
-
     // Run async initialization in blocking context during setup
     tauri::async_runtime::block_on(async move {
         // CRITICAL: Setup database MUST succeed
         match setup_kv_database(state_clone.clone(), db_path.clone()).await {
             Ok(_) => {
-                log::info!("✓ Database initialized successfully at: {}", db_path.display());
+                log::info!("Database initialized successfully at: {}", db_path.display());
             }
             Err(e) => {
                 let err_msg = format!(
@@ -56,9 +54,7 @@ pub fn setup_app<R: tauri::Runtime>(app: &mut App<R>) -> Result<(), Box<dyn std:
 
         // CRITICAL: Initialize default settings MUST succeed
         match init_default_settings(&state_clone).await {
-            Ok(_) => {
-                log::info!("✓ Default settings initialized");
-            }
+            Ok(_) => {}
             Err(e) => {
                 let err_msg = format!("CRITICAL: Failed to initialize default settings: {}", e);
                 log::error!("{}", err_msg);

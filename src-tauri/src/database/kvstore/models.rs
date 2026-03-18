@@ -27,9 +27,6 @@ impl Namespace {
     /// Namespace for application configuration
     pub const CONFIG: &'static str = "config";
 
-    /// Namespace for update-related data
-    pub const UPDATE: &'static str = "update";
-
     /// Create a namespaced key by adding a prefix
     ///
     /// # Arguments

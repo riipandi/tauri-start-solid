@@ -145,6 +145,7 @@ pub async fn get_value(
 ///
 /// # Returns
 /// * `Result<bool, Box<dyn std::error::Error + Send + Sync>>` - True if deleted, false if not found
+#[allow(dead_code)]
 pub async fn delete_value(
     state: &Arc<Mutex<AppState>>,
     key: &str,
@@ -202,6 +203,7 @@ pub async fn delete_value(
 ///
 /// # Returns
 /// * `Result<u64, Box<dyn std::error::Error + Send + Sync>>` - Number of items deleted
+#[allow(dead_code)]
 pub async fn delete_all(state: &Arc<Mutex<AppState>>) -> Result<u64, Box<dyn std::error::Error + Send + Sync>> {
     log::info!("Deleting all values from KV store");
 
@@ -250,6 +252,7 @@ pub async fn delete_all(state: &Arc<Mutex<AppState>>) -> Result<u64, Box<dyn std
 ///
 /// # Returns
 /// * `Result<Vec<KVItem>, Box<dyn std::error::Error + Send + Sync>>` - List of all items
+#[allow(dead_code)]
 pub async fn list_all(state: &Arc<Mutex<AppState>>) -> Result<Vec<KVItem>, Box<dyn std::error::Error + Send + Sync>> {
     let state_guard = state.lock().map_err(|e| {
         let err_msg = format!("Failed to lock state: {}", e);
@@ -292,6 +295,7 @@ pub async fn list_all(state: &Arc<Mutex<AppState>>) -> Result<Vec<KVItem>, Box<d
 ///
 /// # Returns
 /// * `Result<Vec<KVItem>, Box<dyn std::error::Error + Send + Sync>>` - List of all items in the namespace
+#[allow(dead_code)]
 pub async fn list_namespace(
     state: &Arc<Mutex<AppState>>,
     namespace: &str,
@@ -349,6 +353,7 @@ pub async fn list_namespace(
 ///
 /// # Returns
 /// * `Result<u64, Box<dyn std::error::Error + Send + Sync>>` - Number of items deleted
+#[allow(dead_code)]
 pub async fn delete_namespace(
     state: &Arc<Mutex<AppState>>,
     namespace: &str,
@@ -410,6 +415,7 @@ pub async fn delete_namespace(
 ///
 /// # Returns
 /// * `Result<(), Box<dyn std::error::Error + Send + Sync>>` - Success or error
+#[allow(dead_code)]
 pub async fn monitor_database_usage(
     state: &Arc<Mutex<AppState>>,
 ) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
@@ -499,6 +505,7 @@ pub async fn monitor_database_usage(
 ///
 /// # Returns
 /// * `Result<String, Box<dyn std::error::Error + Send + Sync>>` - Backup file path or error
+#[allow(dead_code)]
 pub async fn backup_database(
     state: &Arc<Mutex<AppState>>,
     backup_dir: &Path,

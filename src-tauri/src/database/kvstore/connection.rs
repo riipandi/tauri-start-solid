@@ -8,8 +8,7 @@ use heed3::types::{SerdeBincode, Str};
 use heed3::{Database, EnvOpenOptions};
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
-use tauri::AppHandle;
-use tauri::Manager;
+use tauri::{AppHandle, Manager};
 
 /// Get database directory path based on environment
 ///
@@ -48,8 +47,6 @@ pub fn get_kv_database_path<R: tauri::Runtime>(
     // Database file path (LMDB database file, not directory)
     let db_path = data_dir.join(format!("{}{}.mdb", app_name, suffix));
 
-    log::debug!("Using database at: {}", db_path.display());
-
     Ok(db_path)
 }
 
@@ -66,18 +63,11 @@ pub async fn setup_kv_database(
     db_path: PathBuf,
 ) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     // Setup the database for the app with the specified path
-    let db_path_str = db_path.to_str().ok_or("Invalid database path")?;
-    log::debug!("Database file path: {}", db_path_str);
-
-    // LMDB requires a DIRECTORY path, not a file path
-    // Extract the parent directory from the database file path
+    // LMDB requires a DIRECTORY path, not a file path.
     let db_dir = db_path.parent().ok_or("Invalid database path (no parent directory)")?;
-    let db_dir_str = db_dir.to_str().ok_or("Invalid database directory path")?;
-    log::debug!("Opening LMDB environment at directory: {}", db_dir_str);
 
     // CRITICAL: Ensure database directory exists before LMDB open()
     std::fs::create_dir_all(db_dir).map_err(|e| format!("Failed to create database directory: {}", e))?;
-    log::debug!("Ensured database directory exists: {}", db_dir.display());
 
     // Open the environment with a 50MB map size
     // Using unsafe here because Heed's EnvOpenOptions::open requires it as it:

@@ -18,6 +18,7 @@ pub struct AppState {
     pub kv_db: Option<Database<Str, SerdeBincode<KVItem>>>,
 
     /// Pending update that has been checked but not installed
+    #[allow(dead_code)]
     pub pending_update: Option<Update>,
 }
 

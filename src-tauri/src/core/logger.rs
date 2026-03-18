@@ -27,9 +27,8 @@ pub fn setup_plugin_log() -> tauri_plugin_log::Builder {
             let level = record.level();
             let padding = " ".repeat(6 - level.to_string().len());
             out.finish(format_args!(
-                "[{}][{}][{}]{}{}",
-                now.format("%Y-%m-%d"),
-                now.format("%H:%M:%S"),
+                "[{}][{}]{}{}",
+                now.format("%Y-%m-%d %H:%M:%S"),
                 level,
                 padding,
                 message
