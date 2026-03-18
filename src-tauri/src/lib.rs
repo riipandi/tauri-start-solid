@@ -1,6 +1,5 @@
 mod commands;
 mod core;
-mod database;
 mod hooks;
 mod state;
 mod utils;
@@ -86,7 +85,6 @@ pub fn run() {
             commands::settings::open_settings_window,
             commands::settings::reset_settings,
             commands::settings::update_settings,
-            commands::demo::greet,
         ])
         .build(tauri_ctx)
         .expect("error while running tauri application")

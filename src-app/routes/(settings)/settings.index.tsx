@@ -1,6 +1,7 @@
 import { toaster } from '@kobalte/core/toast'
 import { useStore } from '@nanostores/solid'
 import { createFileRoute } from '@tanstack/solid-router'
+import { confirm } from '@tauri-apps/plugin-dialog'
 import { consola } from 'consola'
 import { createSignal } from 'solid-js'
 import { Select, type SelectOption } from '#/components/select'
@@ -66,7 +67,12 @@ function RouteComponent() {
   }
 
   async function handleReset() {
-    if (!confirm('Are you sure you want to reset all settings to default?')) {
+    const confirmation = await confirm('Are you sure you want to reset all settings to default?', {
+      title: 'Confirm Reset',
+      kind: 'warning'
+    })
+
+    if (!confirmation) {
       return
     }
 
