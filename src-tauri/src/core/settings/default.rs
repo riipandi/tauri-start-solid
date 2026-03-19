@@ -6,7 +6,7 @@ impl Default for UISettings {
             theme_mode: ThemeMode::Auto,
             theme_light: "default-light".to_string(),
             theme_dark: "default-dark".to_string(),
-            enable_spell_check: false,
+            enable_spell_check: true,
         }
     }
 }
