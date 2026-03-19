@@ -1,4 +1,4 @@
-import { invoke } from '@tauri-apps/api/core'
+import { invoke, Channel } from '@tauri-apps/api/core'
 import { listen } from '@tauri-apps/api/event'
 
 export interface UpdateInfo {
@@ -48,9 +48,9 @@ function defineService(): UpdaterService {
 
     async downloadUpdate(onProgress) {
       try {
-        await invoke('download_update', {
-          onEvent: { emit: (event: DownloadEvent) => onProgress(event) }
-        })
+        const onEvent = new Channel<DownloadEvent>()
+        onEvent.onmessage = (event) => onProgress(event)
+        await invoke('download_update', { onEvent })
       } catch (error) {
         console.error('[Updater] Error downloading update:', error)
         throw error

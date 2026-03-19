@@ -2,5 +2,11 @@
     "identifier": "desktop-capability",
     "platforms": ["macOS", "windows", "linux"],
     "windows": ["main", "settings"],
-    "permissions": ["updater:default"]
+    "permissions": [
+        "updater:allow-check",
+        "updater:allow-download-and-install",
+        "updater:allow-download",
+        "updater:allow-install",
+        "updater:default"
+    ]
 }

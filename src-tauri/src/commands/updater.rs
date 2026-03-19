@@ -1,6 +1,6 @@
 //! Tauri commands for updater management
 
-use tauri::{AppHandle, ipc::Channel};
+use tauri::{AppHandle, Emitter, ipc::Channel};
 
 use crate::core::updater::{DownloadEvent, UpdateInfo, UpdateManager};
 
@@ -24,11 +24,17 @@ pub async fn download_update(
     manager: tauri::State<'_, UpdateManager>,
     on_event: Channel<DownloadEvent>,
 ) -> Result<(), String> {
-    manager
-        .download_and_install(app, move |event| {
+    let result = manager
+        .download_and_install(app.clone(), move |event| {
             let _ = on_event.send(event);
         })
-        .await
+        .await;
+
+    if result.is_ok() {
+        let _ = app.emit("updater://ready-to-install", ());
+    }
+
+    result
 }
 
 /// Install pending update

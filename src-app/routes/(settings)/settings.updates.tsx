@@ -84,6 +84,8 @@ function RouteComponent() {
           const total = event.data.contentLength || 100
           const current = event.data.chunkLength || 0
           setDownloadProgress((current / total) * 100)
+        } else if (event.event === 'Finished') {
+          setDownloadProgress(100)
         }
       }),
       updaterService.onReadyToInstall(() => {
@@ -292,15 +294,15 @@ function RouteComponent() {
         </div>
 
         <Show when={availableUpdate() && !updateReady()}>
-          <div class='mt-4 p-4 bg-success/10 border border-success/20 rounded-md'>
+          <div class='mt-4 p-4 bg-success/10 border border-border-positive/50 rounded-md'>
             <div class='flex items-start justify-between gap-4'>
               <div class='flex-1 min-w-0'>
                 <div class='text-[13px] font-medium text-success'>
-                  ✨ Update Available: {availableUpdate()!.version}
+                  ✨ Update Available: {availableUpdate()?.version}
                 </div>
-                <Show when={availableUpdate()!.notes}>
+                <Show when={availableUpdate()?.notes}>
                   <p class='text-[11px] text-foreground-neutral-faded mt-1'>
-                    {availableUpdate()!.notes}
+                    {availableUpdate()?.notes}
                   </p>
                 </Show>
               </div>
@@ -330,11 +332,11 @@ function RouteComponent() {
         </Show>
 
         <Show when={updateReady()}>
-          <div class='mt-4 p-4 bg-success/10 border border-success/20 rounded-md'>
+          <div class='mt-4 p-4 bg-success/10 border border-border-positive/50 rounded-md'>
             <div class='flex items-start justify-between gap-4'>
               <div class='flex-1 min-w-0'>
                 <div class='text-[13px] font-medium text-success'>
-                  ✅ Update Ready: {availableUpdate()!.version}
+                  ✅ Update Ready: {availableUpdate()?.version}
                 </div>
                 <p class='text-[11px] text-foreground-neutral-faded mt-1'>
                   The update has been downloaded and is ready to install. Restart the app to apply.
