@@ -5,7 +5,7 @@ import { consola } from 'consola'
 import { createSignal } from 'solid-js'
 import { Select, type SelectOption } from '#/components/select'
 import { Toast } from '#/components/toast'
-import { uiSettings, currentTheme } from '#/stores/settings'
+import { uiSettings } from '#/stores/settings'
 import { updateUISettings, updateTheme } from '#/stores/settings'
 import { SettingRow } from './-setting-row'
 
@@ -15,7 +15,6 @@ export const Route = createFileRoute('/(settings)/settings/appearance')({
 
 function RouteComponent() {
   const ui = useStore(uiSettings)
-  const theme = useStore(currentTheme)
   const [isSaving, setIsSaving] = createSignal(false)
 
   const isLightThemeDisabled = () => ui().theme_mode === 'dark' || isSaving()
@@ -126,10 +125,6 @@ function RouteComponent() {
               { value: 'modern-dark', label: 'Modern Dark' }
             ]}
           />
-        </SettingRow>
-
-        <SettingRow label='Current Theme' description='Active theme based on your settings'>
-          <span class='text-[13px] text-foreground-neutral-faded'>{theme()}</span>
         </SettingRow>
       </section>
     </div>
