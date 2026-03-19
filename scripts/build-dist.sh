@@ -7,12 +7,58 @@ set -eu  # Exit on error, undefined variable = error
 
 PROJECT_ROOT=$(cd "$(dirname "$0")/.." && pwd)
 PACKAGE_NAME=$(jq -r '.name' "$PROJECT_ROOT/package.json")
-PACKAGE_VERSION=$(jq -r '.version' "$PROJECT_ROOT/src-tauri/tauri.conf.json")
+PACKAGE_VERSION=$(jq -r '.version' "$PROJECT_ROOT/package.json")
 PRODUCT_NAME=$(jq -r '.productName' "$PROJECT_ROOT/src-tauri/tauri.conf.json")
 
-# Build configuration (can be overridden via env)
-BUILD_MODE="${BUILD_MODE:-release}"   # debug | release
-CHANNEL="${CHANNEL:-stable}"          # stable | canary
+# =============================================================================
+# CLI ARGUMENTS
+# =============================================================================
+
+BUILD_MODE="release"
+CHANNEL="stable"
+VERSION_OVERRIDE=""
+FORCE=""
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --debug)
+            BUILD_MODE="debug"
+            shift
+            ;;
+        --canary)
+            CHANNEL="canary"
+            shift
+            ;;
+        --version)
+            VERSION_OVERRIDE="$2"
+            shift 2
+            ;;
+        --force|-f)
+            FORCE="1"
+            shift
+            ;;
+        --help|-h)
+            echo "Usage: $0 [OPTIONS]"
+            echo "Options:"
+            echo "  --debug            Build in debug mode (default: release)"
+            echo "  --canary           Use canary channel (default: stable)"
+            echo "  --version <ver>    Override version (default: from package.json)"
+            echo "  --force,-f         Skip confirmation prompt"
+            echo "  --help,-h          Show this help message"
+            exit 0
+            ;;
+        *)
+            echo "Unknown option: $1"
+            echo "Use --help for usage information"
+            exit 1
+            ;;
+    esac
+done
+
+# Apply version override if provided
+if [ -n "$VERSION_OVERRIDE" ]; then
+    PACKAGE_VERSION="$VERSION_OVERRIDE"
+fi
 
 # Build target (auto-detect platform)
 OS="$(uname -s | tr '[:upper:]' '[:lower:]')"
@@ -27,7 +73,7 @@ esac
 
 # Directory paths
 TARGET_DIR="$PROJECT_ROOT/src-tauri/target/$BUILD_MODE/bundle"
-ARTIFACT_DIR="$PROJECT_ROOT/dist/artifacts"
+ARTIFACT_DIR="$PROJECT_ROOT/dist/$CHANNEL"
 WORK_DIR="$PROJECT_ROOT/dist/work"
 
 # =============================================================================
@@ -71,6 +117,25 @@ log_info() {
 log_error() {
     echo "✗ ERROR: $*" >&2
     exit 1
+}
+
+confirm_execution() {
+    if [ -n "$FORCE" ]; then
+        return 0
+    fi
+
+    printf "Continue? [Y/n] "
+    read -r response </dev/tty
+
+    case "$response" in
+        [nN]|[nN][oO])
+            echo "Aborted."
+            exit 0
+            ;;
+        *)
+            return 0
+            ;;
+    esac
 }
 
 # Detect platform string for update.json
@@ -182,18 +247,18 @@ extract_signature() {
     cat "$sig_file" | tr -d '\n'
 }
 
-# Sync package.json version with tauri.conf.json
+# Sync tauri.conf.json version with package.json
 sync_package_version() {
-    local tauri_version="$1"
+    local pkg_version="$1"
 
-    log_info "Syncing package.json version to $tauri_version"
+    log_info "Syncing tauri.conf.json version to $pkg_version"
 
-    # Update package.json version using jq
-    jq --arg v "$tauri_version" '.version = $v' "$PROJECT_ROOT/package.json" > "$PROJECT_ROOT/package.json.tmp"
-    mv "$PROJECT_ROOT/package.json.tmp" "$PROJECT_ROOT/package.json"
-    pnpm exec oxfmt --write "$PROJECT_ROOT/package.json" >/dev/null 2>&1
+    # Update tauri.conf.json version using jq
+    jq --arg v "$pkg_version" '.version = $v' "$PROJECT_ROOT/src-tauri/tauri.conf.json" > "$PROJECT_ROOT/src-tauri/tauri.conf.json.tmp"
+    mv "$PROJECT_ROOT/src-tauri/tauri.conf.json.tmp" "$PROJECT_ROOT/src-tauri/tauri.conf.json"
+    pnpm exec oxfmt --write "$PROJECT_ROOT/src-tauri/tauri.conf.json" >/dev/null 2>&1
 
-    log_info "✓ package.json updated to version $tauri_version"
+    log_info "✓ tauri.conf.json updated to version $pkg_version"
 }
 
 # =============================================================================
@@ -327,6 +392,8 @@ main() {
     log_info "S3 Path: $S3_CHANNEL_PATH"
     echo ""
 
+    confirm_execution
+
     # Sync version before build
     sync_package_version "$PACKAGE_VERSION"
 
@@ -338,7 +405,7 @@ main() {
 
     echo ""
     log_info "=== Build Complete ==="
-    log_info "Artifacts: $ARTIFACT_DIR"
+    log_info "Artifacts: dist/$CHANNEL/"
     log_info "Update URL: $PUBLIC_CHANNEL_URL/update.json"
 }
 
