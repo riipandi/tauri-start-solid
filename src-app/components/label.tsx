@@ -11,7 +11,10 @@ interface LabelProps {
 
 export function Label(props: LabelProps) {
   return (
-    <label for={props.for} class={clsx('font-medium text-[13px] text-foreground-neutral', props.class)}>
+    <label
+      for={props.for}
+      class={clsx('font-medium text-[13px] text-foreground-neutral', props.class)}
+    >
       {props.label}
 
       <Show when={props.required}>

@@ -23,26 +23,28 @@ export function Switch(props: SwitchProps) {
       disabled={props.disabled}
       class={clsx(props.class)}
     >
-      <BaseSwitch.Input
+      <BaseSwitch.Input class='sr-only' />
+      <BaseSwitch.Control
         class={clsx(
-          'relative inline-flex shrink-0 w-8 h-5',
-          'border-2 border-transparent rounded-full cursor-pointer',
+          'relative inline-flex shrink-0 w-8 h-5 rounded-full cursor-pointer',
           'transition-colors duration-200 ease-in-out',
-          'focus:outline-none focus:ring-2 focus:ring-border-primary focus:ring-offset-1 focus:ring-offset-background-page',
+          'focus-visible:outline-none focus-visible:ring-2',
+          'focus-visible:ring-border-primary focus-visible:ring-offset-1',
+          'focus-visible:ring-offset-background-page',
           'disabled:opacity-50 disabled:cursor-not-allowed',
-          'data-checked:bg-background-primary',
-          'data-unchecked:bg-background-neutral-faded'
+          'bg-background-neutral-faded',
+          'data-checked:bg-background-primary'
         )}
       >
-        <BaseSwitch.Control
+        <BaseSwitch.Thumb
           class={clsx(
             'pointer-events-none absolute top-0.5 left-0.5',
-            'w-4 h-4 rounded-full bg-on-background-primary shadow-sm',
+            'w-4 h-4 rounded-full bg-white shadow-sm',
             'transform transition-transform duration-200 ease-in-out',
             'data-checked:translate-x-3'
           )}
         />
-      </BaseSwitch.Input>
+      </BaseSwitch.Control>
     </BaseSwitch>
   )
 }

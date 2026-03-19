@@ -4,10 +4,10 @@ import { createFileRoute } from '@tanstack/solid-router'
 import { consola } from 'consola'
 import { createSignal } from 'solid-js'
 import { Select, type SelectOption } from '#/components/select'
-import { SettingRow } from '#/components/setting-row'
 import { Toast } from '#/components/toast'
 import { uiSettings, currentTheme } from '#/stores/settings'
 import { updateUISettings, updateTheme } from '#/stores/settings'
+import { SettingRow } from './-setting-row'
 
 export const Route = createFileRoute('/(settings)/settings/appearance')({
   component: RouteComponent
@@ -23,17 +23,23 @@ function RouteComponent() {
 
   const lightThemeDescription = () => {
     switch (ui().theme_mode) {
-      case 'light': return 'Theme used in light mode'
-      case 'dark': return 'Not used in dark mode'
-      default: return 'Theme used when system is in light mode'
+      case 'light':
+        return 'Theme used in light mode'
+      case 'dark':
+        return 'Not used in dark mode'
+      default:
+        return 'Theme used when system is in light mode'
     }
   }
 
   const darkThemeDescription = () => {
     switch (ui().theme_mode) {
-      case 'dark': return 'Theme used in dark mode'
-      case 'light': return 'Not used in light mode'
-      default: return 'Theme used when system is in dark mode'
+      case 'dark':
+        return 'Theme used in dark mode'
+      case 'light':
+        return 'Not used in light mode'
+      default:
+        return 'Theme used when system is in dark mode'
     }
   }
 
@@ -72,19 +78,20 @@ function RouteComponent() {
   }
 
   return (
-    <div class='px-5 py-4'>
+    <div class='px-5 pb-4 pt-0'>
       <header class='mb-6'>
         <h1 class='text-[15px] font-semibold text-foreground-neutral'>Appearance</h1>
-        <p class='text-[11px] text-foreground-neutral-faded mt-0.5'>Customize the look and feel of the app</p>
+        <p class='text-[11px] text-foreground-neutral-faded mt-0.5'>
+          Customize the look and feel of the app
+        </p>
       </header>
 
       <section>
-        <h2 class='text-[13px] font-medium text-foreground-neutral mb-3 pb-2 border-b border-border-neutral'>Theme</h2>
-        
-        <SettingRow
-          label='Theme Mode'
-          description='Auto mode follows your system preference'
-        >
+        <h2 class='text-[13px] font-medium text-foreground-neutral mb-3 pb-2 border-b border-border-neutral'>
+          Theme
+        </h2>
+
+        <SettingRow label='Theme Mode' description='Auto mode follows your system preference'>
           <Select
             value={ui().theme_mode}
             onChange={handleThemeModeChange}
@@ -97,10 +104,7 @@ function RouteComponent() {
           />
         </SettingRow>
 
-        <SettingRow
-          label='Light Theme'
-          description={lightThemeDescription()}
-        >
+        <SettingRow label='Light Theme' description={lightThemeDescription()}>
           <Select
             value={ui().theme_light}
             onChange={(option) => handleThemeChange('light', option)}
@@ -112,10 +116,7 @@ function RouteComponent() {
           />
         </SettingRow>
 
-        <SettingRow
-          label='Dark Theme'
-          description={darkThemeDescription()}
-        >
+        <SettingRow label='Dark Theme' description={darkThemeDescription()}>
           <Select
             value={ui().theme_dark}
             onChange={(option) => handleThemeChange('dark', option)}
@@ -127,10 +128,7 @@ function RouteComponent() {
           />
         </SettingRow>
 
-        <SettingRow
-          label='Current Theme'
-          description='Active theme based on your settings'
-        >
+        <SettingRow label='Current Theme' description='Active theme based on your settings'>
           <span class='text-[13px] text-foreground-neutral-faded'>{theme()}</span>
         </SettingRow>
       </section>

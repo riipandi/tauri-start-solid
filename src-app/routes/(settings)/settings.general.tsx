@@ -5,15 +5,25 @@ import { confirm } from '@tauri-apps/plugin-dialog'
 import { consola } from 'consola'
 import { createSignal } from 'solid-js'
 import { Button } from '#/components/button'
-import { SettingRow } from '#/components/setting-row'
 import { Switch } from '#/components/switch'
+import { Select } from '#/components/select'
 import { Toast } from '#/components/toast'
 import { uiSettings } from '#/stores/settings'
 import { updateUISettings, resetSettings } from '#/stores/settings'
+import { SettingRow } from './-setting-row'
+import type { UpdateCheckFrequency } from '#/types/settings'
 
 export const Route = createFileRoute('/(settings)/settings/general')({
   component: RouteComponent
 })
+
+const UPDATE_FREQUENCY_OPTIONS = [
+  { value: 'on-startup', label: 'On Startup' },
+  { value: 'daily', label: 'Daily' },
+  { value: 'weekly', label: 'Weekly' },
+  { value: 'monthly', label: 'Monthly' },
+  { value: 'never', label: 'Never' }
+] as const
 
 function RouteComponent() {
   const ui = useStore(uiSettings)
@@ -58,19 +68,48 @@ function RouteComponent() {
     }
   }
 
+  async function handleExport() {
+    showToast('info', 'Export settings - Coming soon!')
+  }
+
+  async function handleImport() {
+    showToast('info', 'Import settings - Coming soon!')
+  }
+
+  async function handleUpdateFrequencyChange(option: { value: string; label: string } | null) {
+    if (!option) return
+    setIsSaving(true)
+    try {
+      await updateUISettings({
+        update_check_frequency: option.value as UpdateCheckFrequency
+      })
+      showToast('success', `Update frequency set to ${option.label}`)
+    } catch (error) {
+      consola.error('[Settings] Error updating frequency:', error)
+      showToast('error', 'Failed to update frequency')
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  async function handleCheckUpdate() {
+    showToast('info', 'Checking for updates - Coming soon!')
+  }
+
   return (
-    <div class='px-5 py-4'>
+    <div class='px-5 pb-4 pt-0'>
       <header class='mb-6'>
         <h1 class='text-[15px] font-semibold text-foreground-neutral'>General</h1>
-        <p class='text-[11px] text-foreground-neutral-faded mt-0.5'>General application preferences</p>
+        <p class='text-[11px] text-foreground-neutral-faded mt-0.5'>
+          General application preferences
+        </p>
       </header>
 
       <section class='mb-6'>
-        <h2 class='text-[13px] font-medium text-foreground-neutral mb-3 pb-2 border-b border-border-neutral'>Text Editing</h2>
-        <SettingRow
-          label='Enable Spell Check'
-          description='Check spelling as you type'
-        >
+        <h2 class='text-[13px] font-medium text-foreground-neutral mb-3 pb-2 border-b border-border-neutral'>
+          Text Editing
+        </h2>
+        <SettingRow label='Enable Spell Check' description='Check spelling as you type'>
           <Switch
             checked={ui().enable_spell_check}
             onChange={handleToggleChange}
@@ -79,16 +118,71 @@ function RouteComponent() {
         </SettingRow>
       </section>
 
+      <section class='mb-6'>
+        <h2 class='text-[13px] font-medium text-foreground-neutral mb-3 pb-2 border-b border-border-neutral'>
+          Updates
+        </h2>
+        <SettingRow label='Check for Updates' description='Automatically check for new versions'>
+          <Select
+            options={UPDATE_FREQUENCY_OPTIONS}
+            value={ui().update_check_frequency}
+            onChange={handleUpdateFrequencyChange}
+            disabled={isSaving()}
+          />
+        </SettingRow>
+        <div class='flex items-center justify-between gap-4 py-2'>
+          <div class='flex-1 min-w-0'>
+            <div class='text-[13px] font-medium text-foreground-neutral'>Manual Update Check</div>
+            <div class='text-[11px] text-foreground-neutral-faded mt-0.5'>
+              Current version: v1.0.0
+            </div>
+          </div>
+          <Button variant='secondary' onClick={handleCheckUpdate} disabled={isSaving()}>
+            Check Update
+          </Button>
+        </div>
+      </section>
+
       <section>
-        <h2 class='text-[13px] font-medium text-critical mb-3 pb-2 border-b border-border-neutral'>Danger Zone</h2>
+        <h2 class='text-[13px] font-medium text-critical mb-3 pb-2 border-b border-border-neutral'>
+          Danger Zone
+        </h2>
         <div class='flex items-center justify-between gap-4 py-2'>
           <div class='flex-1 min-w-0'>
             <div class='text-[13px] font-medium text-foreground-neutral'>Reset All Settings</div>
-            <div class='text-[11px] text-foreground-neutral-faded mt-0.5'>Restore all settings to their default values</div>
+            <div class='text-[11px] text-foreground-neutral-faded mt-0.5'>
+              Restore all settings to their default values
+            </div>
           </div>
           <Button variant='danger' onClick={handleReset} disabled={isSaving()}>
             Reset
           </Button>
+        </div>
+        <div class='flex items-center justify-between gap-4 py-2'>
+          <div class='flex-1 min-w-0'>
+            <div class='text-[13px] font-medium text-foreground-neutral'>Export & Import Settings</div>
+            <div class='text-[11px] text-foreground-neutral-faded mt-0.5'>
+              Backup or restore your settings
+            </div>
+          </div>
+          <div class='flex items-stretch rounded-md overflow-hidden border border-border-neutral/20'>
+            <Button
+              variant='secondary'
+              onClick={handleExport}
+              disabled={isSaving()}
+              class='rounded-r-none border-r-0 px-3'
+            >
+              Export
+            </Button>
+            <Button
+              variant='secondary'
+              onClick={handleImport}
+              disabled={isSaving()}
+              class='rounded-l-none border-l-0 px-3'
+            >
+              Import
+            </Button>
+          </div>
         </div>
       </section>
     </div>

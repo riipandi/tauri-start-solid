@@ -90,9 +90,9 @@ pub fn create_settings_window<R: Runtime>(
     let mut win_builder = WebviewWindowBuilder::new(app_handle, SETTINGS_WINDOW_ID, settings_url)
         .title("Settings")
         // Set exact size and disable resizing
-        .inner_size(760., 630.)
-        .min_inner_size(760., 630.)
-        .max_inner_size(760., 630.)
+        .inner_size(720., 630.)
+        .min_inner_size(720., 630.)
+        .max_inner_size(720., 630.)
         .resizable(false)
         .minimizable(false)
         .maximizable(false)
@@ -142,7 +142,7 @@ pub fn create_settings_window<R: Runtime>(
         .unwrap();
 
         // Try to set the size again after a short delay
-        if let Err(e) = window_clone.set_size(LogicalSize::new(760., 630.)) {
+        if let Err(e) = window_clone.set_size(LogicalSize::new(720., 630.)) {
             log::error!("Failed to set settings window size: {}", e);
         }
     });

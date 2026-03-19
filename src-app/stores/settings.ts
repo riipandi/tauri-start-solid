@@ -8,7 +8,8 @@ export const settingsStore = atom<AppSettings>({
     theme_mode: 'auto',
     theme_light: 'default-light',
     theme_dark: 'default-dark',
-    enable_spell_check: false
+    enable_spell_check: false,
+    update_check_frequency: 'on-startup'
   }
 })
 

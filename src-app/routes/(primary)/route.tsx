@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet } from '@tanstack/solid-router'
-import { TitleBar } from '#/components/title-bar'
+import { TitleBar } from './-title-bar'
 
 export const Route = createFileRoute('/(primary)')({
   component: RouteComponent
