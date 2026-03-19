@@ -1,7 +1,5 @@
 import * as BaseSelect from '@kobalte/core/select'
 import { clsx } from 'clsx'
-import { Show } from 'solid-js'
-import { Label } from './label'
 
 export interface SelectOption {
   value: string
@@ -11,8 +9,6 @@ export interface SelectOption {
 
 interface SelectProps {
   name?: string
-  label?: string
-  description?: string
   options: SelectOption[]
   placeholder?: string
   value?: string
@@ -40,30 +36,19 @@ export function Select(props: SelectProps) {
         <BaseSelect.Item
           item={itemProps.item}
           class={clsx(
-            'flex items-center justify-between py-2.5 px-3 text-sm',
+            'flex items-center justify-between py-1.5 px-2.5 text-[13px]',
             'focus:outline-none focus:bg-background-neutral-faded',
             'cursor-pointer select-none',
             'data-disabled:opacity-50 data-disabled:cursor-not-allowed',
-            'data-focused:bg-primary/10 text-primary'
+            'data-focused:bg-background-primary/10 text-foreground-primary'
           )}
         >
           <BaseSelect.ItemLabel class='flex-1'>
             {itemProps.item.rawValue.label}
           </BaseSelect.ItemLabel>
           <BaseSelect.ItemIndicator class='ml-2'>
-            <svg
-              class='w-4 h-4'
-              fill='none'
-              stroke='currentColor'
-              viewBox='0 0 24 24'
-              aria-hidden='true'
-            >
-              <path
-                stroke-linecap='round'
-                stroke-linejoin='round'
-                stroke-width='2'
-                d='M5 13l4 4L19 7'
-              />
+            <svg class='w-3.5 h-3.5' fill='none' stroke='currentColor' viewBox='0 0 24 24' aria-hidden='true'>
+              <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7' />
             </svg>
           </BaseSelect.ItemIndicator>
         </BaseSelect.Item>
@@ -72,21 +57,12 @@ export function Select(props: SelectProps) {
     >
       <BaseSelect.HiddenSelect name={props.name} required={props.required} />
 
-      <Show when={props.label}>
-        <BaseSelect.Label
-          as={Label}
-          label={props.label!}
-          description={props.description}
-          required={props.required}
-        />
-      </Show>
-
       <BaseSelect.Trigger
         class={clsx(
-          'w-full py-2.5 px-3',
+          'py-1.5 px-2.5 min-w-[140px]',
           'rounded-md border border-border-neutral',
-          'bg-background-page text-foreground-neutral text-sm',
-          'focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background-page',
+          'bg-background-page text-foreground-neutral text-[13px]',
+          'focus:outline-none focus:ring-2 focus:ring-border-primary focus:ring-offset-1 focus:ring-offset-background-page',
           'disabled:opacity-50 disabled:cursor-not-allowed',
           'transition-all duration-200',
           'flex items-center justify-between gap-2'
@@ -97,19 +73,8 @@ export function Select(props: SelectProps) {
         </BaseSelect.Value>
 
         <BaseSelect.Icon class='shrink-0'>
-          <svg
-            class='w-4 h-4 text-foreground-neutral-faded'
-            fill='none'
-            stroke='currentColor'
-            viewBox='0 0 24 24'
-            aria-hidden='true'
-          >
-            <path
-              stroke-linecap='round'
-              stroke-linejoin='round'
-              stroke-width='2'
-              d='M19 9l-7 7-7-7'
-            />
+          <svg class='w-3.5 h-3.5 text-foreground-neutral-faded' fill='none' stroke='currentColor' viewBox='0 0 24 24' aria-hidden='true'>
+            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7' />
           </svg>
         </BaseSelect.Icon>
       </BaseSelect.Trigger>
@@ -117,7 +82,7 @@ export function Select(props: SelectProps) {
       <BaseSelect.Portal>
         <BaseSelect.Content
           class={clsx(
-            'z-50 w-full mt-1 py-1',
+            'z-50 w-full mt-1 py-0.5',
             'rounded-md border border-border-neutral bg-background-page',
             'shadow-raised max-h-60 overflow-auto'
           )}

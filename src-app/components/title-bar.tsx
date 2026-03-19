@@ -57,7 +57,7 @@ export function TitleBar(props: { title?: string }) {
               onClick={close}
               class={clsx(
                 'inline-flex items-center justify-center w-11.5 h-full bg-transparent border-0 transition-colors duration-150 text-foreground-neutral hover:bg-foreground-neutral/8 active:bg-foreground-neutral/12',
-                'hover:bg-[#e81123] hover:stroke-white'
+                'hover:bg-background-critical hover:text-on-background-critical'
               )}
               data-close
               title='Close'

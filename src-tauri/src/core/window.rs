@@ -84,7 +84,7 @@ pub fn create_settings_window<R: Runtime>(
         .ok_or_else(|| Box::<dyn std::error::Error>::from("Main window not found"))?;
 
     // Create a window builder with settings-specific configurations
-    let settings_url = WebviewUrl::App("/settings".into());
+    let settings_url = WebviewUrl::App("/settings/general".into());
 
     // Create a fixed-size window with exact dimensions
     let mut win_builder = WebviewWindowBuilder::new(app_handle, SETTINGS_WINDOW_ID, settings_url)
