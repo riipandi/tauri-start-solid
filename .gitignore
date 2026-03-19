@@ -100,3 +100,5 @@ terraform.tfvars*
 target/
 src-tauri/gen/
 src-app/libs/bindings.ts
+update.json
+!update.json.example

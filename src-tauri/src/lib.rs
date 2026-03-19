@@ -15,6 +15,9 @@ pub fn run() {
     // Create application state
     let app_state = state::create_app_state();
 
+    // Create update manager
+    let update_manager = core::updater::UpdateManager::new();
+
     let mut builder = tauri::Builder::default();
     let tauri_ctx = tauri::generate_context!();
 
@@ -46,7 +49,10 @@ pub fn run() {
     }
 
     // Setup application hooks to load database and other resources
-    builder = builder.manage(app_state.clone()).setup(hooks::setup_app);
+    builder = builder
+        .manage(app_state.clone())
+        .manage(update_manager)
+        .setup(hooks::setup_app);
 
     // Handle the window events
     builder = builder.on_window_event(|window, event| {
@@ -85,6 +91,10 @@ pub fn run() {
             commands::settings::open_settings_window,
             commands::settings::reset_settings,
             commands::settings::update_settings,
+            commands::updater::check_for_updates,
+            commands::updater::download_update,
+            commands::updater::install_update,
+            commands::updater::get_update_state,
         ])
         .build(tauri_ctx)
         .expect("error while running tauri application")

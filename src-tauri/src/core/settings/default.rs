@@ -1,4 +1,4 @@
-use super::{AppSettings, ThemeMode, UISettings};
+use super::{AppSettings, ThemeMode, UISettings, UpdateChannel, UpdateMode, UpdateSettings};
 
 impl Default for UISettings {
     fn default() -> Self {
@@ -11,11 +11,22 @@ impl Default for UISettings {
     }
 }
 
+impl Default for UpdateSettings {
+    fn default() -> Self {
+        Self {
+            channel: UpdateChannel::Stable,
+            mode: UpdateMode::Automatic,
+            auto_download: false,
+        }
+    }
+}
+
 impl Default for AppSettings {
     fn default() -> Self {
         Self {
             license_key: None,
             ui: UISettings::default(),
+            update: UpdateSettings::default(),
         }
     }
 }

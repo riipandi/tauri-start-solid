@@ -16,6 +16,11 @@ const mainSettings = [
     label: 'Appearance',
     path: '/settings/appearance',
     keywords: ['appearance', 'theme', 'dark', 'light', 'mode', 'color', 'accent']
+  },
+  {
+    label: 'Updates',
+    path: '/settings/updates',
+    keywords: ['updates', 'update', 'channel', 'beta', 'stable', 'version', 'automatic', 'manual']
   }
 ]
 

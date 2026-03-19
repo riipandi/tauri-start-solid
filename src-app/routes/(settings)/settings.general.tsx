@@ -6,24 +6,14 @@ import { consola } from 'consola'
 import { createSignal } from 'solid-js'
 import { Button } from '#/components/button'
 import { Switch } from '#/components/switch'
-import { Select } from '#/components/select'
 import { Toast } from '#/components/toast'
 import { uiSettings } from '#/stores/settings'
 import { updateUISettings, resetSettings } from '#/stores/settings'
 import { SettingRow } from './-setting-row'
-import type { UpdateCheckFrequency } from '#/types/settings'
 
 export const Route = createFileRoute('/(settings)/settings/general')({
   component: RouteComponent
 })
-
-const UPDATE_FREQUENCY_OPTIONS = [
-  { value: 'on-startup', label: 'On Startup' },
-  { value: 'daily', label: 'Daily' },
-  { value: 'weekly', label: 'Weekly' },
-  { value: 'monthly', label: 'Monthly' },
-  { value: 'never', label: 'Never' }
-] as const
 
 function RouteComponent() {
   const ui = useStore(uiSettings)
@@ -69,31 +59,11 @@ function RouteComponent() {
   }
 
   async function handleExport() {
-    showToast('info', 'Export settings - Coming soon!')
+    showToast('success', 'Export settings - Coming soon!')
   }
 
   async function handleImport() {
-    showToast('info', 'Import settings - Coming soon!')
-  }
-
-  async function handleUpdateFrequencyChange(option: { value: string; label: string } | null) {
-    if (!option) return
-    setIsSaving(true)
-    try {
-      await updateUISettings({
-        update_check_frequency: option.value as UpdateCheckFrequency
-      })
-      showToast('success', `Update frequency set to ${option.label}`)
-    } catch (error) {
-      consola.error('[Settings] Error updating frequency:', error)
-      showToast('error', 'Failed to update frequency')
-    } finally {
-      setIsSaving(false)
-    }
-  }
-
-  async function handleCheckUpdate() {
-    showToast('info', 'Checking for updates - Coming soon!')
+    showToast('success', 'Import settings - Coming soon!')
   }
 
   return (
@@ -116,31 +86,6 @@ function RouteComponent() {
             disabled={isSaving()}
           />
         </SettingRow>
-      </section>
-
-      <section class='mb-6'>
-        <h2 class='text-[13px] font-medium text-foreground-neutral mb-3 pb-2 border-b border-border-neutral'>
-          Updates
-        </h2>
-        <SettingRow label='Check for Updates' description='Automatically check for new versions'>
-          <Select
-            options={UPDATE_FREQUENCY_OPTIONS}
-            value={ui().update_check_frequency}
-            onChange={handleUpdateFrequencyChange}
-            disabled={isSaving()}
-          />
-        </SettingRow>
-        <div class='flex items-center justify-between gap-4 py-2'>
-          <div class='flex-1 min-w-0'>
-            <div class='text-[13px] font-medium text-foreground-neutral'>Manual Update Check</div>
-            <div class='text-[11px] text-foreground-neutral-faded mt-0.5'>
-              Current version: v1.0.0
-            </div>
-          </div>
-          <Button variant='secondary' onClick={handleCheckUpdate} disabled={isSaving()}>
-            Check Update
-          </Button>
-        </div>
       </section>
 
       <section>

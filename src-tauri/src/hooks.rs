@@ -3,8 +3,7 @@
 //! This module contains hooks that are executed during the application lifecycle.
 
 use crate::core;
-
-use tauri::App;
+use tauri::{App, Manager};
 
 /// Setup the application
 ///
@@ -15,6 +14,15 @@ pub fn setup_app<R: tauri::Runtime>(app: &mut App<R>) -> Result<(), Box<dyn std:
     {
         // Register the updater plugin with the app
         let _ = app.handle().plugin(tauri_plugin_updater::Builder::new().build());
+
+        // Start the update scheduler
+        let manager = app.state::<core::updater::UpdateManager>().inner().clone();
+        let handle = app.handle().clone();
+
+        // Spawn the update scheduler in the background
+        tauri::async_runtime::spawn(async move {
+            core::updater::start_update_scheduler(handle, manager).await;
+        });
     }
 
     // Setup the customized main window

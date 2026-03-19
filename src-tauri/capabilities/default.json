@@ -107,8 +107,13 @@
         "opener:allow-reveal-item-in-dir",
         "os:default",
         "positioner:default",
+        "process:allow-restart",
         "process:default",
         "shell:allow-open",
+        "updater:allow-check",
+        "updater:allow-download-and-install",
+        "updater:allow-download",
+        "updater:allow-install",
         "updater:default",
         "window-state:default"
     ]

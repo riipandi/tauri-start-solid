@@ -1,6 +1,6 @@
 import { atom, computed } from 'nanostores'
 import { settingsService } from '#/services/settings.service'
-import type { AppSettings, UISettings, ThemeName } from '#/types/settings'
+import type { AppSettings, UISettings, UpdateSettings, ThemeName } from '#/types/settings'
 
 export const settingsStore = atom<AppSettings>({
   license_key: undefined,
@@ -10,12 +10,18 @@ export const settingsStore = atom<AppSettings>({
     theme_dark: 'default-dark',
     enable_spell_check: false,
     update_check_frequency: 'on-startup'
+  },
+  update: {
+    channel: 'stable',
+    mode: 'automatic',
+    auto_download: false
   }
 })
 
 export const systemThemeStore = atom<'light' | 'dark'>('light')
 
 export const uiSettings = computed(settingsStore, (s) => s.ui)
+export const updateSettingsStore = computed(settingsStore, (s) => s.update)
 export const themeMode = computed(settingsStore, (s) => s.ui.theme_mode)
 export const licenseKey = computed(settingsStore, (s) => s.license_key)
 
@@ -69,6 +75,12 @@ export async function updateTheme(mode: 'light' | 'dark', theme: ThemeName) {
 
 export async function updateLicenseKey(licenseKey: string) {
   return updateSettings({ license_key: licenseKey })
+}
+
+export async function updateUpdateSettings(update: Partial<UpdateSettings>) {
+  const current = settingsStore.get()
+  const mergedUpdate: UpdateSettings = { ...current.update, ...update }
+  return updateSettings({ update: mergedUpdate })
 }
 
 loadSettings()

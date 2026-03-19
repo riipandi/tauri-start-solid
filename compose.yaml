@@ -1,0 +1,101 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json
+
+name: myapp
+
+x-common: &common
+  networks: ['intranet']
+  extra_hosts: ['host.docker.internal:host-gateway']
+  restart: unless-stopped
+
+services:
+  minio:
+    <<: *common
+    image: minio/minio:${MINIO_VERSION:-latest}
+    hostname: minio
+    ports: ['9100:9100', '9101:9101']
+    environment:
+      # docker-compose exec minio /usr/bin/mc alias ls
+      MINIO_BROWSER_LOGIN_ANIMATION: off
+      MINIO_DOMAIN: ${MINIO_DOMAIN:-localhost}
+      MINIO_ROOT_USER: ${S3_ACCESS_KEY_ID:-s3admin}
+      MINIO_ROOT_PASSWORD: ${S3_SECRET_ACCESS_KEY:-s3passw0rd}
+      MC_HOST_local: http://${MINIO_ROOT_USER:-s3admin}:${MINIO_ROOT_PASSWORD:-s3passw0rd}@localhost:9100
+    volumes: ['./storage/minio_data:/data:rw']
+    command: server /data --address "0.0.0.0:9100" --console-address "0.0.0.0:9101"
+    shm_size: 256m # set shared memory limit
+    mem_limit: 256m # set memory limit
+    cpus: 1.0 # set CPUs limit
+    post_start:
+      - command: sh -c "/usr/bin/mc mb local/canary --ignore-existing"
+      - command: sh -c "/usr/bin/mc mb local/stable --ignore-existing"
+      - command: sh -c "/usr/bin/mc anonymous set download local/canary"
+      - command: sh -c "/usr/bin/mc anonymous set download local/stable"
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:9100/minio/health/live']
+      interval: 3s
+      timeout: 5s
+      retries: 3
+
+  nginx:
+    <<: *common
+    image: nginx:${NGINX_VERSION:-mainline-alpine-slim}
+    hostname: nginx
+    ports: ['9180:9180']
+    configs:
+      - source: nginx_config
+        target: /etc/nginx/templates/default.conf.template
+    healthcheck:
+      test: ['CMD', 'nc', '-vz', '127.0.0.1', '9180']
+      interval: 3s
+      timeout: 5s
+      retries: 3
+    depends_on:
+      minio: { condition: service_started }
+
+configs:
+  nginx_config:
+    content: |
+      server {
+          listen 9180;
+          server_name localhost;
+
+          add_header X-Frame-Options "SAMEORIGIN" always;
+          add_header X-Content-Type-Options "nosniff" always;
+          add_header Access-Control-Allow-Origin * always;
+          add_header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, HEAD, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization" always;
+          add_header Access-Control-Expose-Headers "Content-Length,Content-Range,ETag" always;
+
+          location /canary/ {
+              proxy_pass http://minio:9100/canary/;
+              proxy_http_version 1.1;
+              proxy_set_header Connection "";
+              proxy_buffering off;
+              proxy_redirect off;
+              proxy_connect_timeout 300;
+              proxy_send_timeout 300;
+              proxy_read_timeout 300;
+              send_timeout 300;
+          }
+
+          location /stable/ {
+              proxy_pass http://minio:9100/stable/;
+              proxy_http_version 1.1;
+              proxy_set_header Connection "";
+              proxy_buffering off;
+              proxy_redirect off;
+              proxy_connect_timeout 300;
+              proxy_send_timeout 300;
+              proxy_read_timeout 300;
+              send_timeout 300;
+          }
+      }
+
+volumes:
+  minio_data:
+    driver: local
+
+networks:
+  intranet:
+    name: intranet
+    driver: bridge

@@ -39,7 +39,7 @@ tauri-plugin-shell = "2.3.5"
 aes-gcm = "0.10.3"
 anyhow = "1.0.102"
 base64 = "0.22.1"
-chrono = "0.4.44"
+chrono = { version = "0.4.44", features = ["serde"] }
 heed3 = "0.22.0"
 log = "0.4.29"
 machine-id = "0.4.0"
