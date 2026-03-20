@@ -1,15 +1,18 @@
-#[cfg(desktop)]
-mod builder;
-#[cfg(desktop)]
-mod handler;
-#[cfg(desktop)]
-mod types;
-
 use anyhow::Result;
 use tauri::Runtime;
 
 #[cfg(desktop)]
+mod builder;
+
+#[cfg(desktop)]
+pub mod handler;
+
+#[cfg(desktop)]
+mod types;
+
+#[cfg(desktop)]
 use self::builder::create_app_menu;
+
 #[cfg(desktop)]
 use self::handler::MenuEventHandler;
 

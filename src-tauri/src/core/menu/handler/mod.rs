@@ -3,6 +3,7 @@ use tauri::{AppHandle, Runtime};
 mod menu_app;
 mod menu_file;
 mod menu_help;
+mod menu_tray;
 mod menu_view;
 mod menu_window;
 
@@ -33,6 +34,10 @@ impl<R: Runtime> MenuEventHandler<R> {
             log::debug!("Menu event received with ID: {}", event_id);
 
             match event_id {
+                // Tray menu items
+                "open" => menu_tray::handle_menu_open(&app_handle),
+                "about" => menu_tray::handle_menu_about(&app_handle),
+                "quit" => menu_tray::handle_menu_quit(&app_handle),
                 // App menu items
                 "settings" => menu_app::handle_menu_settings(&app_handle),
                 // "check_update" => menu_app::handle_menu_check_update(&app_handle),

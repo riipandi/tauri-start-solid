@@ -4,6 +4,7 @@
 
 pub mod menu;
 pub mod settings;
+pub mod tray;
 pub mod updater;
 
 mod logger;

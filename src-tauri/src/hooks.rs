@@ -34,6 +34,13 @@ pub fn setup_app<R: tauri::Runtime>(app: &mut App<R>) -> Result<(), Box<dyn std:
                 log::error!("Error setting up menu: {}", e);
                 return Err(Box::<dyn std::error::Error>::from(format!("{}", e)));
             }
+
+            // Setup tray menu (must be done after the state is initialized)
+            if let Err(e) = core::tray::setup_tray_menu(app) {
+                log::error!("Error setting up tray menu: {}", e);
+                return Err(Box::<dyn std::error::Error>::from(format!("{}", e)));
+            }
+
             Ok(())
         }
         Err(e) => {

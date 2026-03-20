@@ -42,6 +42,7 @@ to build the application in debug mode, this will enable developer tools.
     - [x] `tauri-plugin-shell`
 - [x] Custom titlebar (desktop)
 - [x] Custom application menu
+- [x] Application tray menu
 - [x] Application updater
 - [x] Read values from `.env` file
 - [x] Theme switcher (dark & light mode)

@@ -44,6 +44,9 @@ pub fn run() {
                 .set_focus();
         }));
 
+        // Plugin positioner requred by tray menu
+        builder = builder.plugin(tauri_plugin_positioner::init());
+
         // Save window positions and sizes and restore them when the app is reopened.
         builder = builder.plugin(
             tauri_plugin_window_state::Builder::default()
