@@ -77,8 +77,21 @@ function RootComponent() {
 
   createEffect(() => {
     const rootElement = document.documentElement || document.body
+
+    // Theme attributes
     rootElement.setAttribute('data-appearance', mode())
     rootElement.setAttribute('data-theme', theme())
+
+    // Font settings - Apply to CSS variables with proper fallback stacks
+    const uiFontStack = `${ui().ui_font_family}, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`
+    const editorFontStack = `${ui().editor_font_family}, 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', monospace`
+
+    rootElement.style.setProperty('--ui-font-sans', uiFontStack)
+    rootElement.style.setProperty('--ui-font-mono', editorFontStack)
+
+    // Font sizes
+    rootElement.style.setProperty('--ui-font-size-base', `${ui().ui_font_size}px`)
+    rootElement.style.setProperty('--ui-font-size-editor', `${ui().editor_font_size}px`)
   })
 
   return (

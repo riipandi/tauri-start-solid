@@ -9,9 +9,13 @@
 @import './themes/modern.css';
 
 :root {
-  /* Typography */
+  /* Typography - font family */
   --ui-font-sans: system-ui, -apple-system, Inter, Roboto, Aptos, Helvetica, Arial, sans-serif;
   --ui-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+
+  /* Typography - font size */
+  --ui-font-size-base: 14px; /* Base font size for UI */
+  --ui-font-size-editor: 13px; /* Base font size for editor/monospace */
   --ui-text-xs: 0.75rem /* 12px */;
   --ui-text-sm: 0.875rem /* 14px */;
   --ui-text-base: 1rem /* 16px */;
