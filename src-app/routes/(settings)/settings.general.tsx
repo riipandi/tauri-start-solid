@@ -7,8 +7,8 @@ import { createSignal } from 'solid-js'
 import { Button } from '#/components/button'
 import { Switch } from '#/components/switch'
 import { Toast } from '#/components/toast'
-import { uiSettings } from '#/stores/settings'
-import { updateUISettings, resetSettings } from '#/stores/settings'
+import { uiSettings } from '#/stores/settings.store'
+import { updateUISettings, resetSettings } from '#/stores/settings.store'
 import { SettingRow } from './-setting-row'
 
 export const Route = createFileRoute('/(settings)/settings/general')({
@@ -105,7 +105,9 @@ function RouteComponent() {
         </div>
         <div class='flex items-center justify-between gap-4 py-2'>
           <div class='flex-1 min-w-0'>
-            <div class='text-[13px] font-medium text-foreground-neutral'>Export & Import Settings</div>
+            <div class='text-[13px] font-medium text-foreground-neutral'>
+              Export & Import Settings
+            </div>
             <div class='text-[11px] text-foreground-neutral-faded mt-0.5'>
               Backup or restore your settings
             </div>

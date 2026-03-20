@@ -1,15 +1,15 @@
 import { toaster } from '@kobalte/core/toast'
 import { useStore } from '@nanostores/solid'
 import { createFileRoute } from '@tanstack/solid-router'
-import { getVersion } from '@tauri-apps/api/app'
 import { consola } from 'consola'
 import { createSignal, createEffect, onMount, Show } from 'solid-js'
 import { Button } from '#/components/button'
 import { Select, type SelectOption } from '#/components/select'
 import { Switch } from '#/components/switch'
 import { Toast } from '#/components/toast'
+import { useAppInfo } from '#/hooks/use-app-info'
 import { updaterService } from '#/services/updater.service'
-import { updateUpdateSettings, updateSettingsStore } from '#/stores/settings'
+import { updateUpdateSettings, updateSettingsStore } from '#/stores/settings.store'
 import { SettingRow } from './-setting-row'
 
 export const Route = createFileRoute('/(settings)/settings/updates')({
@@ -27,12 +27,12 @@ const UPDATE_MODE_OPTIONS: SelectOption[] = [
 ]
 
 function RouteComponent() {
+  const appInfo = useAppInfo()
   const update = useStore(updateSettingsStore)
   const [isSaving, setIsSaving] = createSignal(false)
   const [isChecking, setIsChecking] = createSignal(false)
   const [isDownloading, setIsDownloading] = createSignal(false)
   const [downloadProgress, setDownloadProgress] = createSignal(0)
-  const [appVersion, setAppVersion] = createSignal('v0.0.0')
   const [lastCheck, setLastCheck] = createSignal<string | null>(null)
   const [availableUpdate, setAvailableUpdate] = createSignal<{
     version: string
@@ -48,9 +48,6 @@ function RouteComponent() {
   // Load app version and update state on mount
   onMount(async () => {
     try {
-      const version = await getVersion()
-      setAppVersion(`v${version}`)
-
       const state = await updaterService.getUpdateState()
       if (state.last_check) {
         const checkDate = new Date(state.last_check)
@@ -278,7 +275,9 @@ function RouteComponent() {
         </h2>
         <div class='flex items-center justify-between gap-4 py-2'>
           <div class='flex-1 min-w-0'>
-            <div class='text-[13px] font-medium text-foreground-neutral'>{appVersion()}</div>
+            <div class='text-[13px] font-medium text-foreground-neutral'>
+              {appInfo.appVersion()}
+            </div>
             <Show when={lastCheck()}>
               <div class='text-[11px] text-foreground-neutral-faded mt-0.5'>
                 Last checked: {lastCheck()}

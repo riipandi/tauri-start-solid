@@ -9,11 +9,11 @@ function RouteComponent() {
   return (
     <main class='mx-auto my-0 w-full'>
       <div class='rounded-3xl py-12 px-8 max-w-125 w-full mt-[20vh] mx-auto'>
-        <h1 class='text-4xl font-bold mb-6 text-center text-foreground-neutral'>
+        <h1 class='text-4xl font-bold mb-6 text-center text-foreground-neutral text-selectable'>
           Tauri Application
         </h1>
         <div class='flex gap-6 justify-center flex-wrap'>
-          <p class='text-center leading-7'>
+          <p class='text-center leading-7 text-selectable'>
             This screen is intended to be simple as possible. <br />
             To see the invoke command in action, open the settings.
           </p>

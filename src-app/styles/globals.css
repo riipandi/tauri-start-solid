@@ -149,3 +149,24 @@
   border-style: dashed;
   border-color: oklch(0.7294 0.1664 22.22);
 }
+
+@utility disable-select {
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none; /* Firefox all */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Likely future */
+}
+
+@utility force-select {
+  -webkit-user-select: all; /* Chrome 49+ */
+  -moz-user-select: all; /* Firefox 43+ */
+  -ms-user-select: all; /* No support yet */
+  user-select: all; /* Likely future */
+}
+
+@utility text-selectable {
+  -webkit-user-select: text; /* Chrome 49+ */
+  -moz-user-select: text; /* Firefox 43+ */
+  -ms-user-select: text; /* No support yet */
+  user-select: text; /* Likely future */
+}

@@ -5,8 +5,9 @@ import { consola } from 'consola'
 import { createSignal } from 'solid-js'
 import { Select, type SelectOption } from '#/components/select'
 import { Toast } from '#/components/toast'
-import { uiSettings } from '#/stores/settings'
-import { updateUISettings, updateTheme } from '#/stores/settings'
+import type { ThemeName } from '#/schemas/settings.schema'
+import { uiSettings } from '#/stores/settings.store'
+import { updateUISettings, updateTheme } from '#/stores/settings.store'
 import { SettingRow } from './-setting-row'
 
 export const Route = createFileRoute('/(settings)/settings/appearance')({
@@ -66,7 +67,7 @@ function RouteComponent() {
     const value = option.value
     setIsSaving(true)
     try {
-      await updateTheme(mode, value as any)
+      await updateTheme(mode, value as ThemeName)
       showToast('success', `Theme updated successfully (${mode} mode: ${value})`)
     } catch (error) {
       consola.error('[Settings] Error in handleThemeChange:', error)

@@ -2,8 +2,8 @@ import type { Atom } from 'nanostores'
 
 export type ThemeMode = 'auto' | 'dark' | 'light'
 export type ThemeName = 'default-light' | 'default-dark' | 'modern-light' | 'modern-dark'
-export type UpdateCheckFrequency = 'on-startup' | 'daily' | 'weekly' | 'monthly' | 'never'
 
+export type UpdateCheckFrequency = 'on-startup' | 'daily' | 'weekly' | 'monthly' | 'never'
 export type UpdateChannel = 'stable' | 'canary'
 export type UpdateMode = 'automatic' | 'manual'
 

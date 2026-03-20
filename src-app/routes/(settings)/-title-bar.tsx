@@ -1,18 +1,18 @@
 import { clsx } from 'clsx'
 import { Show } from 'solid-js'
-import { useTitleBar } from '#/hooks/use-title-bar'
+import { useAppInfo } from '#/hooks/use-app-info'
 
 export function SettingsTitleBar() {
-  const { platform, close } = useTitleBar()
+  const appInfo = useAppInfo()
 
   return (
     <div
       class='flex items-center justify-between w-full relative z-50 select-none shrink-0 h-9 bg-transparent'
-      data-platform={platform()}
+      data-platform={appInfo.osPlatform()}
       data-tauri-drag-region
     >
       <div class='w-48 h-full border-r border-border-neutral' data-tauri-drag-region></div>
-      <Show when={platform() !== 'macos'}>
+      <Show when={appInfo.osPlatform() !== 'macos'}>
         <button
           type='button'
           onClick={close}

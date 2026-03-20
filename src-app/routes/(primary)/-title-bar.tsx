@@ -1,41 +1,41 @@
 import { clsx } from 'clsx'
 import { Show } from 'solid-js'
-import { useTitleBar } from '#/hooks/use-title-bar'
+import { useAppInfo } from '#/hooks/use-app-info'
 
-export function TitleBar(props: { title: string }) {
-  const { platform, isFullscreen, isMaximized, minimize, toggleMaximize, close } = useTitleBar()
+export function TitleBar() {
+  const appInfo = useAppInfo()
 
   return (
-    <Show when={!isFullscreen()}>
+    <Show when={!appInfo.isFullscreen()}>
       <div
         class='flex items-center justify-between w-full relative z-50 select-none shrink-0 h-9.5 bg-background-page/80 backdrop-blur-md border-b border-border-neutral'
-        data-platform={platform()}
+        data-platform={appInfo.osPlatform()}
         data-tauri-drag-region
       >
         <div class='flex items-center shrink-0' data-tauri-drag-region>
-          <Show when={platform() !== 'macos'}>
+          <Show when={appInfo.osPlatform() !== 'macos'}>
             <span class='text-sm font-medium text-foreground-neutral opacity-90 whitespace-nowrap overflow-hidden text-ellipsis'>
-              {props.title}
+              {appInfo.appName()}
             </span>
           </Show>
         </div>
 
-        <Show when={platform() === 'macos'}>
+        <Show when={appInfo.osPlatform() === 'macos'}>
           <div
             class='absolute left-1/2 -translate-x-1/2 pointer-events-none'
             data-tauri-drag-region
           >
             <span class='text-sm font-medium text-foreground-neutral opacity-90 whitespace-nowrap overflow-hidden text-ellipsis'>
-              {props.title}
+              {appInfo.appName()}
             </span>
           </div>
         </Show>
 
-        <Show when={platform() !== 'macos'}>
+        <Show when={appInfo.osPlatform() !== 'macos'}>
           <div class='flex items-center h-full pr-2 pl-2 gap-0.5'>
             <button
               type='button'
-              onClick={minimize}
+              onClick={appInfo.minimize}
               class='inline-flex items-center justify-center w-11.5 h-full bg-transparent border-0 transition-colors duration-150 text-foreground-neutral hover:bg-foreground-neutral/8 active:bg-foreground-neutral/12'
               title='Minimize'
             >
@@ -43,11 +43,11 @@ export function TitleBar(props: { title: string }) {
             </button>
             <button
               type='button'
-              onClick={toggleMaximize}
+              onClick={appInfo.toggleMaximize}
               class='inline-flex items-center justify-center w-11.5 h-full bg-transparent border-0 transition-colors duration-150 text-foreground-neutral hover:bg-foreground-neutral/8 active:bg-foreground-neutral/12'
-              title={isMaximized() ? 'Restore' : 'Maximize'}
+              title={appInfo.isMaximized() ? 'Restore' : 'Maximize'}
             >
-              <Show when={isMaximized()} fallback={<MaximizeIcon />}>
+              <Show when={appInfo.isMaximized()} fallback={<MaximizeIcon />}>
                 <RestoreIcon />
               </Show>
             </button>

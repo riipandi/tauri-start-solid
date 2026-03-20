@@ -8,11 +8,11 @@
   --ui-color-on-background-critical: oklch(1 0 0);
   --ui-color-on-background-warning: oklch(0 0 0);
 
-  --ui-color-background-page: oklch(0.91 0.004 270);
+  --ui-color-background-page: oklch(1 0 0);
   --ui-color-background-page-faded: oklch(0.94 0.003 270);
   --ui-color-background-neutral: oklch(0.84 0.006 270);
   --ui-color-background-neutral-faded: oklch(0.89 0.004 270);
-  --ui-color-background-primary: oklch(0.54 0.21 270);
+  --ui-color-background-primary: oklch(0.55 0.191 263.8);
   --ui-color-background-primary-faded: oklch(0.93 0.035 270);
   --ui-color-background-positive: oklch(0.65 0.16 145);
   --ui-color-background-positive-faded: oklch(0.94 0.025 145);
@@ -57,7 +57,7 @@
   --ui-color-on-background-critical: oklch(1 0 0);
   --ui-color-on-background-warning: oklch(0 0 0);
 
-  --ui-color-background-page: oklch(0.11 0.005 270);
+  --ui-color-background-page: oklch(0.15 0.011 252.11);
   --ui-color-background-page-faded: oklch(0.14 0.006 270);
   --ui-color-background-neutral: oklch(0.17 0.008 270);
   --ui-color-background-neutral-faded: oklch(0.2 0.007 270);

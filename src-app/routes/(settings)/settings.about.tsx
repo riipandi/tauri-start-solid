@@ -1,14 +1,14 @@
 import { toaster } from '@kobalte/core/toast'
 import { useStore } from '@nanostores/solid'
 import { createFileRoute } from '@tanstack/solid-router'
-import { getName, getVersion, getTauriVersion } from '@tauri-apps/api/app'
 import { confirm } from '@tauri-apps/plugin-dialog'
 import { consola } from 'consola'
-import { createSignal, onMount, Show } from 'solid-js'
+import { createSignal, Show } from 'solid-js'
 import { Button } from '#/components/button'
 import { Toast } from '#/components/toast'
-import { licenseKey } from '#/stores/settings'
-import { updateLicenseKey } from '#/stores/settings'
+import { useAppInfo } from '#/hooks/use-app-info'
+import { licenseKey } from '#/stores/settings.store'
+import { updateLicenseKey } from '#/stores/settings.store'
 import { SettingRow } from './-setting-row'
 
 export const Route = createFileRoute('/(settings)/settings/about')({
@@ -16,23 +16,10 @@ export const Route = createFileRoute('/(settings)/settings/about')({
 })
 
 function RouteComponent() {
+  const appInfo = useAppInfo()
   const license = useStore(licenseKey)
   const [isSaving, setIsSaving] = createSignal(false)
   const [licenseKeyInput, setLicenseKeyInput] = createSignal('')
-  const [appName, setAppName] = createSignal<string>('')
-  const [appVersion, setAppVersion] = createSignal<string>('')
-  const [tauriVersion, setTauriVersion] = createSignal<string>('')
-
-  onMount(async () => {
-    try {
-      const [name, version, tauri] = await Promise.all([getName(), getVersion(), getTauriVersion()])
-      setAppName(name)
-      setAppVersion(version)
-      setTauriVersion(tauri)
-    } catch (error) {
-      consola.error('[About] Failed to get app info:', error)
-    }
-  })
 
   function showToast(type: 'success' | 'error', message: string) {
     toaster.show((props) => <Toast toast={props} type={type} title={message} />)
@@ -97,15 +84,15 @@ function RouteComponent() {
         </h2>
 
         <SettingRow label='Name'>
-          <span class='text-[13px] text-foreground-neutral'>{appName()}</span>
+          <span class='text-[13px] text-foreground-neutral'>{appInfo.appName()}</span>
         </SettingRow>
 
         <SettingRow label='Version'>
-          <span class='text-[13px] text-foreground-neutral'>{appVersion()}</span>
+          <span class='text-[13px] text-foreground-neutral'>{appInfo.appVersion()}</span>
         </SettingRow>
 
         <SettingRow label='Tauri Version'>
-          <span class='text-[13px] text-foreground-neutral'>{tauriVersion()}</span>
+          <span class='text-[13px] text-foreground-neutral'>{appInfo.tauriVersion()}</span>
         </SettingRow>
       </section>
 

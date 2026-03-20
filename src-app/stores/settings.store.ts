@@ -19,7 +19,6 @@ export const settingsStore = atom<AppSettings>({
 })
 
 export const systemThemeStore = atom<'light' | 'dark'>('light')
-
 export const uiSettings = computed(settingsStore, (s) => s.ui)
 export const updateSettingsStore = computed(settingsStore, (s) => s.update)
 export const themeMode = computed(settingsStore, (s) => s.ui.theme_mode)
@@ -82,5 +81,3 @@ export async function updateUpdateSettings(update: Partial<UpdateSettings>) {
   const mergedUpdate: UpdateSettings = { ...current.update, ...update }
   return updateSettings({ update: mergedUpdate })
 }
-
-loadSettings()

@@ -1,11 +1,15 @@
+import { getName, getVersion, getTauriVersion } from '@tauri-apps/api/app'
 import { listen } from '@tauri-apps/api/event'
 import { getCurrentWindow } from '@tauri-apps/api/window'
 import { platform, type Platform } from '@tauri-apps/plugin-os'
 import { consola } from 'consola'
 import { createSignal, onCleanup, onMount } from 'solid-js'
 
-export function useTitleBar() {
-  const [currentPlatform, setCurrentPlatform] = createSignal<Platform>('macos')
+export function useAppInfo() {
+  const [appName, setAppName] = createSignal<string>('')
+  const [appVersion, setAppVersion] = createSignal<string>('')
+  const [osPlatform, setOsPlatform] = createSignal<Platform>('macos')
+  const [tauriVersion, setTauriVersion] = createSignal<string>('')
   const [isFullscreen, setIsFullscreen] = createSignal(false)
   const [isMaximized, setIsMaximized] = createSignal(false)
 
@@ -16,7 +20,7 @@ export function useTitleBar() {
       const fs = await appWindow.isFullscreen()
       setIsFullscreen(fs)
     } catch (error) {
-      consola.error('[useTitleBar] Failed to check fullscreen:', error)
+      consola.error('[useAppInfo] Failed to check fullscreen:', error)
     }
   }
 
@@ -25,13 +29,22 @@ export function useTitleBar() {
       const maximized = await appWindow.isMaximized()
       setIsMaximized(maximized)
     } catch (error) {
-      consola.error('[useTitleBar] Failed to check maximized:', error)
+      consola.error('[useAppInfo] Failed to check maximized:', error)
     }
   }
 
   onMount(async () => {
-    const platformResult = await platform()
-    setCurrentPlatform(platformResult)
+    setOsPlatform(platform())
+
+    const [name, version, tauriVersion] = await Promise.all([
+      getName(),
+      getVersion(),
+      getTauriVersion()
+    ])
+
+    setAppName(name)
+    setAppVersion(version)
+    setTauriVersion(tauriVersion)
 
     await checkFullscreen()
     await checkMaximized()
@@ -50,7 +63,7 @@ export function useTitleBar() {
     try {
       await appWindow.minimize()
     } catch (error) {
-      consola.error('[useTitleBar] Failed to minimize:', error)
+      consola.error('[useAppInfo] Failed to minimize:', error)
     }
   }
 
@@ -60,7 +73,7 @@ export function useTitleBar() {
 
       await checkMaximized()
     } catch (error) {
-      consola.error('[useTitleBar] Failed to toggle maximize:', error)
+      consola.error('[useAppInfo] Failed to toggle maximize:', error)
     }
   }
 
@@ -68,16 +81,19 @@ export function useTitleBar() {
     try {
       await appWindow.close()
     } catch (error) {
-      consola.error('[useTitleBar] Failed to close:', error)
+      consola.error('[useAppInfo] Failed to close:', error)
     }
   }
 
   return {
-    platform: currentPlatform,
+    appName,
+    appVersion,
+    osPlatform,
+    tauriVersion,
     isFullscreen,
     isMaximized,
-    minimize,
     toggleMaximize,
+    minimize,
     close
   }
 }
