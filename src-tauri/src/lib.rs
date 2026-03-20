@@ -1,148 +1,117 @@
-mod cmd;
-mod config;
-mod menu;
-mod store;
-mod theme;
-mod tray;
+mod commands;
+mod core;
+mod hooks;
+mod state;
 mod utils;
-mod window;
 
-use chrono::Local;
-use tauri::RunEvent;
-use tauri_plugin_log::{Target, TargetKind, TimezoneStrategy};
-use tauri_specta::collect_commands;
-use tauri_specta::Builder as SpectaBuilder;
+use tauri::{Manager, RunEvent};
+use tauri_plugin_dialog::{DialogExt, MessageDialogButtons, MessageDialogKind};
 
-use cmd::example::{goodbye_world, greet};
-use config::setup_config_store;
-use menu::setup_menu;
-use theme::{get_theme, set_theme};
-use tray::setup_tray;
-use window::{create_main_window, create_settings_window};
-
+/// Run the application
+///
+/// This is the main entry point for the application.
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    let specta_builder = SpectaBuilder::<tauri::Wry>::new()
-        .commands(collect_commands![
-            get_theme::<tauri::Wry>,
-            set_theme::<tauri::Wry>,
-            greet,
-            goodbye_world
-        ])
-        .constant("APP_NAME", "Tauri App");
+    // Create application state
+    let app_state = state::create_app_state();
 
-    #[cfg(debug_assertions)]
-    {
-        let export_opts = specta_typescript::Typescript::default()
-            .formatter(specta_typescript::formatter::biome)
-            .header("/* eslint-disable */");
+    // Create update manager
+    let update_manager = core::updater::UpdateManager::new();
 
-        specta_builder
-            .export(export_opts, "../src-app/libs/bindings.ts")
-            .expect("Failed to export typescript bindings");
-    }
-
-    let builder = tauri::Builder::default();
+    let mut builder = tauri::Builder::default();
     let tauri_ctx = tauri::generate_context!();
 
-    // Setup the logger (https://tauri.app/plugin/logging)
-    let plugin_log = tauri_plugin_log::Builder::new()
-        .level(log::LevelFilter::Debug)
-        .level_for("tauri", log::LevelFilter::Error)
-        .level_for("wry", log::LevelFilter::Off)
-        .level_for("tao", log::LevelFilter::Off)
-        .level_for("hyper", log::LevelFilter::Off)
-        .level_for("reqwest", log::LevelFilter::Error)
-        .level_for("tauri_plugin_updater", log::LevelFilter::Debug)
-        .timezone_strategy(TimezoneStrategy::UseLocal)
-        .format(|out, message, record| {
-            let now = Local::now();
-            let level = record.level().to_string();
-            let padding = " ".repeat(6 - level.len());
-            out.finish(format_args!(
-                "[{}][{}][{}]{}{}",
-                now.format("%Y-%m-%d"),
-                now.format("%H:%M:%S"),
-                level,
-                padding,
-                message
-            ))
-        })
-        .targets([Target::new(TargetKind::Stdout).filter(|meta| meta.level() != log::Level::Trace)]);
-
     // Register Tauri plugins
-    let builder = builder
-        .plugin(plugin_log.build())
+    builder = builder
+        .plugin(core::setup_plugin_log().build())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_http::init())
         .plugin(tauri_plugin_notification::init())
+        .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_os::init())
-        .plugin(tauri_plugin_positioner::init())
         .plugin(tauri_plugin_process::init())
-        .plugin(tauri_plugin_shell::init())
-        .plugin(tauri_plugin_updater::Builder::new().build());
+        .plugin(tauri_plugin_shell::init());
 
-    // Setup the application properties
-    let builder = builder.setup(move |app| {
-        specta_builder.mount_events(app);
+    #[cfg(desktop)]
+    {
+        // By default, when you initiate a new instance while the application is
+        // already running, no action is taken. To focus the window of the running
+        // instance when user tries to open a new instance, alter the callback closure.
+        builder = builder.plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
+            let _ = app
+                .get_webview_window(core::MAIN_WINDOW_ID)
+                .expect("no main window")
+                .set_focus();
+        }));
 
-        setup_config_store(app)?;
-        create_main_window(app)?;
-        create_settings_window(app)?;
-        setup_tray(app)?;
-        setup_menu(app)?;
+        // Plugin positioner requred by tray menu
+        builder = builder.plugin(tauri_plugin_positioner::init());
 
-        #[cfg(target_os = "windows")]
-        {
-            use config::{AppConfig, CONFIG_KEY};
-            use std::sync::Mutex;
-            use store::KVStore;
+        // Save window positions and sizes and restore them when the app is reopened.
+        builder = builder.plugin(
+            tauri_plugin_window_state::Builder::default()
+                .with_filter(|label| label == core::MAIN_WINDOW_ID)
+                .build(),
+        );
+    }
 
-            let state = app.state::<Mutex<KVStore<String, AppConfig>>>();
-            if let Ok(store) = state.lock() {
-                if let Ok(Some(config)) = store.get(&CONFIG_KEY.to_string()) {
-                    let theme = config.theme;
-                    for window in &mut app.webview_windows() {
-                        match theme {
-                            theme::Theme::System => window.theme = None,
-                            theme::Theme::Light => window.theme = Some(tauri::Theme::Light),
-                            theme::Theme::Dark => window.theme = Some(tauri::Theme::Dark),
+    // Setup application hooks to load database and other resources
+    builder = builder
+        .manage(app_state.clone())
+        .manage(update_manager)
+        .setup(hooks::setup_app);
+
+    // Handle the window events
+    builder = builder.on_window_event(|window, event| {
+        if let tauri::WindowEvent::CloseRequested { api, .. } = event {
+            // Prevent the app from exiting unless the user explicitly closes it
+            if window.label() == core::MAIN_WINDOW_ID {
+                log::debug!("Showing confirmation dialog before closing");
+                api.prevent_close();
+
+                // Show confirmation dialog
+                let app_handle = window.app_handle().clone();
+                app_handle
+                    .dialog()
+                    .message("Do you want to terminate and close current session?")
+                    .kind(MessageDialogKind::Warning)
+                    .title("Confirmation")
+                    .buttons(MessageDialogButtons::YesNo)
+                    .show(move |result| {
+                        if result {
+                            // User confirmed, exit the application completely
+                            log::info!("Exiting application");
+                            std::process::exit(0);
+                        } else {
+                            // User canceled, do nothing
+                            log::debug!("User canceled closing the application");
                         }
-                    }
-                }
+                    });
             }
         }
-
-        // Check for updates automatically
-        let handle = app.handle().clone();
-        tauri::async_runtime::spawn(async move {
-            match utils::update(handle).await {
-                Ok(_) => log::info!("Automatic update check completed successfully"),
-                Err(e) => log::error!("Automatic update check failed: {}", e),
-            }
-        });
-
-        Ok(())
     });
 
     // Finally, build and run the application
     builder
-        .invoke_handler(tauri::generate_handler![get_theme, set_theme, greet, goodbye_world])
+        .invoke_handler(tauri::generate_handler![
+            commands::fonts::get_available_ui_fonts,
+            commands::fonts::get_available_editor_fonts,
+            commands::fonts::refresh_font_cache,
+            commands::fonts::get_font_cache_info,
+            commands::settings::get_settings,
+            commands::settings::open_settings_window,
+            commands::settings::reset_settings,
+            commands::settings::update_settings,
+            commands::updater::check_for_updates,
+            commands::updater::download_update,
+            commands::updater::install_update,
+            commands::updater::get_update_state,
+        ])
         .build(tauri_ctx)
-        .expect("error while building tauri application")
-        .run(|app_handle, event| match event {
-            RunEvent::Ready { .. } => {
-                if let Ok(theme) = get_theme(app_handle.clone()) {
-                    if let Err(err) = set_theme(app_handle.clone(), theme) {
-                        eprintln!("Failed to set theme: {}", err);
-                    }
-                }
-            }
-
-            // Prevent the app from exiting unless the user explicitly closes it
-            RunEvent::ExitRequested { api, .. } => {
+        .expect("error while running tauri application")
+        .run(|_, event| {
+            if let RunEvent::ExitRequested { api, .. } = event {
                 api.prevent_exit();
             }
-            _ => {}
         });
 }

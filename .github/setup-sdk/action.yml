@@ -16,7 +16,7 @@ inputs:
     required: false
   workspacePath:
     description: 'Specify workspaces path'
-    default: "./src-tauri -> target"
+    default: './src-tauri -> target'
     required: false
 
 runs:

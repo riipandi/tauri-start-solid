@@ -1,49 +1,67 @@
-/node_modules
-/.fleet
+/.docs
 /.idea
 /.pnp
 /.husky
 .pnp.js
 .DS_Store
 .DS_Store?
+/storage/
 /coverage
+/[Tt]emp/
+/[Tt]mp/
 Thumbs.db
 ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
+node_modules/
 *tsbuildinfo
-.rollup.cache
+npm-debug.log*
+.unikraft
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
 !.vscode/launch.json
+!.vscode/mcp.json
+!.vscode/tasks.json
 *.bak
 
 # SQLite
 *.sqlite*
 *.sqlite3*
-*.libsql
 *.db
 
-# Projects
+# Output directory
 _data/
 build/
+dist-ssr/
 dist/
+output/
+.build/
+.vinxi/
 .data
-.dist
 .cache
+.nitro
 .output
-.client
-.build
 .wrangler
+.netlify
+.wireit
 .temp
 .tmp
 
-# envars
+# Vite & Vitest config
+vite.config.*
+!vite.config.ts
+vitest.config.*
+!vitest.config.ts
+vitest.workspace.*
+!vitest.workspace.ts
+
+# Envars
 .env.*
 !.env.example
 compose.env*
 !compose.env.example
+.*.vars
 
 # Disable this line in your real app
 /playwright/.cache/
@@ -59,17 +77,16 @@ compose.env*
 *storybook.log
 storybook-static/
 
-# Vite & Vitest config
-vite.config.*
-!vite.config.ts
-vitest.config.*
-!vitest.config.ts
-vitest.workspace.*
-!vitest.workspace.ts
-
 # Miscellaneous
 pnpm-exec-summary.json
 slim.report.json
+.memelord/
+RELEASE.md
+audit.json
+
+# TanStack
+.tanstack/
+routes.gen.ts
 
 # Terraform
 .terraform/
@@ -83,3 +100,5 @@ terraform.tfvars*
 target/
 src-tauri/gen/
 src-app/libs/bindings.ts
+update.json
+!update.json.example

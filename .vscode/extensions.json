@@ -1,16 +1,14 @@
 {
     "recommendations": [
-        "biomejs.biome",
-        "bradlc.vscode-tailwindcss",
         "darkriszty.markdown-table-prettify",
         "EditorConfig.EditorConfig",
         "fill-labs.dependi",
         "foxundermoon.shell-format",
+        "oxc.oxc-vscode",
         "rust-lang.rust-analyzer",
-        "tamasfe.even-better-toml",
+        "Shellomo.enhanced-toml",
         "tauri-apps.tauri-vscode",
-        "vadimcn.vscode-lldb",
-        "vunguyentuan.vscode-css-variables"
+        "vadimcn.vscode-lldb"
     ],
     "unwantedRecommendations": []
 }

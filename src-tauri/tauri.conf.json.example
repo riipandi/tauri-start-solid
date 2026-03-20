@@ -1,0 +1,89 @@
+{
+    "$schema": "https://schema.tauri.app/config/2",
+    "identifier": "com.example.tauri-start-solid",
+    "productName": "Tauri App",
+    "version": "0.0.0",
+    "build": {
+        "removeUnusedCommands": true,
+        "beforeDevCommand": "pnpm -s dev:ui",
+        "beforeBuildCommand": "pnpm -s build:ui",
+        "frontendDist": "../.output/frontend",
+        "devUrl": "http://localhost:1420"
+    },
+    "app": {
+        "macOSPrivateApi": true,
+        "withGlobalTauri": true,
+        "security": {
+            "pattern": {
+                "use": "brownfield"
+            },
+            "csp": null
+        },
+        "trayIcon": null,
+        "windows": []
+    },
+    "bundle": {
+        "active": true,
+        "category": "DeveloperTool",
+        "publisher": "Your Company",
+        "copyright": "Copyright © 2026 Your Team",
+        "shortDescription": "A Tauri application",
+        "longDescription": "A Tauri application built with Tauri, SolidJS, and TypeScript",
+        "createUpdaterArtifacts": true,
+        "targets": "all",
+        "macOS": {
+            "dmg": {
+                "appPosition": {
+                    "x": 150,
+                    "y": 160
+                },
+                "applicationFolderPosition": {
+                    "x": 445,
+                    "y": 160
+                },
+                "windowSize": {
+                    "height": 355,
+                    "width": 600
+                }
+            },
+            "minimumSystemVersion": "11.0",
+            "entitlements": "Info.plist",
+            "providerShortName": null,
+            "signingIdentity": null,
+            "files": {}
+        },
+        "windows": {
+            "allowDowngrades": true,
+            "certificateThumbprint": null,
+            "digestAlgorithm": null,
+            "nsis": null,
+            "timestampUrl": null,
+            "tsp": false,
+            "webviewInstallMode": {
+                "silent": true,
+                "type": "downloadBootstrapper"
+            },
+            "wix": null
+        },
+        "resources": [],
+        "icon": [
+            "icons/32x32.png",
+            "icons/128x128.png",
+            "icons/128x128@2x.png",
+            "icons/icon.icns",
+            "icons/icon.ico"
+        ]
+    },
+    "plugins": {
+        "updater": {
+            "active": true,
+            "dialog": true,
+            "dangerousInsecureTransportProtocol": false,
+            "windows": {
+                "installMode": "passive"
+            },
+            "endpoints": [],
+            "pubkey": "CHANGE_ME_WITH_ACTUAL_PUBLIC_KEY_GENERATED_FROM_TAURI_SIGNER_GENERATE"
+        }
+    }
+}

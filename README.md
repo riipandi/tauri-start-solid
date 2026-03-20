@@ -1,15 +1,15 @@
 # ⚡️ Tauri Start Solid
 
-[![Contribution welcome](https://img.shields.io/badge/Contributions-welcome-gray.svg)](https://github.com/riipandi/tauri-start-solid/pulse)
-[![Rust version](https://img.shields.io/badge/rust-v1.77-FF5500.svg?logo=rust)](https://www.rust-lang.org)
+[![Rust version](https://img.shields.io/badge/rust-v1.90-FF5500.svg?logo=rust)](https://www.rust-lang.org)
 [![Tauri version](https://img.shields.io/badge/Tauri-v2-00aaff.svg?logo=tauri)](https://tauri.app)
 ![Repo Size](https://img.shields.io/github/repo-size/riipandi/tauri-start-solid)
+[![Contribution welcome](https://img.shields.io/badge/Contributions-welcome-gray.svg)](https://github.com/riipandi/tauri-start-solid/pulse)
 <!-- [![CI Test](https://github.com/riipandi/tauri-start-solid/actions/workflows/test.yml/badge.svg)](https://github.com/riipandi/tauri-start-solid/actions/workflows/test.yml) -->
 
 ---
 
-This project template should help get you started developing a multi-platform desktop application
-with tray menu support using Tauri, SolidJS, Nano Stores, Typescript, Tailwind CSS, and Vite.
+This project template should help get you started developing a multi-platform desktop application using
+Tauri, SolidJS, TanStack Router, Nano Stores, Typescript, Tailwind CSS, and Vite.
 
 ## Quick Start
 
@@ -35,20 +35,25 @@ to build the application in debug mode, this will enable developer tools.
     - [x] `tauri-plugin-http`
     - [x] `tauri-plugin-log`
     - [x] `tauri-plugin-notification`
+    - [x] `tauri-plugin-opener`
     - [x] `tauri-plugin-os`
     - [x] `tauri-plugin-positioner`
     - [x] `tauri-plugin-process`
     - [x] `tauri-plugin-shell`
 - [x] Custom titlebar (desktop)
 - [x] Custom application menu
+- [x] Application tray menu
 - [x] Application updater
 - [x] Read values from `.env` file
-- [x] Auto-generated Typescript types
 - [x] Theme switcher (dark & light mode)
+- [x] Custom font support for UI and editor
+- [x] Multiple theme support with Tailwind CSS
 - [x] Application settings with separated window
-- [x] Global state with [`persy`][persy] key-value database as backend
 - [x] Frontend app with [SolidJS][solidjs] + [Tailwind CSS][tailwindcss]
-- [x] Frontend lint & format using [Biome][biome]
+- [x] Routing with [TanStack Router][tanstack-router]
+- [x] [Storybook][storybook] for developing user interface
+- [x] State management with [Nano Stores][nanostores]
+- [x] Linter and formatter with [Oxlint][oxlint] and [Oxfmt][oxfmt]
 - [x] Git hooks tasks with [Lefthook][lefthook]
 - [x] GitHub actions for CI testing and build
 
@@ -71,6 +76,12 @@ xattr -r -d com.apple.quarantine "/Applications/Tauri App.app"
 
 ![Screenshot](./assets/images/screenshot-light.jpeg)
 ![Screenshot](./assets/images/screenshot-dark.jpeg)
+
+# Learn More
+
+You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
+
+Type assertion is necessary for Kobalte polymorphic components. See: https://kobalte.dev/docs/core/overview/polymorphism
 
 ## Acknowledgements
 
@@ -97,20 +108,22 @@ Licensed under either of [Apache License 2.0][license-apache] or [MIT license][l
 
 Copyrights in this project are retained by their contributors.
 
-See the [LICENSE-APACHE](./LICENSE-APACHE) and [LICENSE-MIT](./LICENSE-MIT) files
-for more information.
+See the [LICENSE-APACHE](./LICENSE-APACHE) and [LICENSE-MIT](./LICENSE-MIT) files for more information.
 
+[lefthook]: https://github.com/evilmartians/lefthook
+[license-apache]: https://choosealicense.com/licenses/apache-2.0/
+[license-mit]: https://choosealicense.com/licenses/mit/
+[nanostores]: https://github.com/nanostores/nanostores
+[nodejs]: https://nodejs.org/en/download
+[oxfmt]: https://oxc.rs/docs/guide/usage/formatter
+[oxlint]: https://oxc.rs/docs/guide/usage/linter
+[pnpm]: https://pnpm.io/installation
+[riipandi-twitter]: https://twitter.com/intent/follow?screen_name=riipandi
 [rust]: https://www.rust-lang.org/tools/install
 [solidjs]: https://www.solidjs.com
-[biome]: https://biomejs.dev
-[nodejs]: https://nodejs.org/en/download
-[pnpm]: https://pnpm.io/installation
+[storybook]: https://www.npmjs.com/package/storybook-solidjs-vite
+[tanstack-router]: https://tanstack.com/router
 [tailwindcss]: https://tailwindcss.com
-[persy]: https://crates.io/crates/persy
-[lefthook]: https://github.com/evilmartians/lefthook
-[riipandi-twitter]: https://twitter.com/intent/follow?screen_name=riipandi
-[license-mit]: https://choosealicense.com/licenses/mit/
-[license-apache]: https://choosealicense.com/licenses/apache-2.0/
 
 ---
 

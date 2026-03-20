@@ -2,11 +2,11 @@
 name = "tauri-start-solid"
 version = "0.0.0"
 description = "A Tauri application built with Tauri, SolidJS, and TypeScript"
-authors = ["you"]
+repository = "https://github.com/riipandi/tauri-start-solid"
+authors = ["You <you@example.com>"]
 license = "MIT or Apache-2.0"
-repository = "http://github.com/riipandi/tauri-start-solid"
-rust-version = "1.77"
-edition = "2021"
+rust-version = "1.90"
+edition = "2024"
 publish = false
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -15,60 +15,69 @@ publish = false
 # The `_lib` suffix may seem redundant but it is necessary
 # to make the lib name unique and wouldn't conflict with the bin name.
 # This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
-name = "tauri_start_solid_lib"
+name = "myapp_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
-dotenv-build = "^0.1"
-tauri-build = { version = "2", features = [] }
+dotenv-build = "0.1.1"
+tauri-build = { version = "2.5.6", features = [] }
 
 [dependencies]
 # Tauri dependencies
-tauri = { version = "2", features = ["macos-private-api", "tray-icon", "devtools"] }
-tauri-plugin-dialog = "2"
-tauri-plugin-http = "2"
-tauri-plugin-log = "2"
-tauri-plugin-notification = "2"
-tauri-plugin-os = "2"
-tauri-plugin-positioner = { version = "2", features = ["tray-icon"] }
-tauri-plugin-process = "2"
-tauri-plugin-shell = "2"
+tauri = { version = "2.10.3", features = ["macos-private-api", "tray-icon", "devtools"] }
+tauri-plugin-dialog = "2.6.0"
+tauri-plugin-http = "2.5.7"
+tauri-plugin-log = "2.8.0"
+tauri-plugin-notification = "2.3.3"
+tauri-plugin-opener = "2.5.3"
+tauri-plugin-os = "2.3.2"
+tauri-plugin-positioner = { version = "2.3.1", features = ["tray-icon"] }
+tauri-plugin-process = "2.3.1"
+tauri-plugin-shell = "2.3.5"
 
 # Essential crates
-anyhow = "1.0"
-chrono = "0.4"
-log = "0.4"
-persy = "1.6"
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
-specta = { version = "2.0.0-rc.22", features = ["derive", "serde", "serde_json"] }
-specta-typescript = "0.0.9"
-tauri-specta = { version = "2.0.0-rc.21", features = ["derive", "typescript"] }
-tokio = { version = "1.43", features = ["sync"] }
+aes-gcm = "0.10.3"
+anyhow = "1.0.102"
+base64 = "0.22.1"
+chrono = { version = "0.4.44", features = ["serde"] }
+heed3 = "0.22.0"
+log = "0.4.29"
+machine-id = "0.4.0"
+rust-fontconfig = "2.0.0"
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.149"
+sha2 = "0.10.9"
+thiserror = "2.0.18"
+tokio = { version = "1.50.0", features = ["macros", "sync", "time"] }
+url = { version = "2.5.8", features = ["serde"] }
 
 # Used to call the macOS native API
-[target."cfg(target_os = \"macos\")".dependencies]
-cocoa = "0.26.0"
-objc = "0.2.7"
+[target.'cfg(target_os = "macos")'.dependencies]
+objc2-app-kit = "0.3.2"
+objc2 = "0.6.4"
 
-[target."cfg(target_os = \"windows\")".dependencies]
-webview2-com = "0.35"
-windows = "0.59"
-windows-core = "0.59"
-windows-version = "0.1"
+[target.'cfg(target_os = "windows")'.dependencies]
+webview2-com = "0.39.1"
+windows = "0.62.2"
+windows-core = "0.62.2"
+windows-version = "0.1.7"
 
-[target."cfg(target_os = \"linux\")".dependencies]
-gtk = { version = "0.18", features = ["v3_24"] }
-webkit2gtk = { version = "=2.0.1", features = ["v2_38"] }
+[target.'cfg(target_os = "linux")'.dependencies]
+gtk = { version = "0.18.2", features = ["v3_24"] }
+webkit2gtk = { version = "=2.0.2", features = ["v2_38"] }
 tintanum = "0.4.0"
-futures-lite = "2.6"
-tokio = { version = "1", features = ["macros"] }
+futures-lite = "2.6.1"
+tokio = { version = "1.50.0", features = ["macros"] }
 
 [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
-tauri-plugin-updater = "2"
+tauri-plugin-updater = "2.10.0"
+
+[target.'cfg(any(target_os = "macos", windows, target_os = "linux"))'.dependencies]
+tauri-plugin-single-instance = { version = "2.4.0", features = ["deep-link"] }
+tauri-plugin-window-state = "2.4.1"
 
 [dev-dependencies]
-tauri = { version = "2", features = ["test"] }
+tauri = { version = "2.10.3", features = ["test"] }
 
 # Optimized for bundle size. If you want faster builds comment out/delete this section.
 # Reference: https://doc.rust-lang.org/cargo/reference/profiles.html

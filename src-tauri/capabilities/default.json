@@ -1,9 +1,10 @@
 {
     "$schema": "../gen/schemas/desktop-schema.json",
     "identifier": "default",
-    "description": "Capability for the main window",
+    "description": "Capability for the main and settings window",
     "windows": ["main", "settings"],
     "permissions": [
+        "core:app:allow-set-app-theme",
         "core:app:default",
         "core:default",
         "core:event:default",
@@ -34,6 +35,7 @@
         "core:path:default",
         "core:resources:default",
         "core:tray:default",
+        "core:webview:default",
         "core:window:allow-center",
         "core:window:allow-close",
         "core:window:allow-create",
@@ -72,7 +74,10 @@
         "dialog:default",
         {
             "identifier": "http:default",
-            "allow": [{ "url": "https://i18n-quotes.victr.workers.dev" }]
+            "allow": [
+                { "url": "https://i18n-quotes.victr.workers.dev" },
+                { "url": "https://*.workers.dev" }
+            ]
         },
         "log:default",
         "notification:allow-batch",
@@ -91,10 +96,20 @@
         "notification:allow-remove-active",
         "notification:allow-request-permission",
         "notification:allow-show",
+        {
+            "identifier": "opener:allow-open-path",
+            "allow": [{ "path": "$APPDATA" }]
+        },
+        {
+            "identifier": "opener:allow-open-url",
+            "allow": [{ "url": "https://*" }]
+        },
+        "opener:allow-reveal-item-in-dir",
         "os:default",
         "positioner:default",
+        "process:allow-restart",
         "process:default",
         "shell:allow-open",
-        "updater:default"
+        "window-state:default"
     ]
 }
