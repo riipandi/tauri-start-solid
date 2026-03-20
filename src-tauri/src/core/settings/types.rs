@@ -28,10 +28,14 @@ pub enum UpdateMode {
 /// UI-specific settings
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct UISettings {
-    pub theme_mode: ThemeMode,
-    pub theme_light: String,
-    pub theme_dark: String,
+    pub editor_font_family: String,
+    pub editor_font_size: u16,
     pub enable_spell_check: bool,
+    pub theme_dark: String,
+    pub theme_light: String,
+    pub theme_mode: ThemeMode,
+    pub ui_font_family: String,
+    pub ui_font_size: u16,
 }
 
 /// Update settings

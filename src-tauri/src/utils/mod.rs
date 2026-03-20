@@ -3,3 +3,4 @@
 //! Contains various utility functions used throughout the application.
 
 pub mod crypto;
+pub mod fonts;

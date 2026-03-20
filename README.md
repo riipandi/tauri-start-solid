@@ -1,9 +1,9 @@
 # ⚡️ Tauri Start Solid
 
-[![Contribution welcome](https://img.shields.io/badge/Contributions-welcome-gray.svg)](https://github.com/riipandi/tauri-start-solid/pulse)
 [![Rust version](https://img.shields.io/badge/rust-v1.90-FF5500.svg?logo=rust)](https://www.rust-lang.org)
 [![Tauri version](https://img.shields.io/badge/Tauri-v2-00aaff.svg?logo=tauri)](https://tauri.app)
 ![Repo Size](https://img.shields.io/github/repo-size/riipandi/tauri-start-solid)
+[![Contribution welcome](https://img.shields.io/badge/Contributions-welcome-gray.svg)](https://github.com/riipandi/tauri-start-solid/pulse)
 <!-- [![CI Test](https://github.com/riipandi/tauri-start-solid/actions/workflows/test.yml/badge.svg)](https://github.com/riipandi/tauri-start-solid/actions/workflows/test.yml) -->
 
 ---
@@ -50,6 +50,7 @@ to build the application in debug mode, this will enable developer tools.
 - [x] Application settings with separated window
 - [x] Frontend app with [SolidJS][solidjs] + [Tailwind CSS][tailwindcss]
 - [x] Routing with [TanStack Router][tanstack-router]
+- [x] [Storybook][storybook] for developing user interface
 - [x] State management with [Nano Stores][nanostores]
 - [x] Linter and formatter with [Oxlint][oxlint] and [Oxfmt][oxfmt]
 - [x] Git hooks tasks with [Lefthook][lefthook]
@@ -119,6 +120,7 @@ See the [LICENSE-APACHE](./LICENSE-APACHE) and [LICENSE-MIT](./LICENSE-MIT) file
 [riipandi-twitter]: https://twitter.com/intent/follow?screen_name=riipandi
 [rust]: https://www.rust-lang.org/tools/install
 [solidjs]: https://www.solidjs.com
+[storybook]: https://www.npmjs.com/package/storybook-solidjs-vite
 [tanstack-router]: https://tanstack.com/router
 [tailwindcss]: https://tailwindcss.com
 

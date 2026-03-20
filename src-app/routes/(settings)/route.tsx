@@ -22,7 +22,26 @@ const mainSettings: NavigationLinks[] = [
   {
     label: 'Appearance',
     path: '/settings/appearance',
-    keywords: ['appearance', 'theme', 'dark', 'light', 'mode', 'color', 'accent']
+    keywords: [
+      'appearance',
+      'theme',
+      'dark',
+      'light',
+      'mode',
+      'color',
+      'accent',
+      'font',
+      'fonts',
+      'typography',
+      'text',
+      'size',
+      'family',
+      'monospace',
+      'sans-serif',
+      'ui',
+      'editor',
+      'code'
+    ]
   },
   {
     label: 'Updates',

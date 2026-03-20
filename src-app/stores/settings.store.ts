@@ -5,10 +5,14 @@ import { settingsService } from '#/services/settings.service'
 export const settingsStore = atom<AppSettings>({
   license_key: undefined,
   ui: {
-    theme_mode: 'auto',
-    theme_light: 'default-light',
-    theme_dark: 'default-dark',
+    editor_font_family: 'monospace',
+    editor_font_size: 13,
     enable_spell_check: true,
+    theme_dark: 'default-dark',
+    theme_light: 'default-light',
+    theme_mode: 'auto',
+    ui_font_family: 'system-ui',
+    ui_font_size: 14,
     update_check_frequency: 'on-startup'
   },
   update: {
@@ -80,4 +84,28 @@ export async function updateUpdateSettings(update: Partial<UpdateSettings>) {
   const current = settingsStore.get()
   const mergedUpdate: UpdateSettings = { ...current.update, ...update }
   return updateSettings({ update: mergedUpdate })
+}
+
+export const uiFontSettings = computed(settingsStore, (s) => ({
+  family: s.ui.ui_font_family,
+  size: s.ui.ui_font_size
+}))
+
+export const editorFontSettings = computed(settingsStore, (s) => ({
+  family: s.ui.editor_font_family,
+  size: s.ui.editor_font_size
+}))
+
+export async function updateUIFontSettings(settings: { family?: string; size?: number }) {
+  const update: Partial<UISettings> = {}
+  if (settings.family) update.ui_font_family = settings.family
+  if (settings.size !== undefined) update.ui_font_size = settings.size
+  return updateUISettings(update)
+}
+
+export async function updateEditorFontSettings(settings: { family?: string; size?: number }) {
+  const update: Partial<UISettings> = {}
+  if (settings.family) update.editor_font_family = settings.family
+  if (settings.size !== undefined) update.editor_font_size = settings.size
+  return updateUISettings(update)
 }

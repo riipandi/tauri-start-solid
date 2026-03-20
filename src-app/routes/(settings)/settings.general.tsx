@@ -7,8 +7,8 @@ import { createSignal } from 'solid-js'
 import { Button } from '#/components/button'
 import { Switch } from '#/components/switch'
 import { Toast } from '#/components/toast'
+import { resetSettings, updateUISettings } from '#/stores/settings.store'
 import { uiSettings } from '#/stores/settings.store'
-import { updateUISettings, resetSettings } from '#/stores/settings.store'
 import { SettingRow } from './-setting-row'
 
 export const Route = createFileRoute('/(settings)/settings/general')({

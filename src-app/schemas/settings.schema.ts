@@ -8,10 +8,14 @@ export type UpdateChannel = 'stable' | 'canary'
 export type UpdateMode = 'automatic' | 'manual'
 
 export interface UISettings {
-  theme_mode: ThemeMode
-  theme_light: ThemeName
-  theme_dark: ThemeName
+  editor_font_family: string
+  editor_font_size: number
   enable_spell_check: boolean
+  theme_dark: ThemeName
+  theme_light: ThemeName
+  theme_mode: ThemeMode
+  ui_font_family: string
+  ui_font_size: number
   update_check_frequency: UpdateCheckFrequency
 }
 

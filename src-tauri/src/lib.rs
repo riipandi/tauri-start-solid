@@ -94,6 +94,10 @@ pub fn run() {
     // Finally, build and run the application
     builder
         .invoke_handler(tauri::generate_handler![
+            commands::fonts::get_available_ui_fonts,
+            commands::fonts::get_available_editor_fonts,
+            commands::fonts::refresh_font_cache,
+            commands::fonts::get_font_cache_info,
             commands::settings::get_settings,
             commands::settings::open_settings_window,
             commands::settings::reset_settings,
