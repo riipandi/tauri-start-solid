@@ -488,42 +488,39 @@ impl FontManager {
         let name_lower = name.to_lowercase();
 
         let sans_patterns = [
-            "sans",
-            // REMOVED: "gothic",  ← Gothic is now in unsafe patterns
-            "grotesque",
-            "neo",
-            "geometric",
-            // Common modern font families (safe for UI)
             "arial",
+            "barlow",
+            "calibri",
+            "cantarell",
+            "circular",
+            "figtree",
+            "geometric",
+            "grotesque",
             "helvetica",
-            "verdana",
+            "inter",
+            "lato",
+            "manrope",
+            "neo",
+            "nunito",
+            "open sans",
+            "plus jakarta sans",
+            "poppins",
+            "proxima",
+            "quicksand",
+            "roboto",
+            "rubik",
+            "sans",
+            "segoe",
+            "sf pro",
+            "sofia",
+            "source sans",
+            "system",
             "tahoma",
             "trebuchet",
-            "inter",
-            "roboto",
-            "open sans",
-            "source sans",
-            "sf pro",
-            "system",
-            "ui",
             "ubuntu",
-            "cantarell",
-            "figtree",
-            "poppins",
-            "nunito",
-            // Additional modern UI fonts
-            "lato",
-            "calibri",
-            "segoe",
-            "proxima",
-            "circular",
-            "sofia",
-            "quicksand",
-            "rubik",
+            "ui",
+            "verdana",
             "work sans",
-            "barlow",
-            "manrope",
-            "plus jakarta sans",
         ];
 
         sans_patterns.iter().any(|&pattern| name_lower.contains(pattern))
@@ -534,27 +531,27 @@ impl FontManager {
         let name_lower = name.to_lowercase();
 
         let mono_patterns = [
-            "mono",
-            "monospace",
-            "code",
-            "consolas",
-            "monaco",
-            "menlo",
-            "courier",
-            "inconsolata",
-            "fira code",
-            "jetbrains mono",
-            "source code pro",
-            "hack",
-            "ibm plex mono",
-            "ubuntu mono",
-            "dejavu sans mono",
-            "liberation mono",
             "andale mono",
-            "lucida console",
             "cascadia code",
             "cascadia mono",
+            "code",
+            "consolas",
+            "courier",
+            "dejavu sans mono",
+            "fira code",
+            "hack",
+            "ibm plex mono",
+            "inconsolata",
+            "jetbrains mono",
+            "liberation mono",
+            "lucida console",
+            "menlo",
+            "monaco",
+            "mono",
+            "monospace",
             "pt mono",
+            "source code pro",
+            "ubuntu mono",
         ];
 
         mono_patterns.iter().any(|&pattern| name_lower.contains(pattern))
@@ -588,10 +585,10 @@ impl FontManager {
             return false;
         }
 
-        // Step 5: Use fontconfig properties
+        // Step 5: Validate proportional fonts with sans-serif indicators
         if pattern.monospace == PatternMatch::False {
-            // Definitely proportional → good for UI
-            return true;
+            // Proportional font - validate it's actually sans-serif
+            return self.has_sans_indicators(&name);
         }
 
         // Step 6: If DontCare, be conservative with keyword matching
