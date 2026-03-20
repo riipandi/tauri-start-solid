@@ -1,5 +1,5 @@
 import { clsx } from 'clsx'
-import { Button } from './button'
+import { Button } from '#/components/button'
 
 interface FontSizeInputProps {
   value: number

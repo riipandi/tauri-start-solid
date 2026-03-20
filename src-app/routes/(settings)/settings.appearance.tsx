@@ -3,19 +3,15 @@ import { useStore } from '@nanostores/solid'
 import { createFileRoute } from '@tanstack/solid-router'
 import { consola } from 'consola'
 import { createSignal, createResource } from 'solid-js'
-import { FontPreview } from '#/components/font-preview'
-import { FontSizeInput } from '#/components/font-size-input'
 import { Select, type SelectOption } from '#/components/select'
 import { Toast } from '#/components/toast'
 import type { ThemeName } from '#/schemas/settings.schema'
 import { fontsService } from '#/services/fonts.service'
 import { uiSettings } from '#/stores/settings.store'
-import {
-  updateEditorFontSettings,
-  updateTheme,
-  updateUIFontSettings,
-  updateUISettings
-} from '#/stores/settings.store'
+import { updateTheme, updateUISettings } from '#/stores/settings.store'
+import { updateEditorFontSettings, updateUIFontSettings } from '#/stores/settings.store'
+import { FontPreview } from './-font-preview'
+import { FontSizeInput } from './-font-size-input'
 import { SettingRow } from './-setting-row'
 
 export const Route = createFileRoute('/(settings)/settings/appearance')({
