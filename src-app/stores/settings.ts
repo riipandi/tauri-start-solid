@@ -1,6 +1,6 @@
 import { atom, computed } from 'nanostores'
+import type { AppSettings, UISettings, UpdateSettings, ThemeName } from '#/schemas/settings.schema'
 import { settingsService } from '#/services/settings.service'
-import type { AppSettings, UISettings, UpdateSettings, ThemeName } from '#/types/settings'
 
 export const settingsStore = atom<AppSettings>({
   license_key: undefined,

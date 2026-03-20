@@ -45,7 +45,11 @@ pub fn run() {
         }));
 
         // Save window positions and sizes and restore them when the app is reopened.
-        builder = builder.plugin(tauri_plugin_window_state::Builder::default().build());
+        builder = builder.plugin(
+            tauri_plugin_window_state::Builder::default()
+                .with_filter(|label| label == core::MAIN_WINDOW_ID)
+                .build(),
+        );
     }
 
     // Setup application hooks to load database and other resources

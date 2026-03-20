@@ -2,9 +2,8 @@ import { clsx } from 'clsx'
 import { Show } from 'solid-js'
 import { useTitleBar } from '#/hooks/use-title-bar'
 
-export function TitleBar(props: { title?: string }) {
+export function TitleBar(props: { title: string }) {
   const { platform, isFullscreen, isMaximized, minimize, toggleMaximize, close } = useTitleBar()
-  const windowTitle = () => props.title || 'Tauri App'
 
   return (
     <Show when={!isFullscreen()}>
@@ -16,7 +15,7 @@ export function TitleBar(props: { title?: string }) {
         <div class='flex items-center shrink-0' data-tauri-drag-region>
           <Show when={platform() !== 'macos'}>
             <span class='text-sm font-medium text-foreground-neutral opacity-90 whitespace-nowrap overflow-hidden text-ellipsis'>
-              {windowTitle()}
+              {props.title}
             </span>
           </Show>
         </div>
@@ -27,7 +26,7 @@ export function TitleBar(props: { title?: string }) {
             data-tauri-drag-region
           >
             <span class='text-sm font-medium text-foreground-neutral opacity-90 whitespace-nowrap overflow-hidden text-ellipsis'>
-              {windowTitle()}
+              {props.title}
             </span>
           </div>
         </Show>

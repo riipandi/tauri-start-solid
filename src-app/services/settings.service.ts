@@ -1,5 +1,5 @@
 import { invoke } from '@tauri-apps/api/core'
-import type { AppSettings } from '#/types/settings'
+import type { AppSettings } from '#/schemas/settings.schema'
 
 export interface SettingsService {
   openWindow: () => void

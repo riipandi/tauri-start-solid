@@ -20,13 +20,14 @@ pub fn setup_app<R: tauri::Runtime>(app: &mut App<R>) -> Result<(), Box<dyn std:
         let handle = app.handle().clone();
 
         // Spawn the update scheduler in the background
+        // Using Tauri's async_runtime instead of std::thread for better integration
         tauri::async_runtime::spawn(async move {
             core::updater::start_update_scheduler(handle, manager).await;
         });
     }
 
     // Setup the customized main window
-    match core::setup_main_window(app) {
+    match core::create_main_window(app) {
         Ok(_) => {
             // Setup menu after window is created
             if let Err(e) = core::menu::setup_menu(app) {
