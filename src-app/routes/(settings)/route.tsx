@@ -1,12 +1,19 @@
-import { createFileRoute, Outlet, Link } from '@tanstack/solid-router'
+import { createFileRoute, Outlet, Link, type LinkProps } from '@tanstack/solid-router'
+import { clsx } from 'clsx'
 import { createSignal, For, Show } from 'solid-js'
 import { SettingsTitleBar } from './-title-bar'
+
+interface NavigationLinks extends LinkProps {
+  label: string
+  path: LinkProps['to']
+  keywords: string[]
+}
 
 export const Route = createFileRoute('/(settings)')({
   component: RouteComponent
 })
 
-const mainSettings = [
+const mainSettings: NavigationLinks[] = [
   {
     label: 'General',
     path: '/settings/general',
@@ -24,7 +31,7 @@ const mainSettings = [
   }
 ]
 
-const otherSettings = [
+const otherSettings: NavigationLinks[] = [
   {
     label: 'About',
     path: '/settings/about',
@@ -57,15 +64,18 @@ function RouteComponent() {
     <div class='flex flex-col h-screen'>
       <SettingsTitleBar />
       <div class='flex flex-1 overflow-hidden'>
-        <nav class='w-48 shrink-0 border-r border-border-neutral bg-background-page/50 flex flex-col'>
+        <nav class='w-48 shrink-0 border-r border-border-neutral bg-background-neutral-faded flex flex-col'>
           <div class='pt-1 pb-3 px-2 shrink-0'>
-            <div class='relative'>
+            <div class='relative px-1'>
               <input
                 type='text'
                 placeholder='Search settings'
                 value={searchQuery()}
                 onInput={(e) => setSearchQuery(e.currentTarget.value)}
-                class='w-full px-3 py-1.5 pr-8 border border-border-neutral rounded-md bg-background-page text-foreground-neutral text-sm focus:outline-none focus:ring-2 focus:ring-border-primary focus:border-border-primary placeholder:text-foreground-neutral-faded/60'
+                class={clsx(
+                  'w-full px-3 py-1.5 pr-8 border border-border-neutral rounded-xs bg-background-page text-foreground-neutral text-sm',
+                  'focus:outline-none focus:ring-2 focus:ring-border-primary focus:border-border-primary placeholder:text-foreground-neutral-faded/60'
+                )}
               />
               <Show when={searchQuery()}>
                 <button
@@ -107,7 +117,7 @@ function RouteComponent() {
                           to={item.path}
                           class='block py-1.5 px-2.5 rounded-md text-[13px] transition-colors text-foreground-neutral-faded hover:bg-background-neutral-faded hover:text-foreground-neutral'
                           activeProps={{
-                            class: 'bg-background-primary/10 text-foreground-primary font-medium'
+                            class: 'text-on-background-primary hover:text-on-background-primary'
                           }}
                         >
                           {item.label}
@@ -131,7 +141,7 @@ function RouteComponent() {
                           to={item.path}
                           class='block py-1.5 px-2.5 rounded-md text-[13px] transition-colors text-foreground-neutral-faded hover:bg-background-neutral-faded hover:text-foreground-neutral'
                           activeProps={{
-                            class: 'bg-background-primary/10 text-foreground-primary font-medium'
+                            class: 'text-on-background-primary hover:text-on-background-primary'
                           }}
                         >
                           {item.label}

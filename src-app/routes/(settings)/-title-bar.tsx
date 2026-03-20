@@ -11,7 +11,10 @@ export function SettingsTitleBar() {
       data-platform={appInfo.osPlatform()}
       data-tauri-drag-region
     >
-      <div class='w-48 h-full border-r border-border-neutral' data-tauri-drag-region></div>
+      <div
+        class='w-48 h-full border-r border-border-neutral bg-background-neutral-faded'
+        data-tauri-drag-region
+      ></div>
       <Show when={appInfo.osPlatform() !== 'macos'}>
         <button
           type='button'

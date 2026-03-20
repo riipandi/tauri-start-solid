@@ -57,7 +57,7 @@
   --ui-color-on-background-critical: oklch(1 0 0);
   --ui-color-on-background-warning: oklch(0 0 0);
 
-  --ui-color-background-page: oklch(0.15 0.011 252.11);
+  --ui-color-background-page: oklch(0.2273 0.0038 286.09);
   --ui-color-background-page-faded: oklch(0.14 0.006 270);
   --ui-color-background-neutral: oklch(0.17 0.008 270);
   --ui-color-background-neutral-faded: oklch(0.2 0.007 270);

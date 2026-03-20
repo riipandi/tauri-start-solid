@@ -1,7 +1,8 @@
 import { useStore } from '@nanostores/solid'
 import { Outlet, createRootRoute } from '@tanstack/solid-router'
 import { listen } from '@tauri-apps/api/event'
-import { onMount, onCleanup, createEffect } from 'solid-js'
+import { onMount, onCleanup, createEffect, Suspense } from 'solid-js'
+import { AppLoader } from '#/components/boundaries'
 import { ToastProvider } from '#/components/toast'
 import { GlobalNotFound } from '#/routes/-errors'
 import type { AppSettings } from '#/schemas/settings.schema'
@@ -81,7 +82,9 @@ function RootComponent() {
       autocapitalize={!ui().enable_spell_check ? 'none' : undefined}
       aria-autocomplete={!ui().enable_spell_check ? 'none' : undefined}
     >
-      <Outlet />
+      <Suspense fallback={<AppLoader />}>
+        <Outlet />
+      </Suspense>
       <ToastProvider />
     </div>
   )
