@@ -2,6 +2,7 @@ import { toaster } from '@kobalte/core/toast'
 import { useStore } from '@nanostores/solid'
 import { createFileRoute } from '@tanstack/solid-router'
 import { getVersion } from '@tauri-apps/api/app'
+import { consola } from 'consola'
 import { createSignal, createEffect, onMount, Show } from 'solid-js'
 import { Button } from '#/components/button'
 import { Select, type SelectOption } from '#/components/select'
@@ -65,7 +66,7 @@ function RouteComponent() {
         setUpdateReady(state.downloaded)
       }
     } catch (error) {
-      console.error('[Updates] Error loading update state:', error)
+      consola.error('[Updates] Error loading update state:', error)
     }
   })
 
@@ -124,7 +125,7 @@ function RouteComponent() {
       await updateUpdateSettings({ channel: option.value as 'stable' | 'canary' })
       showToast('success', `Update channel changed to ${option.label}`)
     } catch (error) {
-      console.error('[Updates] Error updating channel:', error)
+      consola.error('[Updates] Error updating channel:', error)
       showToast('error', 'Failed to update channel')
     } finally {
       setIsSaving(false)
@@ -138,7 +139,7 @@ function RouteComponent() {
       await updateUpdateSettings({ mode: option.value as 'automatic' | 'manual' })
       showToast('success', `Update mode changed to ${option.label}`)
     } catch (error) {
-      console.error('[Updates] Error updating mode:', error)
+      consola.error('[Updates] Error updating mode:', error)
       showToast('error', 'Failed to update mode')
     } finally {
       setIsSaving(false)
@@ -151,7 +152,7 @@ function RouteComponent() {
       await updateUpdateSettings({ auto_download: checked })
       showToast('success', checked ? 'Auto-download enabled' : 'Auto-download disabled')
     } catch (error) {
-      console.error('[Updates] Error toggling auto-download:', error)
+      consola.error('[Updates] Error toggling auto-download:', error)
       showToast('error', 'Failed to update auto-download setting')
     } finally {
       setIsSaving(false)
@@ -172,7 +173,7 @@ function RouteComponent() {
         showToast('success', 'You are on the latest version')
       }
     } catch (error) {
-      console.error('[Updates] Error checking for updates:', error)
+      consola.error('[Updates] Error checking for updates:', error)
       showToast('error', 'Failed to check for updates')
     } finally {
       setIsChecking(false)
@@ -191,7 +192,7 @@ function RouteComponent() {
         }
       })
     } catch (error) {
-      console.error('[Updates] Error downloading update:', error)
+      consola.error('[Updates] Error downloading update:', error)
       showToast('error', 'Failed to download update')
       setIsDownloading(false)
     }
@@ -202,7 +203,7 @@ function RouteComponent() {
       await updaterService.installUpdate()
       showToast('success', 'Update will be installed on restart')
     } catch (error) {
-      console.error('[Updates] Error installing update:', error)
+      consola.error('[Updates] Error installing update:', error)
       showToast('error', 'Failed to install update')
     }
   }

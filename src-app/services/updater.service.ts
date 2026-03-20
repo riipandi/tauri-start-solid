@@ -1,5 +1,6 @@
 import { invoke, Channel } from '@tauri-apps/api/core'
 import { listen } from '@tauri-apps/api/event'
+import { consola } from 'consola'
 
 export interface UpdateInfo {
   version: string
@@ -41,7 +42,7 @@ function defineService(): UpdaterService {
       try {
         return await invoke<UpdateInfo | null>('check_for_updates')
       } catch (error) {
-        console.error('[Updater] Error checking for updates:', error)
+        consola.error('[Updater] Error checking for updates:', error)
         throw error
       }
     },
@@ -52,7 +53,7 @@ function defineService(): UpdaterService {
         onEvent.onmessage = (event) => onProgress(event)
         await invoke('download_update', { onEvent })
       } catch (error) {
-        console.error('[Updater] Error downloading update:', error)
+        consola.error('[Updater] Error downloading update:', error)
         throw error
       }
     },
@@ -61,7 +62,7 @@ function defineService(): UpdaterService {
       try {
         await invoke('install_update')
       } catch (error) {
-        console.error('[Updater] Error installing update:', error)
+        consola.error('[Updater] Error installing update:', error)
         throw error
       }
     },
@@ -70,7 +71,7 @@ function defineService(): UpdaterService {
       try {
         return await invoke<UpdateState>('get_update_state')
       } catch (error) {
-        console.error('[Updater] Error getting update state:', error)
+        consola.error('[Updater] Error getting update state:', error)
         throw error
       }
     },
