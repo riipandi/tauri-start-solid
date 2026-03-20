@@ -1,23 +1,61 @@
-import { Link } from '@tanstack/solid-router'
+import { useCanGoBack, useRouter } from '@tanstack/solid-router'
+import { clsx } from 'clsx'
 
 export function GlobalNotFound() {
+  const router = useRouter()
+  const canGoBack = useCanGoBack()
+
+  const handleBack = () => {
+    if (canGoBack()) {
+      router.history.back()
+    } else {
+      router.navigate({ href: '/' })
+    }
+  }
+
   return (
-    <main class='flex items-center justify-center min-h-screen w-full'>
-      <div class='px-8 py-10 text-center rounded-xl max-w-xl'>
-        <h1 class='text-6xl font-bold leading-none mb-4 bg-linear-to-br from-primary to-positive bg-clip-text text-transparent'>
-          404
-        </h1>
-        <h2 class='text-2xl font-bold mb-3 text-foreground-neutral'>Page not found</h2>
-        <p class='text-base leading-relaxed text-foreground-neutral-faded mb-8'>
-          The page you're looking for doesn't exist or has been moved to a different location.
-        </p>
-        <Link
-          to='/'
-          class='inline-block rounded-full border border-border-neutral/20 bg-background-page/50 py-2.5 px-5 text-sm font-semibold text-foreground-neutral transition-all hover:-translate-y-0.5 hover:border-foreground-neutral/35 active:translate-y-0 text-decoration-none'
-        >
-          Go Home
-        </Link>
+    <div class='relative min-h-screen bg-background-page'>
+      <div
+        class='flex items-center justify-between w-full relative z-50 select-none shrink-0 h-9.5 bg-transparent'
+        data-tauri-drag-region
+      ></div>
+
+      {/* Decorative gradient */}
+      <div class='absolute inset-0 overflow-hidden'>
+        <div class='-inset-2.5 absolute opacity-50'>
+          <div class='absolute top-0 h-160 w-full bg-linear-to-b from-background-primary/30 via-transparent to-transparent' />
+        </div>
       </div>
-    </main>
+
+      <div class='relative flex min-h-screen flex-col items-center justify-center px-4 pt-16 pb-32 sm:px-6 lg:px-8'>
+        {/* 404 Content */}
+        <div class='text-center'>
+          <p class='font-bold text-2xl text-on-background-primary'>404</p>
+          <h1 class='mt-4 font-bold text-3xl text-white tracking-tight sm:text-5xl'>
+            Page not found
+          </h1>
+          <p class='mt-6 text-base text-foreground-neutral leading-7'>
+            Sorry, we couldn't find the page you're looking for.
+          </p>
+          <div class='mt-8 flex items-center justify-center gap-x-4'>
+            <button
+              type='button'
+              class={clsx(
+                'min-w-40 rounded bg-background-primary px-5 py-2.5 font-semibold text-on-background-primary text-sm duration-200',
+                'hover:bg-background-primary/80 focus:outline-none focus:ring-2 focus:ring-border-primary focus:ring-offset-2 focus:ring-offset-border-primary-faded'
+              )}
+              onClick={handleBack}
+            >
+              Go back
+            </button>
+          </div>
+        </div>
+
+        {/* Decorative 404 background */}
+        <div class='pointer-events-none absolute select-none'>
+          <h2 class='font-bold text-[20rem] text-foreground-primary/5'>404</h2>
+        </div>
+      </div>
+    </div>
   )
 }
