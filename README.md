@@ -46,6 +46,7 @@ to build the application in debug mode, this will enable developer tools.
 - [x] Application updater
 - [x] Read values from `.env` file
 - [x] Theme switcher (dark & light mode)
+- [x] Custom font support for UI and editor
 - [x] Multiple theme support with Tailwind CSS
 - [x] Application settings with separated window
 - [x] Frontend app with [SolidJS][solidjs] + [Tailwind CSS][tailwindcss]

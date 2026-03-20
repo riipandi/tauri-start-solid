@@ -36,13 +36,12 @@ pub struct FontCache {
 }
 
 impl FontCache {
-    /// Check if cache is still valid (less than 24 hours old)
+    /// Check if cache is still valid
+    ///
+    /// With startup rebuild strategy, cache is always considered valid
+    /// after it's been built. The timestamp is for reference/debugging.
     pub fn is_valid(&self) -> bool {
-        let now = SystemTime::now()
-            .duration_since(SystemTime::UNIX_EPOCH)
-            .unwrap()
-            .as_secs();
-        now.saturating_sub(self.timestamp) < 86400 // 24 hours
+        true
     }
 }
 
@@ -89,22 +88,51 @@ impl FontManager {
     }
 
     /// Initialize or refresh the font cache
+    ///
+    /// Loads font cache from disk if available, otherwise builds from system fonts.
+    /// Cache is stored in-memory for the duration of the app session for instant access.
+    /// Subsequent calls in the same session use the in-memory cache.
     pub fn initialize_cache<R: tauri::Runtime>(&self, app: &AppHandle<R>) -> Result<(), String> {
-        let cached = self.load_cache_from_disk(app);
-
-        if let Some(cache) = cached {
-            if cache.is_valid() {
-                log::debug!("Using valid font cache from disk");
-                *self.cache.write().unwrap() = Some(cache);
-                return Ok(());
-            }
+        // Step 1: Check if we already have cache in memory for this session
+        if self.cache.read().unwrap().is_some() {
+            log::debug!("Font cache already initialized in memory - using cached fonts");
+            return Ok(());
         }
 
-        log::info!("Building font cache...");
-        let cache = self.build_font_cache()?;
-        self.save_cache_to_disk(app, &cache)?;
-        *self.cache.write().unwrap() = Some(cache);
-        Ok(())
+        // Step 2: Try to load from disk first
+        match self.load_cache_from_disk(app) {
+            Some(cached) => {
+                // Cache file exists on disk → use it
+                log::info!(
+                    "Loading font cache from disk ({} UI fonts, {} editor fonts, cached: {})",
+                    cached.ui_fonts.len(),
+                    cached.editor_fonts.len(),
+                    chrono::DateTime::from_timestamp(cached.timestamp as i64, 0)
+                        .map(|dt| dt.format("%Y-%m-%d %H:%M:%S").to_string())
+                        .unwrap_or_else(|| "unknown".to_string())
+                );
+
+                *self.cache.write().unwrap() = Some(cached);
+                Ok(())
+            }
+            None => {
+                // No cache file → build from system fonts
+                log::info!("No font cache found on disk - building from system fonts...");
+                let cache = self.build_font_cache()?;
+
+                // Save to disk for next startup
+                self.save_cache_to_disk(app, &cache)?;
+
+                log::info!(
+                    "Font cache built and saved: {} UI fonts, {} editor fonts",
+                    cache.ui_fonts.len(),
+                    cache.editor_fonts.len()
+                );
+
+                *self.cache.write().unwrap() = Some(cache);
+                Ok(())
+            }
+        }
     }
 
     /// Build font cache by scanning system fonts
@@ -204,125 +232,399 @@ impl FontManager {
         }
     }
 
-    /// Check if a font pattern is sans-serif (suitable for UI)
-    fn is_sans_serif_font(&self, pattern: &FcPattern) -> bool {
-        // Get the font name
-        let name = pattern
+    /// Helper: Extract font name from pattern
+    fn get_font_name(pattern: &FcPattern) -> String {
+        pattern
             .name
             .as_ref()
             .or_else(|| pattern.family.as_ref())
-            .map(|s| s.to_lowercase())
-            .unwrap_or_else(|| String::new());
+            .cloned()
+            .unwrap_or_else(|| String::new())
+    }
 
-        // Direct name matching
-        if name.contains("sans") || name.contains("sans-serif") {
-            return true;
-        }
+    /// Check if font name contains non-Latin characters
+    fn contains_non_latin_characters(&self, name: &str) -> bool {
+        name.chars().any(|c| {
+            let codepoint = c as u32;
 
-        // Skip serif fonts
-        if name.contains("serif") || name.contains("times") || name.contains("georgia") {
+            // CJK Unified Ideographs
+            if (0x4E00..=0x9FFF).contains(&codepoint) {
+                return true;
+            }
+            // Hiragana
+            if (0x3040..=0x309F).contains(&codepoint) {
+                return true;
+            }
+            // Katakana
+            if (0x30A0..=0x30FF).contains(&codepoint) {
+                return true;
+            }
+            // Hangul Syllables
+            if (0xAC00..=0xD7AF).contains(&codepoint) {
+                return true;
+            }
+            // Arabic
+            if (0x0600..=0x06FF).contains(&codepoint) {
+                return true;
+            }
+            // Hebrew
+            if (0x0590..=0x05FF).contains(&codepoint) {
+                return true;
+            }
+            // Thai
+            if (0x0E00..=0x0E7F).contains(&codepoint) {
+                return true;
+            }
+
+            // Indic Scripts (Indian subcontinent)
+            // Devanagari (Hindi, Marathi, Nepali, Sanskrit)
+            if (0x0900..=0x097F).contains(&codepoint) {
+                return true;
+            }
+            // Bengali
+            if (0x0980..=0x09FF).contains(&codepoint) {
+                return true;
+            }
+            // Gurmukhi (Punjabi)
+            if (0x0A00..=0x0A7F).contains(&codepoint) {
+                return true;
+            }
+            // Gujarati
+            if (0x0A80..=0x0AFF).contains(&codepoint) {
+                return true;
+            }
+            // Oriya
+            if (0x0B00..=0x0B7F).contains(&codepoint) {
+                return true;
+            }
+            // Tamil
+            if (0x0B80..=0x0BFF).contains(&codepoint) {
+                return true;
+            }
+            // Telugu
+            if (0x0C00..=0x0C7F).contains(&codepoint) {
+                return true;
+            }
+            // Kannada
+            if (0x0C80..=0x0CFF).contains(&codepoint) {
+                return true;
+            }
+            // Malayalam
+            if (0x0D00..=0x0D7F).contains(&codepoint) {
+                return true;
+            }
+            // Sinhala (Sri Lanka)
+            if (0x0D80..=0x0DFF).contains(&codepoint) {
+                return true;
+            }
+
+            // Other Southeast Asian
+            // Lao
+            if (0x0E80..=0x0EFF).contains(&codepoint) {
+                return true;
+            }
+            // Myanmar (Burmese)
+            if (0x1000..=0x109F).contains(&codepoint) {
+                return true;
+            }
+            // Khmer
+            if (0x1780..=0x17FF).contains(&codepoint) {
+                return true;
+            }
+
+            // Additional scripts to exclude
+            // Armenian
+            if (0x0530..=0x058F).contains(&codepoint) {
+                return true;
+            }
+            // Georgian
+            if (0x10A0..=0x10FF).contains(&codepoint) {
+                return true;
+            }
+            // Cyrillic (exclude all for safe UI fonts)
+            if (0x0400..=0x052F).contains(&codepoint) {
+                return true;
+            }
+            // Greek (exclude all for safe UI fonts)
+            if (0x0370..=0x03FF).contains(&codepoint) {
+                return true;
+            }
+
+            false
+        })
+    }
+
+    /// Check if font is serif based on name patterns
+    fn is_serif_font(&self, name: &str) -> bool {
+        let name_lower = name.to_lowercase();
+
+        // Common serif patterns
+        let serif_indicators = [
+            "serif",
+            "times",
+            "georgia",
+            "garamond",
+            "baskerville",
+            "palatino",
+            "bookman",
+            "cambria",
+            "constantia",
+            "didot",
+            "bodoni",
+            "walbaum",
+            "rockwell",
+            "minion",
+            "trajan",
+        ];
+
+        serif_indicators.iter().any(|&keyword| name_lower.contains(keyword))
+    }
+
+    /// Check if font is script/calligraphy/handwriting
+    fn is_script_font(&self, name: &str) -> bool {
+        let name_lower = name.to_lowercase();
+
+        let script_indicators = [
+            "script",
+            "calligraphy",
+            "handwriting",
+            "brush",
+            "cursive",
+            "hand",
+            "marker",
+            "signature",
+            "dancing",
+            "kunstler",
+            "zapfino",
+        ];
+
+        script_indicators.iter().any(|&keyword| name_lower.contains(keyword))
+    }
+
+    /// Check if font is symbol/dingbat/decorative
+    fn is_symbol_font(&self, name: &str) -> bool {
+        let name_lower = name.to_lowercase();
+
+        let symbol_indicators = [
+            "symbol",
+            "dingbat",
+            "ornament",
+            "emoji",
+            "icon",
+            "wingdings",
+            "webdings",
+            "fantasy",
+            "decorative",
+            "pi",
+        ];
+
+        symbol_indicators.iter().any(|&keyword| name_lower.contains(keyword))
+    }
+
+    /// Check if font is CJK-specific
+    fn is_cjk_font(&self, name: &str) -> bool {
+        let name_lower = name.to_lowercase();
+
+        // CJK-specific naming patterns
+        let cjk_patterns = [
+            "mincho",   // Japanese Mincho
+            "gyosho",   // Japanese Gyosho
+            "myungjo",  // Korean Myungjo
+            "songti",   // Chinese Songti
+            "hei",      // Chinese Hei
+            "kai",      // Chinese Kai
+            "fangsong", // Chinese FangSong
+            "batang",   // Korean Batang
+            "dotum",    // Korean Dotum
+            "gulim",    // Korean Gulim
+            "mingliu",  // Traditional Chinese
+            "pmingliu", // Traditional Chinese
+            "simhei",   // Simplified Chinese
+            "simsun",   // Simplified Chinese
+        ];
+
+        cjk_patterns.iter().any(|&pattern| name_lower.contains(pattern))
+    }
+
+    /// Check if font is unsafe for UI based on naming patterns
+    /// This includes gothic, blackletter, display, and other non-standard fonts
+    fn is_unsafe_font(&self, name: &str) -> bool {
+        let name_lower = name.to_lowercase();
+
+        // Unsafe patterns for modern UI
+        let unsafe_patterns = [
+            // Gothic & Blackletter (not suitable for modern UI)
+            "gothic",
+            "blackletter",
+            "fraktur",
+            // Display / Decorative / Title fonts
+            "display",
+            "poster",
+            "title",
+            "headline",
+            "banner",
+            // Old-style / Vintage fonts
+            "old style",
+            "oldstyle",
+            "vintage",
+            "retro",
+            // Condensed / Expanded (can be problematic)
+            "narrow",
+            "condensed",
+            "compressed",
+            // Artistic / Novelty fonts
+            "art",
+            "novelty",
+            "fun",
+            "comic",
+            "cartoon",
+        ];
+
+        unsafe_patterns.iter().any(|&pattern| name_lower.contains(pattern))
+    }
+
+    /// Check if font has sans-serif indicators in name
+    fn has_sans_indicators(&self, name: &str) -> bool {
+        let name_lower = name.to_lowercase();
+
+        let sans_patterns = [
+            "sans",
+            // REMOVED: "gothic",  ← Gothic is now in unsafe patterns
+            "grotesque",
+            "neo",
+            "geometric",
+            // Common modern font families (safe for UI)
+            "arial",
+            "helvetica",
+            "verdana",
+            "tahoma",
+            "trebuchet",
+            "inter",
+            "roboto",
+            "open sans",
+            "source sans",
+            "sf pro",
+            "system",
+            "ui",
+            "ubuntu",
+            "cantarell",
+            "figtree",
+            "poppins",
+            "nunito",
+            // Additional modern UI fonts
+            "lato",
+            "calibri",
+            "segoe",
+            "proxima",
+            "circular",
+            "sofia",
+            "quicksand",
+            "rubik",
+            "work sans",
+            "barlow",
+            "manrope",
+            "plus jakarta sans",
+        ];
+
+        sans_patterns.iter().any(|&pattern| name_lower.contains(pattern))
+    }
+
+    /// Check if font has monospace indicators in name
+    fn has_mono_indicators(&self, name: &str) -> bool {
+        let name_lower = name.to_lowercase();
+
+        let mono_patterns = [
+            "mono",
+            "monospace",
+            "code",
+            "consolas",
+            "monaco",
+            "menlo",
+            "courier",
+            "inconsolata",
+            "fira code",
+            "jetbrains mono",
+            "source code pro",
+            "hack",
+            "ibm plex mono",
+            "ubuntu mono",
+            "dejavu sans mono",
+            "liberation mono",
+            "andale mono",
+            "lucida console",
+            "cascadia code",
+            "cascadia mono",
+            "pt mono",
+        ];
+
+        mono_patterns.iter().any(|&pattern| name_lower.contains(pattern))
+    }
+
+    /// Check if a font pattern is sans-serif (suitable for UI)
+    fn is_sans_serif_font(&self, pattern: &FcPattern) -> bool {
+        let name = Self::get_font_name(pattern);
+
+        // Step 1: Character filtering - exclude ALL non-Latin fonts
+        if self.contains_non_latin_characters(&name) {
             return false;
         }
 
-        // Check if it's explicitly NOT monospace (likely UI/proportional font)
+        // Step 2: Exclude unsafe fonts (gothic, display, poster, etc.)
+        if self.is_unsafe_font(&name) {
+            return false;
+        }
+
+        // Step 3: Exclude unwanted categories
+        if self.is_serif_font(&name)
+            || self.is_script_font(&name)
+            || self.is_symbol_font(&name)
+            || self.is_cjk_font(&name)
+        {
+            return false;
+        }
+
+        // Step 4: Validate slant - only Roman (non-italic/oblique) for UI
+        if pattern.italic == PatternMatch::True || pattern.oblique == PatternMatch::True {
+            return false;
+        }
+
+        // Step 5: Use fontconfig properties
         if pattern.monospace == PatternMatch::False {
+            // Definitely proportional → good for UI
             return true;
         }
 
-        // If it's not marked as monospace, it might be a UI font
-        // But be conservative and only include known sans-serif fonts
+        // Step 6: If DontCare, be conservative with keyword matching
         if pattern.monospace == PatternMatch::DontCare {
-            // Common sans-serif font names
-            let sans_keywords = [
-                "arial",
-                "cantarell",
-                "figtree",
-                "frutiger",
-                "futura",
-                "geneva",
-                "gill sans",
-                "helvetica",
-                "inter",
-                "lucida",
-                "nunito",
-                "open sans",
-                "optima",
-                "poppins",
-                "roboto",
-                "sf pro display",
-                "sf pro text",
-                "sf pro",
-                "source sans",
-                "system ui",
-                "tahoma",
-                "trebuchet",
-                "ubuntu",
-                "verdana",
-            ];
-
-            for keyword in sans_keywords {
-                if name.contains(keyword) {
-                    return true;
-                }
-            }
+            self.has_sans_indicators(&name)
+        } else {
+            // It's monospace → exclude from UI fonts
+            false
         }
-
-        false
     }
 
     /// Check if a font pattern is monospace (suitable for editor)
     fn is_monospace_font(&self, pattern: &FcPattern) -> bool {
-        // Get the font name
-        let name = pattern
-            .name
-            .as_ref()
-            .or_else(|| pattern.family.as_ref())
-            .map(|s| s.to_lowercase())
-            .unwrap_or_else(|| String::new());
+        let name = Self::get_font_name(pattern);
 
-        // Check the monospace property first (most reliable)
+        // Step 1: Character filtering - exclude non-Latin fonts
+        if self.contains_non_latin_characters(&name) {
+            return false;
+        }
+
+        // Step 2: Exclude decorative/symbol fonts
+        if self.is_symbol_font(&name) || self.is_script_font(&name) {
+            return false;
+        }
+
+        // Step 3: Use fontconfig monospace property (primary check)
         if pattern.monospace == PatternMatch::True {
-            return true;
+            // Additional validation: ensure it's not a CJK monospace
+            return !self.is_cjk_font(&name);
         }
 
-        // Direct name matching
-        if name.contains("mono") || name.contains("monospace") {
-            return true;
-        }
-
-        // Common monospace font names
-        let mono_keywords = [
-            "andale mono",
-            "bitstream vera sans mono",
-            "cascadia code",
-            "cascadia mono",
-            "consolas",
-            "courier new",
-            "courier",
-            "dejavu sans mono",
-            "fira code",
-            "hack",
-            "ibm plex mono",
-            "inconsolata",
-            "jetbrains mono",
-            "liberation mono",
-            "lucida console",
-            "menlo",
-            "monaco",
-            "monaco",
-            "pt mono",
-            "source code pro",
-            "ubuntu mono",
-            "vs code",
-        ];
-
-        for keyword in mono_keywords {
-            if name.contains(keyword) {
-                return true;
-            }
-        }
-
-        false
+        // Step 4: Keyword matching as fallback
+        self.has_mono_indicators(&name)
     }
 
     /// Get UI fonts (sans-serif)
@@ -344,8 +646,11 @@ impl FontManager {
     }
 
     /// Force refresh the font cache
+    ///
+    /// Rebuilds the font cache regardless of whether it's already loaded.
+    /// Use this when new fonts have been installed on the system.
     pub fn refresh_cache<R: tauri::Runtime>(&self, app: &AppHandle<R>) -> Result<FontCache, String> {
-        log::info!("Forcing font cache refresh...");
+        log::info!("Force rebuilding font cache...");
         let cache = self.build_font_cache()?;
         self.save_cache_to_disk(app, &cache)?;
         *self.cache.write().unwrap() = Some(cache.clone());

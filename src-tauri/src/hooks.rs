@@ -3,6 +3,7 @@
 //! This module contains hooks that are executed during the application lifecycle.
 
 use crate::core;
+use crate::utils::fonts::get_font_manager;
 use tauri::{App, Manager};
 
 /// Setup the application
@@ -25,6 +26,18 @@ pub fn setup_app<R: tauri::Runtime>(app: &mut App<R>) -> Result<(), Box<dyn std:
             core::updater::start_update_scheduler(handle, manager).await;
         });
     }
+
+    // Initialize font cache in background before loading the main window
+    log::info!("Initializing font cache in background...");
+    let handle = app.handle().clone();
+
+    tauri::async_runtime::spawn(async move {
+        if let Err(e) = get_font_manager().and_then(|manager| manager.initialize_cache(&handle)) {
+            log::error!("Failed to initialize font cache: {}", e);
+        } else {
+            log::debug!("Font cache initialized successfully");
+        }
+    });
 
     // Setup the customized main window
     match core::create_main_window(app) {
