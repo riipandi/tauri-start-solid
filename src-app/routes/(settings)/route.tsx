@@ -74,7 +74,7 @@ function RouteComponent() {
                 onInput={(e) => setSearchQuery(e.currentTarget.value)}
                 class={clsx(
                   'w-full px-3 py-1.5 pr-8 border border-border-neutral rounded-xs bg-background-page text-foreground-neutral text-sm',
-                  'focus:outline-none focus:ring-2 focus:ring-border-primary focus:border-border-primary placeholder:text-foreground-neutral-faded/60'
+                  'focus:outline-none focus:ring-1 focus:ring-border-primary focus:border-border-primary placeholder:text-foreground-neutral-faded/60'
                 )}
               />
               <Show when={searchQuery()}>
@@ -115,9 +115,9 @@ function RouteComponent() {
                       <li>
                         <Link
                           to={item.path}
-                          class='block py-1.5 px-2.5 rounded-md text-[13px] transition-colors text-foreground-neutral-faded hover:bg-background-neutral-faded hover:text-foreground-neutral'
+                          class='block py-1.5 px-2.5 rounded-md text-[13px] text-foreground-neutral hover:bg-background-neutral-faded hover:text-foreground-primary'
                           activeProps={{
-                            class: 'text-on-background-primary hover:text-on-background-primary'
+                            class: 'text-foreground-primary hover:text-foreground-primary'
                           }}
                         >
                           {item.label}
@@ -139,9 +139,9 @@ function RouteComponent() {
                       <li>
                         <Link
                           to={item.path}
-                          class='block py-1.5 px-2.5 rounded-md text-[13px] transition-colors text-foreground-neutral-faded hover:bg-background-neutral-faded hover:text-foreground-neutral'
+                          class='block py-1.5 px-2.5 rounded-md text-[13px] text-foreground-neutral hover:bg-background-neutral-faded hover:text-foreground-primary'
                           activeProps={{
-                            class: 'text-on-background-primary hover:text-on-background-primary'
+                            class: 'text-foreground-primary hover:text-foreground-primary'
                           }}
                         >
                           {item.label}

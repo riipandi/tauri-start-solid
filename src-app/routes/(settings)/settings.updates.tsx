@@ -2,7 +2,7 @@ import { toaster } from '@kobalte/core/toast'
 import { useStore } from '@nanostores/solid'
 import { createFileRoute } from '@tanstack/solid-router'
 import { consola } from 'consola'
-import { createSignal, createEffect, onMount, Show } from 'solid-js'
+import { createSignal, onMount, onCleanup, Show } from 'solid-js'
 import { Button } from '#/components/button'
 import { Select, type SelectOption } from '#/components/select'
 import { Switch } from '#/components/switch'
@@ -68,7 +68,17 @@ function RouteComponent() {
   })
 
   // Listen for update events
-  createEffect(() => {
+  onMount(() => {
+    let cleanup: (() => void) | undefined
+    let isMounted = true
+
+    // Register cleanup SYNCHRONOUSLY (tracked by SolidJS)
+    onCleanup(() => {
+      isMounted = false
+      cleanup?.()
+    })
+
+    // Then do async work
     const unlistenPromises = [
       updaterService.onUpdateAvailable((info) => {
         setAvailableUpdate({
@@ -99,8 +109,18 @@ function RouteComponent() {
     ]
 
     Promise.all(unlistenPromises).then((unlisteners) => {
-      return () => {
-        unlisteners.forEach((fn) => fn())
+      if (isMounted) {
+        // Store cleanup function for later use
+        cleanup = () => {
+          for (const fn of unlisteners) {
+            fn()
+          }
+        }
+      } else {
+        // Component already unmounted, cleanup immediately
+        for (const fn of unlisteners) {
+          fn()
+        }
       }
     })
   })

@@ -5,6 +5,7 @@ import { onMount, onCleanup, createEffect, Suspense } from 'solid-js'
 import { AppLoader } from '#/components/boundaries'
 import { ToastProvider } from '#/components/toast'
 import { GlobalNotFound } from '#/routes/-errors'
+import { useAppInfo } from '#/hooks/use-app-info'
 import type { AppSettings } from '#/schemas/settings.schema'
 import { themeMode, currentTheme } from '#/stores/settings.store'
 import { uiSettings } from '#/stores/settings.store'
@@ -59,6 +60,10 @@ function RootComponent() {
     })
 
     await loadSettings()
+
+    // Initialize app info singleton
+    const { init } = useAppInfo()
+    await init()
   })
 
   onCleanup(() => {
